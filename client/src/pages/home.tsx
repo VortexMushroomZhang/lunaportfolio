@@ -117,10 +117,10 @@ export default function Home() {
         </div>
         <div className="absolute bottom-0 left-0 right-0 z-10 pointer-events-none px-8 md:px-12 lg:px-16 pb-8">
           <div
-            className="flex items-end justify-between gap-8 flex-wrap pointer-events-auto"
+            className="flex items-end gap-8 flex-wrap pointer-events-auto"
             data-testid="section-hero-footer"
           >
-            <div className="flex-1 min-w-[200px]" data-testid="info-location">
+            <div className="min-w-[180px] mr-8" data-testid="info-location">
               <p className="font-sans text-xs mb-1" style={{ color: "rgba(255,255,255,0.4)" }}>
                 Currently based in
               </p>
@@ -128,7 +128,7 @@ export default function Home() {
                 Amsterdam, NL & Paris, FR
               </p>
             </div>
-            <div className="flex-1 min-w-[200px]" data-testid="info-work">
+            <div className="min-w-[140px]" data-testid="info-work">
               <p className="font-sans text-xs mb-1" style={{ color: "rgba(255,255,255,0.4)" }}>
                 Currently working in
               </p>
@@ -136,7 +136,7 @@ export default function Home() {
                 Finance sector
               </p>
             </div>
-            <div className="flex-1 min-w-[200px] text-right" data-testid="info-contact">
+            <div className="flex-1 text-right" data-testid="info-contact">
               <p className="font-sans text-xs mb-1" style={{ color: "rgba(255,255,255,0.4)" }}>
                 Contact me at
               </p>
@@ -152,7 +152,6 @@ export default function Home() {
       <section
         className="relative"
         data-testid="section-latest-work"
-        style={{ background: "#F7F4EF", zIndex: 2 }}
       >
         <FullLine />
 
@@ -235,7 +234,6 @@ export default function Home() {
       <section
         className="relative"
         data-testid="section-experience"
-        style={{ background: "#F7F4EF", zIndex: 2 }}
       >
         <div className={`${CONTENT} px-6 pt-20 md:pt-28 pb-12`}>
           <div className="text-center">
@@ -327,7 +325,6 @@ export default function Home() {
       <section
         className="relative flex flex-col justify-end min-h-screen"
         data-testid="section-how"
-        style={{ background: "#F7F4EF", zIndex: 2 }}
       >
         <div>
           <FullLine />
@@ -353,7 +350,6 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col py-14 md:py-16">
-              <div className="hidden lg:block" style={{ height: "calc(0.75rem * 1.5 + 1rem)" }} />
               {principles.map((p, idx) => (
                 <div
                   key={idx}
