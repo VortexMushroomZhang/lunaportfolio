@@ -151,7 +151,7 @@ export default function Home() {
       >
         <div className="w-full h-px" style={{ background: LINE }} />
 
-        <div className="px-8 md:px-12 lg:px-16 max-w-7xl mx-auto py-28 md:py-36">
+        <div className="px-8 md:px-12 lg:px-16 py-28 md:py-36">
           <div className="flex items-baseline justify-between mb-16">
             <div>
               <p className="font-sans text-xs uppercase tracking-widest mb-2" style={{ color: "rgba(0,0,0,0.35)" }}>
@@ -233,7 +233,7 @@ export default function Home() {
         data-testid="section-experience"
         style={{ background: "#F7F4EF" }}
       >
-        <div className="px-8 md:px-12 lg:px-16 max-w-7xl mx-auto py-28 md:py-36">
+        <div className="px-8 md:px-12 lg:px-16 py-28 md:py-36">
           <div className="text-center mb-20">
             <h2
               className="font-serif text-3xl md:text-4xl font-light tracking-tight mb-4"
@@ -248,7 +248,7 @@ export default function Home() {
             <div className="flex items-center justify-center gap-3 mt-6">
               <Link href="/work">
                 <span
-                  className="font-sans text-sm px-5 py-2 rounded-full inline-block transition-all duration-200 hover:bg-opacity-10"
+                  className="btn-pill font-sans text-sm px-5 py-2 rounded-full inline-block select-none"
                   style={{ border: `1px solid ${STEEL_TEAL}40`, color: STEEL_TEAL }}
                   data-testid="link-more-work"
                 >
@@ -257,7 +257,7 @@ export default function Home() {
               </Link>
               <Link href="/about">
                 <span
-                  className="font-sans text-sm px-5 py-2 rounded-full inline-block transition-all duration-200 hover:bg-opacity-10"
+                  className="btn-pill font-sans text-sm px-5 py-2 rounded-full inline-block select-none"
                   style={{ border: `1px solid ${MAUVE_BROWN}40`, color: MAUVE_BROWN }}
                   data-testid="link-more-about"
                 >
@@ -273,7 +273,7 @@ export default function Home() {
           style={{ borderTop: `1px solid ${LINE}`, borderBottom: `1px solid ${LINE}` }}
         >
           <div
-            className="relative p-8 md:p-10 transition-colors duration-200 hover:bg-white/40 border-b lg:border-b-0 lg:border-r"
+            className="relative px-8 md:px-12 lg:px-16 py-10 transition-colors duration-200 hover:bg-white/40 border-b lg:border-b-0 lg:border-r"
             data-testid="card-experience-latest"
             style={{ borderColor: LINE }}
           >
@@ -302,7 +302,7 @@ export default function Home() {
             {pastExperiences.map((exp, idx) => (
               <div
                 key={idx}
-                className="p-6 md:p-8 transition-colors duration-200 hover:bg-white/40"
+                className="px-8 md:px-12 lg:px-16 py-6 transition-colors duration-200 hover:bg-white/40"
                 data-testid={`card-experience-${idx}`}
                 style={{
                   borderTop: idx > 0 ? `1px solid ${LINE_L}` : "none",
@@ -326,7 +326,7 @@ export default function Home() {
         data-testid="section-how"
         style={{ background: "#F7F4EF" }}
       >
-        <div className="px-8 md:px-12 lg:px-16 max-w-7xl mx-auto pt-28 md:pt-36 pb-16">
+        <div className="px-8 md:px-12 lg:px-16 pt-28 md:pt-36 pb-16">
           <p className="font-sans text-xs uppercase tracking-widest mb-2" style={{ color: "rgba(0,0,0,0.35)" }}>
             How I Work
           </p>
@@ -336,7 +336,7 @@ export default function Home() {
           className="grid grid-cols-1 lg:grid-cols-2"
           style={{ borderTop: `1px solid ${LINE}`, borderBottom: `1px solid ${LINE}` }}
         >
-          <div className="p-8 md:p-12 border-b lg:border-b-0 lg:border-r" style={{ borderColor: LINE }}>
+          <div className="px-8 md:px-12 lg:px-16 py-10 md:py-12 border-b lg:border-b-0 lg:border-r" style={{ borderColor: LINE }}>
             <p className="font-sans text-xs uppercase tracking-widest mb-4" style={{ color: STEEL_TEAL }}>
               How
             </p>
@@ -360,7 +360,7 @@ export default function Home() {
             {principles.map((p, idx) => (
               <div
                 key={idx}
-                className="flex items-start gap-6 p-6 md:p-8"
+                className="flex items-start gap-6 px-8 md:px-12 lg:px-16 py-6 md:py-8"
                 style={{ borderTop: idx > 0 ? `1px solid ${LINE_L}` : "none" }}
                 data-testid={`text-principle-${idx}`}
               >

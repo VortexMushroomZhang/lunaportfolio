@@ -7,8 +7,8 @@ export default function SiteFooter() {
       className="relative"
       style={{ background: "#F7F4EF" }}
     >
-      <div className="px-8 md:px-12 lg:px-16 max-w-7xl mx-auto">
-        <div className="pt-16 pb-10" style={{ borderTop: "1px solid rgba(0,0,0,0.06)" }}>
+      <div className="w-full" style={{ borderTop: "1px solid rgba(0,0,0,0.06)" }}>
+        <div className="px-8 md:px-12 lg:px-16 max-w-7xl mx-auto pt-16 pb-10">
           <div className="flex items-end justify-between gap-8 flex-wrap">
             <div className="flex-1 min-w-[200px]">
               <p className="font-sans text-xs mb-1" style={{ color: "rgba(0,0,0,0.35)" }}>
@@ -80,8 +80,8 @@ export default function SiteFooter() {
         <img
           src={asciiArtPath}
           alt="ASCII art landscape"
-          className="w-full select-none pointer-events-none"
-          style={{ opacity: 0.5 }}
+          className="w-full select-none pointer-events-none ascii-art-blend"
+          style={{ opacity: 0.6 }}
           draggable={false}
         />
       </div>

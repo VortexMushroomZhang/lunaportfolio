@@ -2,8 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
 *, *::before, *::after {
   cursor: none !important;
+}
+
+.nav-pill:hover:not([style*="background: rgba(255,255,255,0.85)"]):not([style*="background: rgba(255,255,255,0.15)"]) {
+  background: rgba(0,0,0,0.06) !important;
+}
+.nav-pill:active {
+  background: rgba(0,0,0,0.12) !important;
+}
+
+.btn-pill {
+  transition: all 150ms ease;
+}
+.btn-pill:hover {
+  background: rgba(0,0,0,0.06) !important;
+}
+.btn-pill:active {
+  background: rgba(0,0,0,0.12) !important;
+  transform: scale(0.97);
+}
+
+.ascii-art-blend {
+  mix-blend-mode: multiply;
 }
 
 /* LIGHT MODE */

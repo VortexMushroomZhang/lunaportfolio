@@ -58,13 +58,13 @@ export default function Navigation() {
             <Link key={item.path} href={item.path}>
               <span
                 data-testid={`link-nav-${item.label.toLowerCase()}`}
-                className="px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-300 inline-block"
+                className="nav-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-150 inline-block select-none"
                 style={{
                   color: onDark
                     ? isActive ? "#ffffff" : "rgba(255,255,255,0.6)"
                     : isActive ? "#1a1a1a" : "rgba(0,0,0,0.45)",
                   background: isActive
-                    ? onDark ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.8)"
+                    ? onDark ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.85)"
                     : "transparent",
                 }}
               >
