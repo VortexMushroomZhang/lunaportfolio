@@ -5,7 +5,7 @@ export default function SiteFooter() {
     <footer
       data-testid="section-footer"
       className="relative"
-      style={{ background: "#F7F4EF" }}
+      style={{ background: "#F7F4EF", zIndex: 2 }}
     >
       <div className="w-full" style={{ borderTop: "1px solid rgba(0,0,0,0.06)" }}>
         <div className="px-6 max-w-6xl mx-auto pt-16 pb-10">

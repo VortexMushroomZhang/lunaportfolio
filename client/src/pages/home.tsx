@@ -152,7 +152,7 @@ export default function Home() {
       <section
         className="relative"
         data-testid="section-latest-work"
-        style={{ background: "#F7F4EF" }}
+        style={{ background: "#F7F4EF", zIndex: 2 }}
       >
         <FullLine />
 
@@ -235,7 +235,7 @@ export default function Home() {
       <section
         className="relative"
         data-testid="section-experience"
-        style={{ background: "#F7F4EF" }}
+        style={{ background: "#F7F4EF", zIndex: 2 }}
       >
         <div className={`${CONTENT} px-6 pt-20 md:pt-28 pb-12`}>
           <div className="text-center">
@@ -325,62 +325,59 @@ export default function Home() {
       </section>
 
       <section
-        className="relative"
+        className="relative flex flex-col justify-end min-h-screen"
         data-testid="section-how"
-        style={{ background: "#F7F4EF" }}
+        style={{ background: "#F7F4EF", zIndex: 2 }}
       >
-        <div className={`${CONTENT} px-6 pt-28 md:pt-36 pb-16`}>
-          <p className="font-sans text-xs uppercase tracking-widest mb-2" style={{ color: "rgba(0,0,0,0.35)" }}>
-            How I Work
-          </p>
-        </div>
-
-        <FullLine />
-        <div className={`${CONTENT} grid grid-cols-1 lg:grid-cols-2`}>
-          <div className="px-6 py-14 md:py-16 border-b lg:border-b-0 lg:border-r" style={{ borderColor: LINE }}>
-            <p className="font-sans text-xs uppercase tracking-widest mb-4" style={{ color: STEEL_TEAL }}>
-              How
-            </p>
-            <p
-              className="font-serif text-2xl md:text-3xl font-light leading-relaxed"
-              style={{ color: "#1a1a1a" }}
-              data-testid="text-how-description"
-            >
-              Through profound user insights, I find harmony between user needs and product ecosystem, transforming complex features into intuitive and confident design solutions.
-            </p>
-            <div className="mt-8 h-px w-16" style={{ background: MAUVE_BROWN + "30" }} />
-            <p className="font-serif text-lg leading-relaxed mt-8" style={{ color: "rgba(0,0,0,0.55)" }}>
-              As a researcher, a keen curiosity fuels the exploration of human behaviors, uncovering patterns and making sense of complex datasets to bring clarity to the vast expanse of human data.
-            </p>
-            <p className="font-sans text-xs mt-8 italic" style={{ color: "rgba(0,0,0,0.3)" }}>
-              Inspired by Yuan Lu, TU/e professor.
-            </p>
-          </div>
-
-          <div>
-            {principles.map((p, idx) => (
-              <div
-                key={idx}
-                className="flex items-start gap-6 px-6 py-6 md:py-8"
-                style={{ borderTop: idx > 0 ? `1px solid ${LINE_L}` : "none" }}
-                data-testid={`text-principle-${idx}`}
+        <div>
+          <FullLine />
+          <div className={`${CONTENT} grid grid-cols-1 lg:grid-cols-2`}>
+            <div className="px-6 py-14 md:py-16 border-b lg:border-b-0 lg:border-r" style={{ borderColor: LINE }}>
+              <p className="font-sans text-xs uppercase tracking-widest mb-4" style={{ color: STEEL_TEAL }}>
+                How
+              </p>
+              <p
+                className="font-serif text-2xl md:text-3xl font-light leading-relaxed"
+                style={{ color: "#1a1a1a" }}
+                data-testid="text-how-description"
               >
-                <span
-                  className="font-serif text-3xl font-light flex-shrink-0 w-12"
-                  style={{ color: `${STEEL_TEAL}30` }}
-                >
-                  {p.num}
-                </span>
-                <p className="font-sans text-base font-medium pt-2" style={{ color: "#1a1a1a" }}>
-                  {p.text}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-        <FullLine />
+                Through profound user insights, I find harmony between user needs and product ecosystem, transforming complex features into intuitive and confident design solutions.
+              </p>
+              <div className="mt-8 h-px w-16" style={{ background: MAUVE_BROWN + "30" }} />
+              <p className="font-serif text-lg leading-relaxed mt-8" style={{ color: "rgba(0,0,0,0.55)" }}>
+                As a researcher, a keen curiosity fuels the exploration of human behaviors, uncovering patterns and making sense of complex datasets to bring clarity to the vast expanse of human data.
+              </p>
+              <p className="font-sans text-xs mt-8 italic" style={{ color: "rgba(0,0,0,0.3)" }}>
+                Inspired by Yuan Lu, TU/e professor.
+              </p>
+            </div>
 
-        <div style={{ height: "4rem" }} />
+            <div className="flex flex-col py-14 md:py-16">
+              <div className="hidden lg:block" style={{ height: "calc(0.75rem * 1.5 + 1rem)" }} />
+              {principles.map((p, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-start gap-6 px-6 py-5 md:py-6"
+                  style={{ borderTop: idx > 0 ? `1px solid ${LINE_L}` : "none" }}
+                  data-testid={`text-principle-${idx}`}
+                >
+                  <span
+                    className="font-serif text-3xl font-light flex-shrink-0 w-12"
+                    style={{ color: `${STEEL_TEAL}30` }}
+                  >
+                    {p.num}
+                  </span>
+                  <p className="font-sans text-base font-medium pt-2" style={{ color: "#1a1a1a" }}>
+                    {p.text}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <FullLine />
+
+          <div style={{ height: "4rem" }} />
+        </div>
       </section>
 
       <SiteFooter />

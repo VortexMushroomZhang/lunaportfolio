@@ -4,7 +4,7 @@ export default function BackgroundGrid() {
   return (
     <div
       className="fixed inset-0 pointer-events-none select-none"
-      style={{ zIndex: 0 }}
+      style={{ zIndex: 1 }}
       data-testid="background-grid"
     >
       <div
