@@ -25,7 +25,7 @@ export default function FilmGrain() {
       const buf = new Uint32Array(imageData.data.buffer);
       for (let i = 0; i < buf.length; i++) {
         const v = (Math.random() * 255) | 0;
-        buf[i] = (14 << 24) | (v << 16) | (v << 8) | v;
+        buf[i] = (8 << 24) | (v << 16) | (v << 8) | v;
       }
       ctx.putImageData(imageData, 0, 0);
     };
@@ -33,14 +33,14 @@ export default function FilmGrain() {
     draw();
 
     if (!prefersReduced) {
-      intervalId = setInterval(draw, 100);
+      intervalId = setInterval(draw, 300);
     }
 
     const handleVisibility = () => {
       if (document.hidden) {
         clearInterval(intervalId);
       } else if (!prefersReduced) {
-        intervalId = setInterval(draw, 100);
+        intervalId = setInterval(draw, 300);
       }
     };
     document.addEventListener("visibilitychange", handleVisibility);
@@ -56,7 +56,7 @@ export default function FilmGrain() {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 w-full h-full pointer-events-none select-none"
-      style={{ zIndex: 9999, opacity: 1, mixBlendMode: "multiply" }}
+      style={{ zIndex: 9999, opacity: 0.7, mixBlendMode: "multiply" }}
       data-testid="film-grain-overlay"
     />
   );
