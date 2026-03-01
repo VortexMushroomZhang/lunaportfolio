@@ -14,7 +14,9 @@ Creative product designer portfolio website for Xumeng Zhang (LunaZhang). Warm, 
 - **Brand Colors**: Steel Teal (#4A7C7E), Dark Sienna (#6B3A2A), Mauve Brown (#8B6F5E), Deep Forest, Lavender Purple
 - **Text**: #1a1a1a (dark), rgba variants for muted
 - **Container Style**: Vercel-inspired — no rounded corners, adjacent cells separated by 1px lines, outer border on grid
+- **Layout**: Content centered with max-w-6xl mx-auto; border lines extend full viewport width (edge to edge)
 - **Line Elements**: Thin borders (rgba(0,0,0,0.08)) between grid cells
+- **Film Grain**: Animated noise overlay on all pages (canvas, 10fps, 1/4 resolution, pauses when tab hidden, respects prefers-reduced-motion)
 - **Custom Cursor**: White dot, 14px normal / 20px clicked, `mix-blend-mode: difference`, site-wide
 - **Links**: No underline at rest, arrow tilted 45° up (↗); on hover underline appears + arrow rotates to horizontal (→)
 
@@ -49,6 +51,7 @@ Creative product designer portfolio website for Xumeng Zhang (LunaZhang). Warm, 
 client/src/
   components/
     custom-cursor.tsx     - Global custom cursor
+    film-grain.tsx        - Animated film grain overlay (all pages)
     raindrop-canvas.tsx   - Interactive canvas raindrop effect
     typewriter-banner.tsx - Name + typewriter roles
     navigation.tsx        - Scroll-aware site navigation (no bg bar)

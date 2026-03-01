@@ -8,7 +8,7 @@ export default function SiteFooter() {
       style={{ background: "#F7F4EF" }}
     >
       <div className="w-full" style={{ borderTop: "1px solid rgba(0,0,0,0.06)" }}>
-        <div className="px-8 md:px-12 lg:px-16 max-w-7xl mx-auto pt-16 pb-10">
+        <div className="px-6 max-w-6xl mx-auto pt-16 pb-10">
           <div className="flex items-end justify-between gap-8 flex-wrap">
             <div className="flex-1 min-w-[200px]">
               <p className="font-sans text-xs mb-1" style={{ color: "rgba(0,0,0,0.35)" }}>
