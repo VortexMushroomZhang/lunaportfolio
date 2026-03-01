@@ -23,7 +23,7 @@ export default function Navigation() {
             letterSpacing: "0.04em",
           }}
         >
-          LUNA ZHANG
+          XUMENG ZHANG
         </span>
       </Link>
 

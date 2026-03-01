@@ -11,6 +11,9 @@ interface Drop {
   wobbleSpeed: number;
   letter: string;
   letterSize: number;
+  shape: number[];
+  flatness: number;
+  angle: number;
 }
 
 interface TrailDot {
@@ -33,16 +36,37 @@ interface MacroDrop {
 }
 
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-const NUM_DROPS = 160;
+const NUM_DROPS = 170;
 const SPAWN_RATE = 2;
-const WIND_BASE = 0.12;
-const WIND_VARIATION = 0.2;
-const GRAVITY = 0.055;
-const DRAG = 0.997;
+const FLOW_ANGLE = Math.PI * 0.58;
+const FLOW_SPEED = 0.07;
+const FLOW_VARIATION = 0.02;
+const GRAVITY = 0.04;
+const DRAG = 0.998;
 const ATTRACTION_RADIUS = 130;
 const IDLE_MS = 1800;
 const MACRO_GRAVITY = 0.45;
 const MACRO_WIND = 0.6;
+
+const BG_IMAGES = [
+  "/images/bg-city-sunset.jpg",
+  "/images/bg-street-rain.jpg",
+];
+
+function pickBg(): string {
+  const hour = new Date().getHours();
+  if (hour >= 6 && hour < 18) return BG_IMAGES[1];
+  return BG_IMAGES[0];
+}
+
+function makeShape(): number[] {
+  const pts: number[] = [];
+  const segments = 8 + Math.floor(Math.random() * 5);
+  for (let i = 0; i < segments; i++) {
+    pts.push(0.7 + Math.random() * 0.6);
+  }
+  return pts;
+}
 
 export default function RaindropCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -62,16 +86,20 @@ export default function RaindropCanvas() {
   const randomLetter = () => LETTERS[Math.floor(Math.random() * LETTERS.length)];
 
   const makeDrop = useCallback((w: number, h: number, top = false): Drop => {
-    const r = 1.5 + Math.random() * 5;
+    const r = 1 + Math.random() * 5.5;
+    const flowDir = FLOW_ANGLE + (Math.random() - 0.5) * 0.3;
     return {
-      x: Math.random() * w,
-      y: top ? -(r * 2 + Math.random() * 80) : Math.random() * h,
+      x: top ? Math.random() * w * 1.3 - w * 0.15 : Math.random() * w,
+      y: top ? -(r * 2 + Math.random() * 100) : Math.random() * h,
       r, vx: 0, vy: 0,
-      opacity: 0.5 + Math.random() * 0.5,
+      opacity: 0.45 + Math.random() * 0.55,
       wobble: Math.random() * Math.PI * 2,
-      wobbleSpeed: 0.008 + Math.random() * 0.018,
+      wobbleSpeed: 0.005 + Math.random() * 0.015,
       letter: randomLetter(),
-      letterSize: Math.max(8, r * 2.2),
+      letterSize: Math.max(7, r * 2),
+      shape: makeShape(),
+      flatness: 0.15 + Math.random() * 0.35,
+      angle: flowDir,
     };
   }, []);
 
@@ -86,7 +114,7 @@ export default function RaindropCanvas() {
 
     const img = new Image();
     img.crossOrigin = "anonymous";
-    img.src = "/images/hero-bg.png";
+    img.src = pickBg();
     imgRef.current = img;
 
     let blurReady = false;
@@ -105,10 +133,10 @@ export default function RaindropCanvas() {
       blurCvs.width = w;
       blurCvs.height = h;
       const p = coverParams(img.naturalWidth, img.naturalHeight, w, h);
-      blurCtx.filter = "blur(14px) brightness(0.65) saturate(0.6)";
+      blurCtx.filter = "blur(14px) brightness(0.55) saturate(0.65)";
       blurCtx.drawImage(img, p.ox - 20, p.oy - 20, p.dw + 40, p.dh + 40);
       blurCtx.filter = "none";
-      blurCtx.fillStyle = "rgba(200,210,205,0.06)";
+      blurCtx.fillStyle = "rgba(180,195,205,0.07)";
       blurCtx.fillRect(0, 0, w, h);
       blurReady = true;
     };
@@ -126,52 +154,74 @@ export default function RaindropCanvas() {
     resize();
     addEventListener("resize", resize);
 
+    dropsRef.current = [];
     const drops = dropsRef.current;
-    if (drops.length === 0) {
-      const { w, h } = sizeRef.current;
-      for (let i = 0; i < NUM_DROPS; i++) drops.push(makeDrop(w, h));
-    }
+    const { w: iw, h: ih } = sizeRef.current;
+    for (let i = 0; i < NUM_DROPS; i++) drops.push(makeDrop(iw, ih));
 
-    const dropPath = (cx: CanvasRenderingContext2D, x: number, y: number, r: number, elong = 0) => {
-      const s = 1 + elong * 0.4;
+    const organicPath = (cx: CanvasRenderingContext2D, x: number, y: number, r: number, shape: number[] | undefined, flatness: number, moveAngle: number, speed = 0) => {
+      if (!shape || shape.length === 0) {
+        cx.beginPath();
+        cx.arc(x, y, r, 0, Math.PI * 2);
+        cx.closePath();
+        return;
+      }
+      const n = shape.length;
       cx.beginPath();
+
+      const stretch = 1 + Math.min(speed * 3, 0.7);
+
       cx.save();
       cx.translate(x, y);
-      cx.scale(1, s);
-      if (r > 2.5) {
-        cx.moveTo(0, -r);
-        cx.bezierCurveTo(r * 0.45, -r * 0.85, r, -r * 0.25, r, r * 0.15);
-        cx.bezierCurveTo(r, r * 0.65, r * 0.5, r, 0, r);
-        cx.bezierCurveTo(-r * 0.5, r, -r, r * 0.65, -r, r * 0.15);
-        cx.bezierCurveTo(-r, -r * 0.25, -r * 0.45, -r * 0.85, 0, -r);
-      } else {
-        cx.arc(0, 0, r, 0, Math.PI * 2);
+      cx.rotate(moveAngle - Math.PI / 2);
+      cx.scale(1 / stretch, stretch);
+
+      const pts: [number, number][] = [];
+      for (let i = 0; i < n; i++) {
+        const a = (Math.PI * 2 * i) / n;
+        const dist = r * shape[i];
+        const squash = 1 - flatness * Math.abs(Math.cos(a));
+        pts.push([Math.cos(a) * dist * squash, Math.sin(a) * dist * squash]);
       }
+
+      cx.moveTo(pts[0][0], pts[0][1]);
+      for (let i = 0; i < n; i++) {
+        const curr = pts[i];
+        const next = pts[(i + 1) % n];
+        const cpx = (curr[0] + next[0]) / 2;
+        const cpy = (curr[1] + next[1]) / 2;
+        cx.quadraticCurveTo(curr[0], curr[1], cpx, cpy);
+      }
+      cx.closePath();
       cx.restore();
+    };
+
+    const simpleOrganicPath = (cx: CanvasRenderingContext2D, x: number, y: number, r: number) => {
+      cx.beginPath();
+      cx.arc(x, y, r, 0, Math.PI * 2);
       cx.closePath();
     };
 
-    const drawDrop = (
-      cx: CanvasRenderingContext2D,
-      d: Drop,
-      elong = 0
-    ) => {
+    const drawDrop = (cx: CanvasRenderingContext2D, d: Drop, elong = 0) => {
       const { x, y, r, opacity: opa } = d;
       if (r < 0.5 || opa < 0.01) return;
 
-      if (r < 2) {
+      const moveAngle = Math.atan2(d.vy || Math.sin(d.angle), d.vx || Math.cos(d.angle));
+      const spd = Math.sqrt(d.vx * d.vx + d.vy * d.vy);
+
+      if (r < 1.8) {
         cx.save();
-        cx.globalAlpha = opa * 0.6;
+        cx.globalAlpha = opa * 0.55;
         cx.beginPath();
         cx.arc(x, y, r, 0, Math.PI * 2);
-        const sg = cx.createRadialGradient(x - r * 0.2, y - r * 0.2, 0, x, y, r);
-        sg.addColorStop(0, "rgba(230,240,250,0.45)");
-        sg.addColorStop(0.6, "rgba(210,225,240,0.2)");
-        sg.addColorStop(1, "rgba(190,210,240,0.05)");
+        const sg = cx.createRadialGradient(x - r * 0.15, y - r * 0.15, 0, x, y, r);
+        sg.addColorStop(0, "rgba(230,240,250,0.4)");
+        sg.addColorStop(0.7, "rgba(215,228,242,0.15)");
+        sg.addColorStop(1, "rgba(200,218,240,0.03)");
         cx.fillStyle = sg;
         cx.fill();
-        cx.font = `${Math.max(6, r * 2)}px 'Lato', sans-serif`;
-        cx.fillStyle = `rgba(80,90,100,${0.4 * opa})`;
+        cx.font = `${Math.max(5, r * 2.2)}px 'Lato', sans-serif`;
+        cx.fillStyle = `rgba(80,90,100,${0.35 * opa})`;
         cx.textAlign = "center";
         cx.textBaseline = "middle";
         cx.fillText(d.letter, x, y);
@@ -180,53 +230,54 @@ export default function RaindropCanvas() {
       }
 
       cx.save();
-      dropPath(cx, x, y, r, elong);
+
+      organicPath(cx, x, y, r, d.shape, d.flatness, moveAngle, spd);
       cx.clip();
 
       if (img.complete && img.naturalWidth > 0) {
         const { w, h } = sizeRef.current;
         const p = coverParams(img.naturalWidth, img.naturalHeight, w, h);
-        const magnify = 1.05;
+        const magnify = 1.06;
         cx.save();
         cx.translate(x, y);
         cx.scale(magnify, magnify);
         cx.translate(-x, -y);
-        cx.globalAlpha = 0.88 * opa;
+        cx.globalAlpha = 0.85 * opa;
         cx.drawImage(img, p.ox, p.oy, p.dw, p.dh);
         cx.restore();
       }
 
-      const edge = cx.createRadialGradient(x - r * 0.1, y - r * 0.1, r * 0.2, x, y, r);
+      const edge = cx.createRadialGradient(x - r * 0.1, y - r * 0.1, r * 0.15, x, y, r);
       edge.addColorStop(0, "rgba(255,255,255,0)");
-      edge.addColorStop(0.5, "rgba(255,255,255,0)");
-      edge.addColorStop(0.7, `rgba(215,230,245,${0.07 * opa})`);
-      edge.addColorStop(0.85, `rgba(195,218,250,${0.15 * opa})`);
-      edge.addColorStop(0.95, `rgba(175,205,250,${0.22 * opa})`);
-      edge.addColorStop(1.0, `rgba(155,195,250,${0.08 * opa})`);
-      dropPath(cx, x, y, r, elong);
+      edge.addColorStop(0.45, "rgba(255,255,255,0)");
+      edge.addColorStop(0.68, `rgba(218,232,248,${0.06 * opa})`);
+      edge.addColorStop(0.82, `rgba(198,220,252,${0.14 * opa})`);
+      edge.addColorStop(0.93, `rgba(178,208,252,${0.2 * opa})`);
+      edge.addColorStop(1.0, `rgba(160,198,250,${0.07 * opa})`);
+      organicPath(cx, x, y, r, d.shape, d.flatness, moveAngle, spd);
       cx.fillStyle = edge;
       cx.fill();
 
       if (r > 3) {
-        const crR = cx.createRadialGradient(x + r * 0.3, y + r * 0.25, 0, x + r * 0.3, y + r * 0.25, r * 0.5);
-        crR.addColorStop(0, `rgba(255,150,120,${0.04 * opa})`);
-        crR.addColorStop(1, "rgba(255,150,120,0)");
-        dropPath(cx, x, y, r, elong);
+        const crR = cx.createRadialGradient(x + r * 0.28, y + r * 0.22, 0, x + r * 0.28, y + r * 0.22, r * 0.45);
+        crR.addColorStop(0, `rgba(255,155,125,${0.035 * opa})`);
+        crR.addColorStop(1, "rgba(255,155,125,0)");
+        organicPath(cx, x, y, r, d.shape, d.flatness, moveAngle, spd);
         cx.fillStyle = crR;
         cx.fill();
 
-        const crB = cx.createRadialGradient(x - r * 0.3, y - r * 0.2, 0, x - r * 0.3, y - r * 0.2, r * 0.5);
-        crB.addColorStop(0, `rgba(110,170,255,${0.04 * opa})`);
-        crB.addColorStop(1, "rgba(110,170,255,0)");
-        dropPath(cx, x, y, r, elong);
+        const crB = cx.createRadialGradient(x - r * 0.28, y - r * 0.18, 0, x - r * 0.28, y - r * 0.18, r * 0.45);
+        crB.addColorStop(0, `rgba(115,175,255,${0.035 * opa})`);
+        crB.addColorStop(1, "rgba(115,175,255,0)");
+        organicPath(cx, x, y, r, d.shape, d.flatness, moveAngle, spd);
         cx.fillStyle = crB;
         cx.fill();
       }
 
-      const hx = x - r * 0.25, hy = y - r * 0.3, hr = r * 0.3;
+      const hx = x - r * 0.22, hy = y - r * 0.28, hr = r * 0.28;
       const hl = cx.createRadialGradient(hx, hy, 0, hx, hy, hr);
-      hl.addColorStop(0, `rgba(255,255,255,${0.55 * opa})`);
-      hl.addColorStop(0.4, `rgba(255,255,255,${0.18 * opa})`);
+      hl.addColorStop(0, `rgba(255,255,255,${0.5 * opa})`);
+      hl.addColorStop(0.35, `rgba(255,255,255,${0.15 * opa})`);
       hl.addColorStop(1, "rgba(255,255,255,0)");
       cx.fillStyle = hl;
       cx.beginPath();
@@ -234,9 +285,9 @@ export default function RaindropCanvas() {
       cx.fill();
 
       if (r > 3.5) {
-        const bx = x + r * 0.1, by = y + r * 0.35, br = r * 0.15;
+        const bx = x + r * 0.08, by = y + r * 0.32, br = r * 0.13;
         const bl = cx.createRadialGradient(bx, by, 0, bx, by, br);
-        bl.addColorStop(0, `rgba(255,255,255,${0.12 * opa})`);
+        bl.addColorStop(0, `rgba(255,255,255,${0.1 * opa})`);
         bl.addColorStop(1, "rgba(255,255,255,0)");
         cx.fillStyle = bl;
         cx.beginPath();
@@ -244,30 +295,26 @@ export default function RaindropCanvas() {
         cx.fill();
       }
 
-      dropPath(cx, x, y, r, elong);
-      cx.strokeStyle = `rgba(255,255,255,${0.08 * opa})`;
-      cx.lineWidth = 0.4;
+      organicPath(cx, x, y, r, d.shape, d.flatness, moveAngle, spd);
+      cx.strokeStyle = `rgba(255,255,255,${0.06 * opa})`;
+      cx.lineWidth = 0.35;
       cx.stroke();
 
       cx.restore();
 
       cx.save();
       cx.font = `${d.letterSize}px 'Lato', sans-serif`;
-      cx.fillStyle = `rgba(60,70,80,${0.5 * opa})`;
+      cx.fillStyle = `rgba(60,70,80,${0.45 * opa})`;
       cx.textAlign = "center";
       cx.textBaseline = "middle";
       cx.fillText(d.letter, x, y + 1);
       cx.restore();
     };
 
-    const drawMacroDrop = (
-      cx: CanvasRenderingContext2D,
-      mx: number, my: number, mr: number,
-      elong = 0, letters: string[]
-    ) => {
+    const drawMacroDrop = (cx: CanvasRenderingContext2D, mx: number, my: number, mr: number, elong = 0, letters: string[]) => {
       if (mr < 1) return;
       cx.save();
-      dropPath(cx, mx, my, mr, elong);
+      simpleOrganicPath(cx, mx, my, mr);
       cx.clip();
 
       if (img.complete && img.naturalWidth > 0) {
@@ -277,46 +324,45 @@ export default function RaindropCanvas() {
         cx.translate(mx, my);
         cx.scale(1.08, 1.08);
         cx.translate(-mx, -my);
-        cx.globalAlpha = 0.9;
+        cx.globalAlpha = 0.88;
         cx.drawImage(img, p.ox, p.oy, p.dw, p.dh);
         cx.restore();
       }
 
-      const edge = cx.createRadialGradient(mx - mr * 0.1, my - mr * 0.1, mr * 0.2, mx, my, mr);
+      const edge = cx.createRadialGradient(mx - mr * 0.08, my - mr * 0.08, mr * 0.15, mx, my, mr);
       edge.addColorStop(0, "rgba(255,255,255,0)");
-      edge.addColorStop(0.6, "rgba(255,255,255,0)");
-      edge.addColorStop(0.8, "rgba(200,220,245,0.12)");
-      edge.addColorStop(0.95, "rgba(180,210,250,0.2)");
-      edge.addColorStop(1.0, "rgba(160,200,250,0.08)");
-      dropPath(cx, mx, my, mr, elong);
+      edge.addColorStop(0.55, "rgba(255,255,255,0)");
+      edge.addColorStop(0.78, "rgba(205,222,248,0.1)");
+      edge.addColorStop(0.93, "rgba(185,212,252,0.18)");
+      edge.addColorStop(1.0, "rgba(165,200,250,0.06)");
+      simpleOrganicPath(cx, mx, my, mr);
       cx.fillStyle = edge;
       cx.fill();
 
-      const hx = mx - mr * 0.2, hy = my - mr * 0.25, hr = mr * 0.35;
+      const hx = mx - mr * 0.18, hy = my - mr * 0.22, hr = mr * 0.32;
       const hl = cx.createRadialGradient(hx, hy, 0, hx, hy, hr);
-      hl.addColorStop(0, "rgba(255,255,255,0.5)");
-      hl.addColorStop(0.4, "rgba(255,255,255,0.15)");
+      hl.addColorStop(0, "rgba(255,255,255,0.45)");
+      hl.addColorStop(0.4, "rgba(255,255,255,0.12)");
       hl.addColorStop(1, "rgba(255,255,255,0)");
       cx.fillStyle = hl;
       cx.beginPath();
       cx.arc(hx, hy, hr, 0, Math.PI * 2);
       cx.fill();
 
-      dropPath(cx, mx, my, mr, elong);
-      cx.strokeStyle = "rgba(255,255,255,0.1)";
-      cx.lineWidth = 0.5;
+      simpleOrganicPath(cx, mx, my, mr);
+      cx.strokeStyle = "rgba(255,255,255,0.08)";
+      cx.lineWidth = 0.4;
       cx.stroke();
-
       cx.restore();
 
       if (letters.length > 0) {
         cx.save();
-        cx.font = `${Math.min(14, mr * 0.5)}px 'Lato', sans-serif`;
-        cx.fillStyle = "rgba(50,60,70,0.45)";
+        cx.font = `${Math.min(13, mr * 0.45)}px 'Lato', sans-serif`;
+        cx.fillStyle = "rgba(50,60,70,0.4)";
         cx.textAlign = "center";
         cx.textBaseline = "middle";
         const shown = letters.slice(-6);
-        const spacing = Math.min(mr * 0.35, 10);
+        const spacing = Math.min(mr * 0.3, 9);
         shown.forEach((l, i) => {
           const ox = (i - (shown.length - 1) / 2) * spacing;
           cx.fillText(l, mx + ox, my);
@@ -334,12 +380,12 @@ export default function RaindropCanvas() {
       if (img.complete && img.naturalWidth > 0) {
         const { w, h } = sizeRef.current;
         const p = coverParams(img.naturalWidth, img.naturalHeight, w, h);
-        cx.globalAlpha = 0.6 * t.opacity;
+        cx.globalAlpha = 0.55 * t.opacity;
         cx.drawImage(img, p.ox, p.oy, p.dw, p.dh);
       }
       const eg = cx.createRadialGradient(t.x, t.y, 0, t.x, t.y, t.r);
-      eg.addColorStop(0, `rgba(210,225,240,${0.04 * t.opacity})`);
-      eg.addColorStop(1, `rgba(190,215,245,${0.1 * t.opacity})`);
+      eg.addColorStop(0, `rgba(215,228,242,${0.03 * t.opacity})`);
+      eg.addColorStop(1, `rgba(195,218,245,${0.08 * t.opacity})`);
       cx.fillStyle = eg;
       cx.beginPath();
       cx.arc(t.x, t.y, t.r, 0, Math.PI * 2);
@@ -349,15 +395,14 @@ export default function RaindropCanvas() {
 
     const drawBurnCursor = (cx: CanvasRenderingContext2D, mx: number, my: number) => {
       const cursorR = 12;
-
-      const burn = cx.createRadialGradient(mx, my, 0, mx, my, cursorR * 2.5);
-      burn.addColorStop(0, "rgba(0,0,0,0.25)");
-      burn.addColorStop(0.3, "rgba(0,0,0,0.12)");
-      burn.addColorStop(0.6, "rgba(0,0,0,0.04)");
+      const burn = cx.createRadialGradient(mx, my, 0, mx, my, cursorR * 2.8);
+      burn.addColorStop(0, "rgba(0,0,0,0.28)");
+      burn.addColorStop(0.25, "rgba(0,0,0,0.14)");
+      burn.addColorStop(0.55, "rgba(0,0,0,0.05)");
       burn.addColorStop(1, "rgba(0,0,0,0)");
       cx.fillStyle = burn;
       cx.beginPath();
-      cx.arc(mx, my, cursorR * 2.5, 0, Math.PI * 2);
+      cx.arc(mx, my, cursorR * 2.8, 0, Math.PI * 2);
       cx.fill();
 
       cx.fillStyle = "#111111";
@@ -366,7 +411,7 @@ export default function RaindropCanvas() {
       cx.fill();
 
       const glint = cx.createRadialGradient(mx - 3, my - 3, 0, mx - 3, my - 3, 4);
-      glint.addColorStop(0, "rgba(255,255,255,0.35)");
+      glint.addColorStop(0, "rgba(255,255,255,0.3)");
       glint.addColorStop(1, "rgba(255,255,255,0)");
       cx.fillStyle = glint;
       cx.beginPath();
@@ -383,29 +428,33 @@ export default function RaindropCanvas() {
       const mouse = mouseRef.current;
       const t = tRef.current;
 
-      const windX = Math.sin(t * 0.002) * WIND_VARIATION + WIND_BASE;
+      const flowCos = Math.cos(FLOW_ANGLE);
+      const flowSin = Math.sin(FLOW_ANGLE);
 
       ctx.clearRect(0, 0, w, h);
 
       if (blurReady) {
         ctx.drawImage(blurCvs, 0, 0);
       } else {
-        ctx.fillStyle = "#2a3530";
+        ctx.fillStyle = "#1e2830";
         ctx.fillRect(0, 0, w, h);
       }
 
       for (let i = drops.length - 1; i >= 0; i--) {
         const d = drops[i];
         d.wobble += d.wobbleSpeed;
-        d.vy += GRAVITY * 0.02 * (1 + d.r * 0.12);
-        d.vx += windX * 0.004;
-        d.vx += Math.sin(d.wobble) * 0.002;
+
+        const flowF = FLOW_SPEED * (1 + d.r * 0.04);
+        const variation = Math.sin(d.wobble) * FLOW_VARIATION;
+        d.vx += (flowCos * flowF + variation * 0.3) * 0.015;
+        d.vy += (flowSin * flowF + GRAVITY * 0.3) * 0.015;
+
         d.vy *= DRAG;
         d.vx *= DRAG;
         d.x += d.vx;
         d.y += d.vy;
 
-        if (d.y > h + d.r * 2 || d.x < -d.r * 2 || d.x > w + d.r * 2) {
+        if (d.y > h + d.r * 3 || d.x < -d.r * 3 || d.x > w + d.r * 3 || d.y < -d.r * 10) {
           drops[i] = makeDrop(w, h, true);
           continue;
         }
@@ -414,12 +463,15 @@ export default function RaindropCanvas() {
           const o = drops[j];
           const dx = d.x - o.x, dy = d.y - o.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < d.r + o.r && dist > 0) {
+          if (dist < (d.r + o.r) * 0.8 && dist > 0) {
             const area = d.r * d.r + o.r * o.r;
             d.r = Math.sqrt(area);
-            d.letterSize = Math.max(8, d.r * 2.2);
+            d.letterSize = Math.max(7, d.r * 2);
             d.vx = (d.vx + o.vx) * 0.5;
-            d.vy = (d.vy + o.vy) * 0.5 + 0.015;
+            d.vy = (d.vy + o.vy) * 0.5 + 0.01;
+            for (let k = 0; k < d.shape.length; k++) {
+              d.shape[k] = (d.shape[k] + (o.shape[k % o.shape.length] || 1)) / 2;
+            }
             drops.splice(j, 1);
             i--;
             break;
@@ -428,8 +480,9 @@ export default function RaindropCanvas() {
       }
 
       while (drops.length < NUM_DROPS) {
-        const spawns = Math.min(SPAWN_RATE, NUM_DROPS - drops.length);
-        for (let s = 0; s < spawns; s++) drops.push(makeDrop(w, h, true));
+        for (let s = 0; s < Math.min(SPAWN_RATE, NUM_DROPS - drops.length); s++) {
+          drops.push(makeDrop(w, h, true));
+        }
         break;
       }
 
@@ -455,18 +508,18 @@ export default function RaindropCanvas() {
         }
 
         if (!macro.trail.length || Math.hypot(macro.x - macro.trail[macro.trail.length - 1].x, macro.y - macro.trail[macro.trail.length - 1].y) > 4) {
-          macro.trail.push({ x: macro.x, y: macro.y, r: macro.r * 0.3, opacity: 0.3 });
+          macro.trail.push({ x: macro.x, y: macro.y, r: macro.r * 0.28, opacity: 0.28 });
           if (macro.trail.length > 30) macro.trail.shift();
         }
       } else if (macro.falling) {
         macro.vy += MACRO_GRAVITY;
-        macro.vx = Math.sin(t * 0.008) * MACRO_WIND + windX * 2;
+        macro.vx = flowCos * MACRO_WIND + Math.sin(t * 0.008) * 0.5;
         macro.x += macro.vx;
         macro.y += macro.vy;
         if (macro.r > 2.5) macro.r -= 0.12;
 
-        if (!macro.trail.length || Math.hypot(macro.x - macro.trail[macro.trail.length - 1].x, macro.y - macro.trail[macro.trail.length - 1].y) > macro.r * 0.8) {
-          macro.trail.push({ x: macro.x, y: macro.y, r: macro.r * 0.28, opacity: 0.25 });
+        if (!macro.trail.length || Math.hypot(macro.x - macro.trail[macro.trail.length - 1].x, macro.y - macro.trail[macro.trail.length - 1].y) > macro.r * 0.7) {
+          macro.trail.push({ x: macro.x, y: macro.y, r: macro.r * 0.25, opacity: 0.22 });
           if (macro.trail.length > 35) macro.trail.shift();
         }
 
@@ -495,13 +548,11 @@ export default function RaindropCanvas() {
       }
 
       for (const d of drops) {
-        const spd = Math.sqrt(d.vx * d.vx + d.vy * d.vy);
-        drawDrop(ctx, d, Math.min(spd * 1.8, 0.5));
+        drawDrop(ctx, d);
       }
 
       if (macro.active || macro.falling) {
-        const ms = Math.sqrt(macro.vx * macro.vx + macro.vy * macro.vy);
-        drawMacroDrop(ctx, macro.x, macro.y, macro.r, Math.min(ms * 0.4, 0.7), macro.letters);
+        drawMacroDrop(ctx, macro.x, macro.y, macro.r, 0, macro.letters);
       }
 
       if (mouse.active || macro.active) {
