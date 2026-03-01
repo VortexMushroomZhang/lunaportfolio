@@ -68,8 +68,8 @@ const principles = [
   { num: "04", text: "Driving 100% decisions with 80% information." },
 ];
 
-const LINE_COLOR = "rgba(0,0,0,0.08)";
-const LINE_LIGHT = "rgba(0,0,0,0.05)";
+const LINE = "rgba(0,0,0,0.08)";
+const LINE_L = "rgba(0,0,0,0.05)";
 
 function ArrowLink({ href, label, color, external = true }: { href: string; label: string; color: string; external?: boolean }) {
   const cls = "group font-sans text-sm font-medium inline-flex items-center gap-1.5";
@@ -145,11 +145,13 @@ export default function Home() {
       </section>
 
       <section
-        className="relative py-28 md:py-36"
+        className="relative"
         data-testid="section-latest-work"
         style={{ background: "#F7F4EF" }}
       >
-        <div className="relative z-10 px-8 md:px-12 lg:px-16 max-w-7xl mx-auto">
+        <div className="w-full h-px" style={{ background: LINE }} />
+
+        <div className="px-8 md:px-12 lg:px-16 max-w-7xl mx-auto py-28 md:py-36">
           <div className="flex items-baseline justify-between mb-16">
             <div>
               <p className="font-sans text-xs uppercase tracking-widest mb-2" style={{ color: "rgba(0,0,0,0.35)" }}>
@@ -165,75 +167,73 @@ export default function Home() {
             </div>
             <ArrowLink href="/work" label="All work" color="rgba(0,0,0,0.45)" external={false} />
           </div>
+        </div>
 
-          <div
-            className="grid grid-cols-1 md:grid-cols-3"
-            style={{ border: `1px solid ${LINE_COLOR}` }}
-          >
-            {featuredProjects.map((project, idx) => (
-              <Link key={project.id} href={`/work/${project.id}`}>
+        <div
+          className="grid grid-cols-1 md:grid-cols-3"
+          style={{ borderTop: `1px solid ${LINE}`, borderBottom: `1px solid ${LINE}` }}
+        >
+          {featuredProjects.map((project, idx) => (
+            <Link key={project.id} href={`/work/${project.id}`}>
+              <div
+                className={`group relative overflow-hidden transition-colors duration-200 hover:bg-white/60 ${idx > 0 ? "border-t md:border-t-0 md:border-l" : ""}`}
+                data-testid={`card-project-${project.id}`}
+                style={{ borderColor: LINE }}
+              >
                 <div
-                  className={`group relative overflow-hidden transition-colors duration-200 hover:bg-white/60 ${idx > 0 ? "border-t md:border-t-0 md:border-l" : ""}`}
-                  data-testid={`card-project-${project.id}`}
+                  className="h-48 md:h-56 flex items-center justify-center"
                   style={{
-                    borderColor: LINE_COLOR,
+                    background: idx === 0
+                      ? "linear-gradient(135deg, #e8e4df 0%, #d4cfc8 100%)"
+                      : idx === 1
+                      ? "linear-gradient(135deg, #eae7e2 0%, #ddd9d2 100%)"
+                      : "linear-gradient(135deg, #ece9e4 0%, #dfdbd5 100%)",
+                    borderBottom: `1px solid ${LINE}`,
                   }}
                 >
-                  <div
-                    className="h-48 md:h-56 flex items-center justify-center"
-                    style={{
-                      background: idx === 0
-                        ? "linear-gradient(135deg, #e8e4df 0%, #d4cfc8 100%)"
-                        : idx === 1
-                        ? "linear-gradient(135deg, #eae7e2 0%, #ddd9d2 100%)"
-                        : "linear-gradient(135deg, #ece9e4 0%, #dfdbd5 100%)",
-                      borderBottom: `1px solid ${LINE_COLOR}`,
-                    }}
+                  <span
+                    className="font-serif text-lg font-light opacity-30 text-center px-6"
+                    style={{ color: "#1a1a1a" }}
                   >
+                    {project.title}
+                  </span>
+                </div>
+
+                <div className="p-6 md:p-8">
+                  <div className="flex items-center gap-2 mb-3">
                     <span
-                      className="font-serif text-lg font-light opacity-30 text-center px-6"
-                      style={{ color: "#1a1a1a" }}
+                      className="font-sans text-[10px] uppercase tracking-wider px-2 py-0.5"
+                      style={{ background: `${STEEL_TEAL}12`, color: STEEL_TEAL }}
                     >
-                      {project.title}
+                      {project.tag}
+                    </span>
+                    <span className="font-sans text-[10px]" style={{ color: "rgba(0,0,0,0.3)" }}>
+                      {project.year}
                     </span>
                   </div>
-
-                  <div className="p-6">
-                    <div className="flex items-center gap-2 mb-3">
-                      <span
-                        className="font-sans text-[10px] uppercase tracking-wider px-2 py-0.5"
-                        style={{ background: `${STEEL_TEAL}12`, color: STEEL_TEAL }}
-                      >
-                        {project.tag}
-                      </span>
-                      <span className="font-sans text-[10px]" style={{ color: "rgba(0,0,0,0.3)" }}>
-                        {project.year}
-                      </span>
-                    </div>
-                    <h3 className="font-sans text-base font-semibold mb-2" style={{ color: "#1a1a1a" }} data-testid={`text-project-title-${project.id}`}>
-                      {project.title}
-                    </h3>
-                    <p className="font-sans text-sm leading-relaxed" style={{ color: "rgba(0,0,0,0.5)" }}>
-                      {project.description}
-                    </p>
-                    <div className="mt-4 flex items-center gap-1.5 font-sans text-xs group" style={{ color: STEEL_TEAL }}>
-                      <span className="group-hover:underline transition-all">View project</span>
-                      <span className="inline-block transition-transform duration-200 -rotate-45 group-hover:rotate-0 font-bold text-[12px]">&#8594;</span>
-                    </div>
+                  <h3 className="font-sans text-xl md:text-2xl font-bold mb-3 leading-tight" style={{ color: "#1a1a1a" }} data-testid={`text-project-title-${project.id}`}>
+                    {project.title}
+                  </h3>
+                  <p className="font-sans text-sm leading-relaxed" style={{ color: "rgba(0,0,0,0.5)" }}>
+                    {project.description}
+                  </p>
+                  <div className="mt-5 inline-flex items-center gap-1.5 font-sans text-xs group" style={{ color: STEEL_TEAL }}>
+                    <span className="group-hover:underline transition-all">View project</span>
+                    <span className="inline-block transition-transform duration-200 -rotate-45 group-hover:rotate-0 font-bold text-[12px]">&#8594;</span>
                   </div>
                 </div>
-              </Link>
-            ))}
-          </div>
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
 
       <section
-        className="relative py-28 md:py-36"
+        className="relative"
         data-testid="section-experience"
         style={{ background: "#F7F4EF" }}
       >
-        <div className="relative z-10 px-8 md:px-12 lg:px-16 max-w-7xl mx-auto">
+        <div className="px-8 md:px-12 lg:px-16 max-w-7xl mx-auto py-28 md:py-36">
           <div className="text-center mb-20">
             <h2
               className="font-serif text-3xl md:text-4xl font-light tracking-tight mb-4"
@@ -266,113 +266,119 @@ export default function Home() {
               </Link>
             </div>
           </div>
+        </div>
 
+        <div
+          className="grid grid-cols-1 lg:grid-cols-2"
+          style={{ borderTop: `1px solid ${LINE}`, borderBottom: `1px solid ${LINE}` }}
+        >
           <div
-            className="grid grid-cols-1 lg:grid-cols-2"
-            style={{ border: `1px solid ${LINE_COLOR}` }}
+            className="relative p-8 md:p-10 transition-colors duration-200 hover:bg-white/40 border-b lg:border-b-0 lg:border-r"
+            data-testid="card-experience-latest"
+            style={{ borderColor: LINE }}
           >
-            <div
-              className="relative p-8 transition-colors duration-200 hover:bg-white/40 border-b lg:border-b-0 lg:border-r"
-              data-testid="card-experience-latest"
-              style={{ borderColor: LINE_COLOR }}
-            >
-              <div className="flex items-start justify-between mb-6">
-                <div>
-                  <h3 className="font-sans text-xl font-bold" style={{ color: "#1a1a1a" }}>{latestExperience.company}</h3>
-                  <p className="font-sans text-sm mt-1" style={{ color: "rgba(0,0,0,0.45)" }}>
-                    {latestExperience.role} · {latestExperience.period}
-                  </p>
-                </div>
-                <Link href={`/work/${featuredProjects[0].id}`}>
-                  <span
-                    className="w-9 h-9 flex items-center justify-center transition-all duration-200 hover:scale-110 text-white font-bold"
-                    style={{ background: STEEL_TEAL }}
-                    data-testid="link-experience-arrow"
-                  >
-                    &#8594;
-                  </span>
-                </Link>
+            <div className="flex items-start justify-between mb-6">
+              <div>
+                <h3 className="font-sans text-xl font-bold" style={{ color: "#1a1a1a" }}>{latestExperience.company}</h3>
+                <p className="font-sans text-sm mt-1" style={{ color: "rgba(0,0,0,0.45)" }}>
+                  {latestExperience.role} · {latestExperience.period}
+                </p>
               </div>
-              <p className="font-sans text-sm mb-2 font-medium" style={{ color: MAUVE_BROWN }}>{latestExperience.sector}</p>
-              <p className="font-sans text-sm leading-relaxed" style={{ color: "rgba(0,0,0,0.55)" }}>{latestExperience.description}</p>
-            </div>
-
-            <div>
-              {pastExperiences.map((exp, idx) => (
-                <div
-                  key={idx}
-                  className="p-6 transition-colors duration-200 hover:bg-white/40"
-                  data-testid={`card-experience-${idx}`}
-                  style={{
-                    borderTop: idx > 0 ? `1px solid ${LINE_LIGHT}` : "none",
-                  }}
+              <Link href={`/work/${featuredProjects[0].id}`}>
+                <span
+                  className="w-9 h-9 flex items-center justify-center transition-all duration-200 hover:scale-110 text-white font-bold"
+                  style={{ background: STEEL_TEAL }}
+                  data-testid="link-experience-arrow"
                 >
-                  <h3 className="font-sans text-base font-bold mb-1" style={{ color: "#1a1a1a" }}>{exp.company}</h3>
-                  <p className="font-sans text-xs whitespace-pre-line" style={{ color: "rgba(0,0,0,0.4)" }}>
-                    {exp.role}
-                  </p>
-                  {exp.details.map((d, i) => (
-                    <p key={i} className="font-sans text-sm mt-2" style={{ color: "rgba(0,0,0,0.45)" }}>{d}</p>
-                  ))}
-                </div>
-              ))}
+                  &#8594;
+                </span>
+              </Link>
             </div>
+            <p className="font-sans text-sm mb-2 font-medium" style={{ color: MAUVE_BROWN }}>{latestExperience.sector}</p>
+            <p className="font-sans text-sm leading-relaxed" style={{ color: "rgba(0,0,0,0.55)" }}>{latestExperience.description}</p>
+          </div>
+
+          <div>
+            {pastExperiences.map((exp, idx) => (
+              <div
+                key={idx}
+                className="p-6 md:p-8 transition-colors duration-200 hover:bg-white/40"
+                data-testid={`card-experience-${idx}`}
+                style={{
+                  borderTop: idx > 0 ? `1px solid ${LINE_L}` : "none",
+                }}
+              >
+                <h3 className="font-sans text-base font-bold mb-1" style={{ color: "#1a1a1a" }}>{exp.company}</h3>
+                <p className="font-sans text-xs whitespace-pre-line" style={{ color: "rgba(0,0,0,0.4)" }}>
+                  {exp.role}
+                </p>
+                {exp.details.map((d, i) => (
+                  <p key={i} className="font-sans text-sm mt-2" style={{ color: "rgba(0,0,0,0.45)" }}>{d}</p>
+                ))}
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       <section
-        className="relative py-28 md:py-36"
+        className="relative"
         data-testid="section-how"
         style={{ background: "#F7F4EF" }}
       >
-        <div className="relative z-10 px-8 md:px-12 lg:px-16 max-w-7xl mx-auto">
-          <div
-            className="grid grid-cols-1 lg:grid-cols-2"
-            style={{ border: `1px solid ${LINE_COLOR}` }}
-          >
-            <div className="p-8 md:p-12 border-b lg:border-b-0 lg:border-r" style={{ borderColor: LINE_COLOR }}>
-              <p className="font-sans text-xs uppercase tracking-widest mb-4" style={{ color: STEEL_TEAL }}>
-                How
-              </p>
-              <p
-                className="font-serif text-2xl md:text-3xl font-light leading-relaxed"
-                style={{ color: "#1a1a1a" }}
-                data-testid="text-how-description"
-              >
-                Through profound user insights, I find harmony between user needs and product ecosystem, transforming complex features into intuitive and confident design solutions.
-              </p>
-              <div className="mt-8 h-px w-16" style={{ background: MAUVE_BROWN + "30" }} />
-              <p className="font-serif text-lg leading-relaxed mt-8" style={{ color: "rgba(0,0,0,0.55)" }}>
-                As a researcher, a keen curiosity fuels the exploration of human behaviors, uncovering patterns and making sense of complex datasets to bring clarity to the vast expanse of human data.
-              </p>
-              <p className="font-sans text-xs mt-8 italic" style={{ color: "rgba(0,0,0,0.3)" }}>
-                Inspired by Yuan Lu, TU/e professor.
-              </p>
-            </div>
+        <div className="px-8 md:px-12 lg:px-16 max-w-7xl mx-auto pt-28 md:pt-36 pb-16">
+          <p className="font-sans text-xs uppercase tracking-widest mb-2" style={{ color: "rgba(0,0,0,0.35)" }}>
+            How I Work
+          </p>
+        </div>
 
-            <div>
-              {principles.map((p, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-start gap-6 p-6 md:p-8"
-                  style={{ borderTop: idx > 0 ? `1px solid ${LINE_LIGHT}` : "none" }}
-                  data-testid={`text-principle-${idx}`}
+        <div
+          className="grid grid-cols-1 lg:grid-cols-2"
+          style={{ borderTop: `1px solid ${LINE}`, borderBottom: `1px solid ${LINE}` }}
+        >
+          <div className="p-8 md:p-12 border-b lg:border-b-0 lg:border-r" style={{ borderColor: LINE }}>
+            <p className="font-sans text-xs uppercase tracking-widest mb-4" style={{ color: STEEL_TEAL }}>
+              How
+            </p>
+            <p
+              className="font-serif text-2xl md:text-3xl font-light leading-relaxed"
+              style={{ color: "#1a1a1a" }}
+              data-testid="text-how-description"
+            >
+              Through profound user insights, I find harmony between user needs and product ecosystem, transforming complex features into intuitive and confident design solutions.
+            </p>
+            <div className="mt-8 h-px w-16" style={{ background: MAUVE_BROWN + "30" }} />
+            <p className="font-serif text-lg leading-relaxed mt-8" style={{ color: "rgba(0,0,0,0.55)" }}>
+              As a researcher, a keen curiosity fuels the exploration of human behaviors, uncovering patterns and making sense of complex datasets to bring clarity to the vast expanse of human data.
+            </p>
+            <p className="font-sans text-xs mt-8 italic" style={{ color: "rgba(0,0,0,0.3)" }}>
+              Inspired by Yuan Lu, TU/e professor.
+            </p>
+          </div>
+
+          <div>
+            {principles.map((p, idx) => (
+              <div
+                key={idx}
+                className="flex items-start gap-6 p-6 md:p-8"
+                style={{ borderTop: idx > 0 ? `1px solid ${LINE_L}` : "none" }}
+                data-testid={`text-principle-${idx}`}
+              >
+                <span
+                  className="font-serif text-3xl font-light flex-shrink-0 w-12"
+                  style={{ color: `${STEEL_TEAL}30` }}
                 >
-                  <span
-                    className="font-serif text-3xl font-light flex-shrink-0 w-12"
-                    style={{ color: `${STEEL_TEAL}30` }}
-                  >
-                    {p.num}
-                  </span>
-                  <p className="font-sans text-base font-medium pt-2" style={{ color: "#1a1a1a" }}>
-                    {p.text}
-                  </p>
-                </div>
-              ))}
-            </div>
+                  {p.num}
+                </span>
+                <p className="font-sans text-base font-medium pt-2" style={{ color: "#1a1a1a" }}>
+                  {p.text}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
+
+        <div style={{ height: "4rem" }} />
       </section>
 
       <SiteFooter />

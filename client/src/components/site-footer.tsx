@@ -80,8 +80,8 @@ export default function SiteFooter() {
         <img
           src={asciiArtPath}
           alt="ASCII art landscape"
-          className="w-full object-cover object-center select-none pointer-events-none"
-          style={{ maxHeight: "180px", opacity: 0.3 }}
+          className="w-full select-none pointer-events-none"
+          style={{ opacity: 0.5 }}
           draggable={false}
         />
       </div>

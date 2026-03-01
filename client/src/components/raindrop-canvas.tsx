@@ -38,10 +38,10 @@ interface MacroDrop {
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 const NUM_DROPS = 600;
 const SPAWN_RATE = 8;
-const FLOW_ANGLE = Math.PI * 0.42;
-const FLOW_SPEED = 0.12;
-const FLOW_VARIATION = 0.03;
-const GRAVITY = 0.06;
+const FLOW_ANGLE = Math.PI * 0.39;
+const FLOW_SPEED = 0.18;
+const FLOW_VARIATION = 0.04;
+const GRAVITY = 0.08;
 const DRAG = 0.998;
 const ATTRACTION_RADIUS = 130;
 const IDLE_MS = 1800;
