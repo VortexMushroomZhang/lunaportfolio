@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import CustomCursor from "@/components/custom-cursor";
 import FilmGrain from "@/components/film-grain";
+import BackgroundGrid from "@/components/background-grid";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 
@@ -23,6 +24,7 @@ function App() {
       <TooltipProvider>
         <CustomCursor />
         <FilmGrain />
+        <BackgroundGrid />
         <Toaster />
         <Router />
       </TooltipProvider>

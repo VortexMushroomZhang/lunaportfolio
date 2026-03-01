@@ -273,9 +273,9 @@ export default function Home() {
         </div>
 
         <FullLine />
-        <div className="grid grid-cols-1 lg:grid-cols-2">
+        <div className={`${CONTENT} grid grid-cols-1 lg:grid-cols-2`}>
           <div
-            className="relative px-8 md:px-12 lg:px-16 py-10 transition-colors duration-200 hover:bg-white/40 border-b lg:border-b-0 lg:border-r"
+            className="relative px-6 py-10 transition-colors duration-200 hover:bg-white/40 border-b lg:border-b-0 lg:border-r"
             data-testid="card-experience-latest"
             style={{ borderColor: LINE }}
           >
@@ -304,7 +304,7 @@ export default function Home() {
             {pastExperiences.map((exp, idx) => (
               <div
                 key={idx}
-                className="px-8 md:px-12 lg:px-16 py-6 transition-colors duration-200 hover:bg-white/40"
+                className="px-6 py-6 transition-colors duration-200 hover:bg-white/40"
                 data-testid={`card-experience-${idx}`}
                 style={{
                   borderTop: idx > 0 ? `1px solid ${LINE_L}` : "none",
@@ -329,9 +329,15 @@ export default function Home() {
         data-testid="section-how"
         style={{ background: "#F7F4EF" }}
       >
+        <div className={`${CONTENT} px-6 pt-28 md:pt-36 pb-16`}>
+          <p className="font-sans text-xs uppercase tracking-widest mb-2" style={{ color: "rgba(0,0,0,0.35)" }}>
+            How I Work
+          </p>
+        </div>
+
         <FullLine />
-        <div className="grid grid-cols-1 lg:grid-cols-2">
-          <div className="px-8 md:px-12 lg:px-16 py-14 md:py-16 border-b lg:border-b-0 lg:border-r" style={{ borderColor: LINE }}>
+        <div className={`${CONTENT} grid grid-cols-1 lg:grid-cols-2`}>
+          <div className="px-6 py-14 md:py-16 border-b lg:border-b-0 lg:border-r" style={{ borderColor: LINE }}>
             <p className="font-sans text-xs uppercase tracking-widest mb-4" style={{ color: STEEL_TEAL }}>
               How
             </p>
@@ -355,7 +361,7 @@ export default function Home() {
             {principles.map((p, idx) => (
               <div
                 key={idx}
-                className="flex items-start gap-6 px-8 md:px-12 lg:px-16 py-6 md:py-8"
+                className="flex items-start gap-6 px-6 py-6 md:py-8"
                 style={{ borderTop: idx > 0 ? `1px solid ${LINE_L}` : "none" }}
                 data-testid={`text-principle-${idx}`}
               >
