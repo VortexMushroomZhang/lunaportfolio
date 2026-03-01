@@ -1,7 +1,7 @@
-# LunaZhang Portfolio
+# Xumeng Zhang Portfolio
 
 ## Overview
-Creative product designer portfolio website with a warm, editorial, data-driven design style. Features an interactive raindrop hero section with letter-carrying raindrops on a foggy glass window effect.
+Creative product designer portfolio website for Xumeng Zhang (LunaZhang). Warm, editorial, data-driven design style. Features an interactive raindrop hero section with letter-carrying raindrops on a foggy glass window effect, followed by content sections with Vercel-like line design and glass effects.
 
 ## Architecture
 - **Frontend**: React SPA with Vite, Tailwind CSS, Shadcn UI
@@ -10,42 +10,54 @@ Creative product designer portfolio website with a warm, editorial, data-driven 
 
 ## Brand System
 - **Fonts**: Bitter (serif headings), Lato (sans-serif body), DM Mono (monospace)
-- **Primary Color**: Vivid Teal (#0D9488)
-- **Accent Brown**: #8B5E3C
-- **Light Mode**: Cream/beige background (#F7F4EF) with dark text
-- **Dark Mode**: Deep ink navy (#051C1C) with off-white text
+- **Brand Cream**: #F7F4EF (main content background)
+- **Text**: #1a1a1a (dark), rgba variants for muted
+- **Glass Effects**: Frosted glass cards with backdrop-blur
+- **Line Elements**: Vercel-style horizontal/vertical guide lines
+- **Custom Cursor**: White dot, 14px normal / 20px clicked, `mix-blend-mode: difference`, site-wide
 
 ## Pages
-- **Home**: Interactive raindrop hero with foggy mountain cabin background
+- **Home**: Hero + Latest Work + Work Experience + How/Principles + Footer
 - Work (planned)
 - Exploration (planned)
 - About (planned)
 
 ## Key Components
+- `custom-cursor.tsx`: Global white dot cursor with difference blending, 14x14 / 20x20 on click
 - `raindrop-canvas.tsx`: HTML5 Canvas interactive raindrop simulation
-  - Pre-rendered blurred background (foggy mountain cabin) for performance
-  - Realistic water drop shapes with chromatic aberration on edges
-  - Each raindrop carries a small letter
-  - Wind-driven movement (car window simulation)
-  - Hover-to-collect: black dot cursor with burn effect, attracts/absorbs nearby drops
-  - Idle drop: collected rain falls with wind when mouse stops
-  - Continuous rain spawning (screen never empty)
-  - Macro drop collects absorbed letters
-- `navigation.tsx`: "LUNA ZHANG" logo left, Work/Exploration/About in rounded pill right
-- Home page footer: location, work sector, and contact links (LinkedIn, CookingInstagram)
+  - 600 drops, spawn rate 8, radius 1.5–9.5, drifting right
+  - Time-based background: city sunset (night) / street rain (day)
+  - Brightness 0.85 for visible background through foggy window
+  - Organic blob shapes, wind-driven movement, drop merging
+  - Hover-to-collect macro drop with wobble surface tension
+- `typewriter-banner.tsx`: "Xumeng Zhang" + cycling roles (Product builder./Researcher./Designer.) in Lato semibold
+- `navigation.tsx`: "XUMENG ZHANG" logo, Work/Exploration/About pills. Scroll-aware: transparent on hero, cream (#F7F4EF) background after scroll
+- Home page sections:
+  - Hero footer: location, work sector, contact links (CookingInstagram, LinkedIn) with arrow hover
+  - Latest Work: 3 featured project cards with glass effect
+  - Work Experience: Featured (Van Lanschot Kempen) + 3 past roles
+  - How/Principles: Philosophy text + numbered principles
+  - Footer: copyright + social links
 
 ## Project Structure
 ```
 client/src/
   components/
+    custom-cursor.tsx     - Global custom cursor
     raindrop-canvas.tsx   - Interactive canvas raindrop effect
-    navigation.tsx        - Site navigation
+    typewriter-banner.tsx - Name + typewriter roles
+    navigation.tsx        - Scroll-aware site navigation
     ui/                   - Shadcn UI components
   pages/
-    home.tsx              - Home page with hero section
+    home.tsx              - Home page with all sections
     not-found.tsx         - 404 page
-  App.tsx                 - Root with routing
+  App.tsx                 - Root with routing + custom cursor
 client/public/
   images/
-    hero-bg.png           - Hero background (foggy mountain cabin)
+    bg-city-sunset.jpg    - Evening/night background
+    bg-street-rain.jpg    - Day background
 ```
+
+## Contact Links
+- LinkedIn: https://www.linkedin.com/in/xumeng-zhang/
+- CookingInstagram: https://www.instagram.com/luna_in_kitchen/

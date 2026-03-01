@@ -1,4 +1,5 @@
 import { Link, useLocation } from "wouter";
+import { useState, useEffect } from "react";
 
 const navItems = [
   { label: "Work", path: "/work" },
@@ -8,18 +9,35 @@ const navItems = [
 
 export default function Navigation() {
   const [location] = useLocation();
-  const isHeroPage = location === "/";
+  const [scrolledPastHero, setScrolledPastHero] = useState(false);
+  const isHomePage = location === "/";
+
+  useEffect(() => {
+    if (!isHomePage) return;
+    const onScroll = () => {
+      setScrolledPastHero(window.scrollY > window.innerHeight * 0.7);
+    };
+    addEventListener("scroll", onScroll, { passive: true });
+    return () => removeEventListener("scroll", onScroll);
+  }, [isHomePage]);
+
+  const onDark = isHomePage && !scrolledPastHero;
 
   return (
     <nav
       data-testid="nav-main"
-      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 lg:px-14 py-3"
+      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 lg:px-14 py-3 transition-colors duration-500"
+      style={{
+        background: onDark ? "transparent" : "rgba(247,244,239,0.85)",
+        backdropFilter: onDark ? undefined : "blur(16px)",
+        borderBottom: onDark ? "none" : "1px solid rgba(0,0,0,0.04)",
+      }}
     >
       <Link href="/" data-testid="link-home-logo">
         <span
-          className="font-sans font-black text-sm tracking-wide uppercase"
+          className="font-sans font-black text-sm tracking-wide uppercase transition-colors duration-500"
           style={{
-            color: isHeroPage ? "rgba(255,255,255,0.92)" : "hsl(var(--foreground))",
+            color: onDark ? "rgba(255,255,255,0.92)" : "#1a1a1a",
             letterSpacing: "0.04em",
           }}
         >
@@ -28,11 +46,11 @@ export default function Navigation() {
       </Link>
 
       <div
-        className="flex items-center gap-0 rounded-full px-1 py-1"
+        className="flex items-center gap-0 rounded-full px-1 py-1 transition-all duration-500"
         style={{
-          background: isHeroPage ? "rgba(255,255,255,0.1)" : "hsl(var(--muted))",
-          backdropFilter: isHeroPage ? "blur(12px)" : undefined,
-          border: isHeroPage ? "1px solid rgba(255,255,255,0.08)" : "1px solid hsl(var(--border))",
+          background: onDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.04)",
+          backdropFilter: onDark ? "blur(12px)" : undefined,
+          border: onDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(0,0,0,0.06)",
         }}
       >
         {navItems.map((item) => {
@@ -41,13 +59,13 @@ export default function Navigation() {
             <Link key={item.path} href={item.path}>
               <span
                 data-testid={`link-nav-${item.label.toLowerCase()}`}
-                className="px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-200 inline-block"
+                className="px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-300 inline-block"
                 style={{
-                  color: isHeroPage
+                  color: onDark
                     ? isActive ? "#ffffff" : "rgba(255,255,255,0.6)"
-                    : isActive ? "hsl(var(--foreground))" : "hsl(var(--muted-foreground))",
+                    : isActive ? "#1a1a1a" : "rgba(0,0,0,0.45)",
                   background: isActive
-                    ? isHeroPage ? "rgba(255,255,255,0.12)" : "hsl(var(--background))"
+                    ? onDark ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.7)"
                     : "transparent",
                 }}
               >

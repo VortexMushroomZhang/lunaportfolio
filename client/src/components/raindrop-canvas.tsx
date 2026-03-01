@@ -574,9 +574,7 @@ export default function RaindropCanvas() {
         drawMacroDrop(ctx, macro.x, macro.y, macro.r, 0, macro.letters, t);
       }
 
-      if (mouse.active || macro.active) {
-        drawCursor(ctx, mouse.x, mouse.y, mouse.pressed);
-      }
+      
     };
 
     const onMove = (e: MouseEvent) => {
