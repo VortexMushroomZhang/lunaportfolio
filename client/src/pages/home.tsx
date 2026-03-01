@@ -174,7 +174,7 @@ export default function Home() {
         </div>
 
         <FullLine />
-        <div className={`${CONTENT} grid grid-cols-1 md:grid-cols-3`}>
+        <div className={`${CONTENT} relative grid grid-cols-1 md:grid-cols-3`} style={{ background: "#F7F4EF", zIndex: 2 }}>
           {featuredProjects.map((project, idx) => (
             <Link key={project.id} href={`/work/${project.id}`}>
               <div
@@ -251,7 +251,7 @@ export default function Home() {
               <Link href="/work">
                 <span
                   className="btn-pill font-sans text-sm px-5 py-2 rounded-full inline-block select-none"
-                  style={{ border: `1px solid ${STEEL_TEAL}40`, color: STEEL_TEAL }}
+                  style={{ border: `1px solid ${STEEL_TEAL}40`, color: STEEL_TEAL, background: "#F7F4EF" }}
                   data-testid="link-more-work"
                 >
                   More work
@@ -260,7 +260,7 @@ export default function Home() {
               <Link href="/about">
                 <span
                   className="btn-pill font-sans text-sm px-5 py-2 rounded-full inline-block select-none"
-                  style={{ border: `1px solid ${MAUVE_BROWN}40`, color: MAUVE_BROWN }}
+                  style={{ border: `1px solid ${MAUVE_BROWN}40`, color: MAUVE_BROWN, background: "#F7F4EF" }}
                   data-testid="link-more-about"
                 >
                   More about me
@@ -271,7 +271,7 @@ export default function Home() {
         </div>
 
         <FullLine />
-        <div className={`${CONTENT} grid grid-cols-1 lg:grid-cols-2`}>
+        <div className={`${CONTENT} relative grid grid-cols-1 lg:grid-cols-2`} style={{ background: "#F7F4EF", zIndex: 2 }}>
           <div
             className="relative px-6 py-10 transition-colors duration-200 hover:bg-white/40 border-b lg:border-b-0 lg:border-r"
             data-testid="card-experience-latest"
@@ -328,7 +328,7 @@ export default function Home() {
       >
         <div>
           <FullLine />
-          <div className={`${CONTENT} grid grid-cols-1 lg:grid-cols-2`}>
+          <div className={`${CONTENT} relative grid grid-cols-1 lg:grid-cols-2`} style={{ background: "#F7F4EF", zIndex: 2 }}>
             <div className="px-6 py-14 md:py-16 border-b lg:border-b-0 lg:border-r" style={{ borderColor: LINE }}>
               <p className="font-sans text-xs uppercase tracking-widest mb-4" style={{ color: STEEL_TEAL }}>
                 How
