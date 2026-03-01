@@ -68,6 +68,9 @@ const principles = [
   { num: "04", text: "Driving 100% decisions with 80% information." },
 ];
 
+const LINE_COLOR = "rgba(0,0,0,0.08)";
+const LINE_LIGHT = "rgba(0,0,0,0.05)";
+
 function ArrowLink({ href, label, color, external = true }: { href: string; label: string; color: string; external?: boolean }) {
   const cls = "group font-sans text-sm font-medium inline-flex items-center gap-1.5";
   const children = (
@@ -146,15 +149,6 @@ export default function Home() {
         data-testid="section-latest-work"
         style={{ background: "#F7F4EF" }}
       >
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "rgba(0,0,0,0.06)" }} />
-          <div className="absolute top-1/3 left-0 right-0 h-px" style={{ background: "rgba(0,0,0,0.03)" }} />
-          <div className="absolute top-2/3 left-0 right-0 h-px" style={{ background: "rgba(0,0,0,0.03)" }} />
-          <div className="absolute top-0 bottom-0 left-1/4 w-px" style={{ background: "rgba(0,0,0,0.03)" }} />
-          <div className="absolute top-0 bottom-0 left-1/2 w-px" style={{ background: "rgba(0,0,0,0.03)" }} />
-          <div className="absolute top-0 bottom-0 left-3/4 w-px" style={{ background: "rgba(0,0,0,0.03)" }} />
-        </div>
-
         <div className="relative z-10 px-8 md:px-12 lg:px-16 max-w-7xl mx-auto">
           <div className="flex items-baseline justify-between mb-16">
             <div>
@@ -172,27 +166,28 @@ export default function Home() {
             <ArrowLink href="/work" label="All work" color="rgba(0,0,0,0.45)" external={false} />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div
+            className="grid grid-cols-1 md:grid-cols-3"
+            style={{ border: `1px solid ${LINE_COLOR}` }}
+          >
             {featuredProjects.map((project, idx) => (
               <Link key={project.id} href={`/work/${project.id}`}>
                 <div
-                  className="group relative rounded-2xl overflow-hidden transition-shadow duration-300 hover:shadow-lg"
+                  className={`group relative overflow-hidden transition-colors duration-200 hover:bg-white/60 ${idx > 0 ? "border-t md:border-t-0 md:border-l" : ""}`}
                   data-testid={`card-project-${project.id}`}
                   style={{
-                    background: "rgba(255,255,255,0.6)",
-                    backdropFilter: "blur(20px)",
-                    border: "1px solid rgba(0,0,0,0.06)",
-                    boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
+                    borderColor: LINE_COLOR,
                   }}
                 >
                   <div
                     className="h-48 md:h-56 flex items-center justify-center"
                     style={{
                       background: idx === 0
-                        ? `linear-gradient(135deg, #e8e4df 0%, #d4cfc8 100%)`
+                        ? "linear-gradient(135deg, #e8e4df 0%, #d4cfc8 100%)"
                         : idx === 1
-                        ? `linear-gradient(135deg, #eae7e2 0%, #ddd9d2 100%)`
-                        : `linear-gradient(135deg, #ece9e4 0%, #dfdbd5 100%)`,
+                        ? "linear-gradient(135deg, #eae7e2 0%, #ddd9d2 100%)"
+                        : "linear-gradient(135deg, #ece9e4 0%, #dfdbd5 100%)",
+                      borderBottom: `1px solid ${LINE_COLOR}`,
                     }}
                   >
                     <span
@@ -206,7 +201,7 @@ export default function Home() {
                   <div className="p-6">
                     <div className="flex items-center gap-2 mb-3">
                       <span
-                        className="font-sans text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full"
+                        className="font-sans text-[10px] uppercase tracking-wider px-2 py-0.5"
                         style={{ background: `${STEEL_TEAL}12`, color: STEEL_TEAL }}
                       >
                         {project.tag}
@@ -238,12 +233,6 @@ export default function Home() {
         data-testid="section-experience"
         style={{ background: "#F7F4EF" }}
       >
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "rgba(0,0,0,0.06)" }} />
-          <div className="absolute top-0 bottom-0 left-[12%] w-px" style={{ background: "rgba(0,0,0,0.03)" }} />
-          <div className="absolute top-0 bottom-0 right-[12%] w-px" style={{ background: "rgba(0,0,0,0.03)" }} />
-        </div>
-
         <div className="relative z-10 px-8 md:px-12 lg:px-16 max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <h2
@@ -278,16 +267,14 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div
+            className="grid grid-cols-1 lg:grid-cols-2"
+            style={{ border: `1px solid ${LINE_COLOR}` }}
+          >
             <div
-              className="relative rounded-2xl p-8 transition-shadow duration-300 hover:shadow-md"
+              className="relative p-8 transition-colors duration-200 hover:bg-white/40 border-b lg:border-b-0 lg:border-r"
               data-testid="card-experience-latest"
-              style={{
-                background: "rgba(255,255,255,0.55)",
-                backdropFilter: "blur(20px)",
-                border: "1px solid rgba(0,0,0,0.06)",
-                boxShadow: "0 1px 3px rgba(0,0,0,0.04), inset 0 0 0 1px rgba(255,255,255,0.5)",
-              }}
+              style={{ borderColor: LINE_COLOR }}
             >
               <div className="flex items-start justify-between mb-6">
                 <div>
@@ -298,7 +285,7 @@ export default function Home() {
                 </div>
                 <Link href={`/work/${featuredProjects[0].id}`}>
                   <span
-                    className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 text-white font-bold"
+                    className="w-9 h-9 flex items-center justify-center transition-all duration-200 hover:scale-110 text-white font-bold"
                     style={{ background: STEEL_TEAL }}
                     data-testid="link-experience-arrow"
                   >
@@ -310,16 +297,14 @@ export default function Home() {
               <p className="font-sans text-sm leading-relaxed" style={{ color: "rgba(0,0,0,0.55)" }}>{latestExperience.description}</p>
             </div>
 
-            <div className="space-y-4">
+            <div>
               {pastExperiences.map((exp, idx) => (
                 <div
                   key={idx}
-                  className="rounded-2xl p-6 transition-shadow duration-300 hover:shadow-md"
+                  className="p-6 transition-colors duration-200 hover:bg-white/40"
                   data-testid={`card-experience-${idx}`}
                   style={{
-                    background: "rgba(255,255,255,0.45)",
-                    backdropFilter: "blur(16px)",
-                    border: "1px solid rgba(0,0,0,0.04)",
+                    borderTop: idx > 0 ? `1px solid ${LINE_LIGHT}` : "none",
                   }}
                 >
                   <h3 className="font-sans text-base font-bold mb-1" style={{ color: "#1a1a1a" }}>{exp.company}</h3>
@@ -341,15 +326,12 @@ export default function Home() {
         data-testid="section-how"
         style={{ background: "#F7F4EF" }}
       >
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "rgba(0,0,0,0.06)" }} />
-          <div className="absolute bottom-0 left-0 right-0 h-px" style={{ background: "rgba(0,0,0,0.06)" }} />
-          <div className="absolute top-0 bottom-0 left-1/2 w-px" style={{ background: "rgba(0,0,0,0.03)" }} />
-        </div>
-
         <div className="relative z-10 px-8 md:px-12 lg:px-16 max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-            <div>
+          <div
+            className="grid grid-cols-1 lg:grid-cols-2"
+            style={{ border: `1px solid ${LINE_COLOR}` }}
+          >
+            <div className="p-8 md:p-12 border-b lg:border-b-0 lg:border-r" style={{ borderColor: LINE_COLOR }}>
               <p className="font-sans text-xs uppercase tracking-widest mb-4" style={{ color: STEEL_TEAL }}>
                 How
               </p>
@@ -369,12 +351,12 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="space-y-0">
+            <div>
               {principles.map((p, idx) => (
                 <div
                   key={idx}
-                  className="flex items-start gap-6 py-7"
-                  style={{ borderTop: idx === 0 ? `1px solid ${STEEL_TEAL}20` : "1px solid rgba(0,0,0,0.05)" }}
+                  className="flex items-start gap-6 p-6 md:p-8"
+                  style={{ borderTop: idx > 0 ? `1px solid ${LINE_LIGHT}` : "none" }}
                   data-testid={`text-principle-${idx}`}
                 >
                   <span
@@ -388,7 +370,6 @@ export default function Home() {
                   </p>
                 </div>
               ))}
-              <div style={{ borderTop: "1px solid rgba(0,0,0,0.05)" }} />
             </div>
           </div>
         </div>
