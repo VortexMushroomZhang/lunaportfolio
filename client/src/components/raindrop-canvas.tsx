@@ -36,8 +36,8 @@ interface MacroDrop {
 }
 
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-const NUM_DROPS = 300;
-const SPAWN_RATE = 4;
+const NUM_DROPS = 600;
+const SPAWN_RATE = 8;
 const FLOW_ANGLE = Math.PI * 0.42;
 const FLOW_SPEED = 0.07;
 const FLOW_VARIATION = 0.02;
@@ -86,13 +86,13 @@ export default function RaindropCanvas() {
   const randomLetter = () => LETTERS[Math.floor(Math.random() * LETTERS.length)];
 
   const makeDrop = useCallback((w: number, h: number, top = false): Drop => {
-    const r = 1 + Math.random() * 5.5;
+    const r = 1.5 + Math.random() * 8;
     const flowDir = FLOW_ANGLE + (Math.random() - 0.5) * 0.3;
     return {
       x: top ? Math.random() * w * 1.3 - w * 0.15 : Math.random() * w,
       y: top ? -(r * 2 + Math.random() * 100) : Math.random() * h,
       r, vx: 0, vy: 0,
-      opacity: 0.45 + Math.random() * 0.55,
+      opacity: 0.6 + Math.random() * 0.4,
       wobble: Math.random() * Math.PI * 2,
       wobbleSpeed: 0.005 + Math.random() * 0.015,
       letter: randomLetter(),
@@ -133,10 +133,10 @@ export default function RaindropCanvas() {
       blurCvs.width = w;
       blurCvs.height = h;
       const p = coverParams(img.naturalWidth, img.naturalHeight, w, h);
-      blurCtx.filter = "blur(14px) brightness(0.78) saturate(0.7)";
+      blurCtx.filter = "blur(14px) brightness(0.85) saturate(0.7)";
       blurCtx.drawImage(img, p.ox - 20, p.oy - 20, p.dw + 40, p.dh + 40);
       blurCtx.filter = "none";
-      blurCtx.fillStyle = "rgba(180,195,205,0.04)";
+      blurCtx.fillStyle = "rgba(180,195,205,0.02)";
       blurCtx.fillRect(0, 0, w, h);
       blurReady = true;
     };
@@ -249,11 +249,11 @@ export default function RaindropCanvas() {
 
       const edge = cx.createRadialGradient(x - r * 0.1, y - r * 0.1, r * 0.15, x, y, r);
       edge.addColorStop(0, "rgba(255,255,255,0)");
-      edge.addColorStop(0.45, "rgba(255,255,255,0)");
-      edge.addColorStop(0.68, `rgba(218,232,248,${0.06 * opa})`);
-      edge.addColorStop(0.82, `rgba(198,220,252,${0.14 * opa})`);
-      edge.addColorStop(0.93, `rgba(178,208,252,${0.2 * opa})`);
-      edge.addColorStop(1.0, `rgba(160,198,250,${0.07 * opa})`);
+      edge.addColorStop(0.4, "rgba(255,255,255,0)");
+      edge.addColorStop(0.65, `rgba(218,232,248,${0.12 * opa})`);
+      edge.addColorStop(0.8, `rgba(198,220,252,${0.22 * opa})`);
+      edge.addColorStop(0.92, `rgba(178,208,252,${0.3 * opa})`);
+      edge.addColorStop(1.0, `rgba(160,198,250,${0.12 * opa})`);
       organicPath(cx, x, y, r, d.shape, d.flatness, moveAngle, spd);
       cx.fillStyle = edge;
       cx.fill();
@@ -276,8 +276,8 @@ export default function RaindropCanvas() {
 
       const hx = x - r * 0.22, hy = y - r * 0.28, hr = r * 0.28;
       const hl = cx.createRadialGradient(hx, hy, 0, hx, hy, hr);
-      hl.addColorStop(0, `rgba(255,255,255,${0.5 * opa})`);
-      hl.addColorStop(0.35, `rgba(255,255,255,${0.15 * opa})`);
+      hl.addColorStop(0, `rgba(255,255,255,${0.6 * opa})`);
+      hl.addColorStop(0.35, `rgba(255,255,255,${0.2 * opa})`);
       hl.addColorStop(1, "rgba(255,255,255,0)");
       cx.fillStyle = hl;
       cx.beginPath();
@@ -285,9 +285,9 @@ export default function RaindropCanvas() {
       cx.fill();
 
       if (r > 3.5) {
-        const bx = x + r * 0.08, by = y + r * 0.32, br = r * 0.13;
+        const bx = x + r * 0.08, by = y + r * 0.32, br = r * 0.15;
         const bl = cx.createRadialGradient(bx, by, 0, bx, by, br);
-        bl.addColorStop(0, `rgba(255,255,255,${0.1 * opa})`);
+        bl.addColorStop(0, `rgba(255,255,255,${0.15 * opa})`);
         bl.addColorStop(1, "rgba(255,255,255,0)");
         cx.fillStyle = bl;
         cx.beginPath();
@@ -296,8 +296,8 @@ export default function RaindropCanvas() {
       }
 
       organicPath(cx, x, y, r, d.shape, d.flatness, moveAngle, spd);
-      cx.strokeStyle = `rgba(255,255,255,${0.06 * opa})`;
-      cx.lineWidth = 0.35;
+      cx.strokeStyle = `rgba(255,255,255,${0.1 * opa})`;
+      cx.lineWidth = 0.5;
       cx.stroke();
 
       cx.restore();

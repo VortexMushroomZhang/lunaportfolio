@@ -13,11 +13,11 @@ export default function Navigation() {
   return (
     <nav
       data-testid="nav-main"
-      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 md:px-12 lg:px-16 py-5"
+      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 lg:px-14 py-3"
     >
       <Link href="/" data-testid="link-home-logo">
         <span
-          className="font-sans font-black text-base tracking-wide uppercase"
+          className="font-sans font-black text-sm tracking-wide uppercase"
           style={{
             color: isHeroPage ? "rgba(255,255,255,0.92)" : "hsl(var(--foreground))",
             letterSpacing: "0.04em",
@@ -41,7 +41,7 @@ export default function Navigation() {
             <Link key={item.path} href={item.path}>
               <span
                 data-testid={`link-nav-${item.label.toLowerCase()}`}
-                className="px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 inline-block"
+                className="px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-200 inline-block"
                 style={{
                   color: isHeroPage
                     ? isActive ? "#ffffff" : "rgba(255,255,255,0.6)"

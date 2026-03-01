@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 
 const ROLES = ["Product builder.", "Researcher.", "Designer."];
-const TYPE_SPEED = 90;
-const DELETE_SPEED = 50;
-const PAUSE_AFTER_TYPE = 2200;
-const PAUSE_AFTER_DELETE = 400;
+const TYPE_SPEED = 55;
+const DELETE_SPEED = 30;
+const PAUSE_AFTER_TYPE = 1600;
+const PAUSE_AFTER_DELETE = 300;
 
 export default function TypewriterBanner() {
   const [displayed, setDisplayed] = useState("");
@@ -57,8 +57,8 @@ export default function TypewriterBanner() {
       </h1>
       <div className="mt-2 flex items-baseline h-[1.4em] text-xl md:text-2xl lg:text-3xl">
         <span
-          className="font-sans font-light whitespace-pre"
-          style={{ color: "rgba(255,255,255,0.6)" }}
+          className="whitespace-pre"
+          style={{ color: "rgba(255,255,255,0.6)", fontFamily: "'Lato', sans-serif", fontWeight: 600 }}
           data-testid="text-role"
         >
           {displayed || "\u200B"}

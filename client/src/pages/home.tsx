@@ -4,10 +4,11 @@ import TypewriterBanner from "@/components/typewriter-banner";
 
 export default function Home() {
   return (
-    <div className="min-h-screen" data-testid="page-home" style={{ cursor: "none" }}>
+    <div data-testid="page-home">
       <section
         className="relative w-full h-screen overflow-hidden"
         data-testid="section-hero"
+        style={{ cursor: "none" }}
       >
         <RaindropCanvas />
 
@@ -85,6 +86,28 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section
+        className="min-h-screen bg-white dark:bg-neutral-950 px-8 md:px-12 lg:px-16 py-24"
+        data-testid="section-content"
+      >
+        <div className="max-w-4xl">
+          <h2
+            className="font-serif text-3xl md:text-4xl font-light tracking-tight mb-6"
+            style={{ color: "hsl(var(--foreground))" }}
+            data-testid="text-content-heading"
+          >
+            Selected Work
+          </h2>
+          <p
+            className="font-sans text-lg leading-relaxed"
+            style={{ color: "hsl(var(--muted-foreground))" }}
+            data-testid="text-content-description"
+          >
+            More coming soon.
+          </p>
         </div>
       </section>
     </div>
