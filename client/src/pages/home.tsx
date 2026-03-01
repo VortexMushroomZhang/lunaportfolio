@@ -3,7 +3,7 @@ import Navigation from "@/components/navigation";
 
 export default function Home() {
   return (
-    <div className="min-h-screen" data-testid="page-home">
+    <div className="min-h-screen" data-testid="page-home" style={{ cursor: "none" }}>
       <section
         className="relative w-full h-screen overflow-hidden"
         data-testid="section-hero"
@@ -12,72 +12,73 @@ export default function Home() {
 
         <Navigation />
 
-        <div className="absolute inset-0 z-10 flex flex-col items-start justify-end pointer-events-none px-8 pb-16 md:px-16 md:pb-20 lg:px-24 lg:pb-24">
-          <div className="max-w-3xl pointer-events-auto">
-            <p
-              className="font-mono text-xs tracking-widest uppercase mb-4"
-              style={{ color: "rgba(255,255,255,0.5)" }}
-              data-testid="text-hero-eyebrow"
-            >
-              Product Designer & Builder
-            </p>
-            <h1
-              className="font-serif font-light text-4xl md:text-5xl lg:text-6xl leading-tight mb-6"
-              style={{ color: "rgba(255,255,255,0.95)" }}
-              data-testid="text-hero-title"
-            >
-              Building products that{" "}
-              <span style={{ color: "#0D9488" }}>feel right</span>
-              <br />
-              and{" "}
-              <span style={{ color: "#8B5E3C" }}>tell stories</span>
-            </h1>
-            <p
-              className="font-sans text-base md:text-lg leading-relaxed max-w-xl mb-8"
-              style={{ color: "rgba(255,255,255,0.6)" }}
-              data-testid="text-hero-description"
-            >
-              I design and build digital products with a warm, data-driven
-              approach. Every detail is intentional, every interaction meaningful.
-            </p>
-            <div className="flex items-center gap-4 flex-wrap">
-              <a
-                href="#work"
-                data-testid="button-view-work"
-                className="px-6 py-3 rounded-full font-semibold text-sm transition-all duration-200"
-                style={{
-                  background: "#0D9488",
-                  color: "#ffffff",
-                }}
-              >
-                View My Work
-              </a>
-              <a
-                href="#about"
-                data-testid="button-learn-more"
-                className="px-6 py-3 rounded-full font-semibold text-sm transition-all duration-200"
-                style={{
-                  background: "rgba(255,255,255,0.1)",
-                  color: "rgba(255,255,255,0.85)",
-                  border: "1px solid rgba(255,255,255,0.15)",
-                  backdropFilter: "blur(8px)",
-                }}
-              >
-                Learn More
-              </a>
-            </div>
-          </div>
-
+        <div className="absolute bottom-0 left-0 right-0 z-10 pointer-events-none px-8 md:px-12 lg:px-16 pb-8">
           <div
-            className="absolute bottom-8 right-8 md:right-16 lg:right-24 pointer-events-auto"
-            data-testid="text-hero-hint"
+            className="flex items-end justify-between gap-8 flex-wrap pointer-events-auto"
+            data-testid="section-hero-footer"
           >
-            <p
-              className="font-mono text-xs"
-              style={{ color: "rgba(255,255,255,0.3)" }}
-            >
-              Move your cursor to collect rain
-            </p>
+            <div className="flex-1 min-w-[200px]" data-testid="info-location">
+              <p
+                className="font-sans text-xs mb-1"
+                style={{ color: "rgba(255,255,255,0.45)" }}
+              >
+                Currently based in
+              </p>
+              <p
+                className="font-sans text-sm font-medium"
+                style={{ color: "rgba(255,255,255,0.85)" }}
+              >
+                Amsterdam, NL & Paris, FR
+              </p>
+            </div>
+
+            <div className="flex-1 min-w-[200px]" data-testid="info-work">
+              <p
+                className="font-sans text-xs mb-1"
+                style={{ color: "rgba(255,255,255,0.45)" }}
+              >
+                Currently working in
+              </p>
+              <p
+                className="font-sans text-sm font-medium"
+                style={{ color: "rgba(255,255,255,0.85)" }}
+              >
+                Finance sector
+              </p>
+            </div>
+
+            <div className="flex-1 min-w-[200px] text-right" data-testid="info-contact">
+              <p
+                className="font-sans text-xs mb-1"
+                style={{ color: "rgba(255,255,255,0.45)" }}
+              >
+                Contact me at
+              </p>
+              <div className="flex items-center justify-end gap-4">
+                <a
+                  href="https://linkedin.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-testid="link-linkedin"
+                  className="font-sans text-sm font-medium inline-flex items-center gap-1"
+                  style={{ color: "rgba(255,255,255,0.85)" }}
+                >
+                  LinkedIn
+                  <span style={{ fontSize: "10px" }}>&#8599;</span>
+                </a>
+                <a
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-testid="link-instagram"
+                  className="font-sans text-sm font-medium inline-flex items-center gap-1"
+                  style={{ color: "rgba(180,170,210,0.8)" }}
+                >
+                  CookingInstagram
+                  <span style={{ fontSize: "10px" }}>&#8599;</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
