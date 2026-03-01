@@ -13,10 +13,14 @@ export default function Navigation() {
   const isHomePage = location === "/";
 
   useEffect(() => {
-    if (!isHomePage) return;
+    if (!isHomePage) {
+      setScrolledPastHero(true);
+      return;
+    }
     const onScroll = () => {
       setScrolledPastHero(window.scrollY > window.innerHeight * 0.7);
     };
+    onScroll();
     addEventListener("scroll", onScroll, { passive: true });
     return () => removeEventListener("scroll", onScroll);
   }, [isHomePage]);
@@ -26,12 +30,7 @@ export default function Navigation() {
   return (
     <nav
       data-testid="nav-main"
-      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 lg:px-14 py-3 transition-colors duration-500"
-      style={{
-        background: onDark ? "transparent" : "rgba(247,244,239,0.85)",
-        backdropFilter: onDark ? undefined : "blur(16px)",
-        borderBottom: onDark ? "none" : "1px solid rgba(0,0,0,0.04)",
-      }}
+      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 lg:px-14 py-3"
     >
       <Link href="/" data-testid="link-home-logo">
         <span
@@ -48,8 +47,8 @@ export default function Navigation() {
       <div
         className="flex items-center gap-0 rounded-full px-1 py-1 transition-all duration-500"
         style={{
-          background: onDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.04)",
-          backdropFilter: onDark ? "blur(12px)" : undefined,
+          background: onDark ? "rgba(255,255,255,0.1)" : "rgba(247,244,239,0.9)",
+          backdropFilter: "blur(14px)",
           border: onDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(0,0,0,0.06)",
         }}
       >
@@ -65,7 +64,7 @@ export default function Navigation() {
                     ? isActive ? "#ffffff" : "rgba(255,255,255,0.6)"
                     : isActive ? "#1a1a1a" : "rgba(0,0,0,0.45)",
                   background: isActive
-                    ? onDark ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.7)"
+                    ? onDark ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.8)"
                     : "transparent",
                 }}
               >

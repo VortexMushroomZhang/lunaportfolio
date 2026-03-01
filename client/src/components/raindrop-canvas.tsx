@@ -39,9 +39,9 @@ const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 const NUM_DROPS = 600;
 const SPAWN_RATE = 8;
 const FLOW_ANGLE = Math.PI * 0.42;
-const FLOW_SPEED = 0.07;
-const FLOW_VARIATION = 0.02;
-const GRAVITY = 0.04;
+const FLOW_SPEED = 0.12;
+const FLOW_VARIATION = 0.03;
+const GRAVITY = 0.06;
 const DRAG = 0.998;
 const ATTRACTION_RADIUS = 130;
 const IDLE_MS = 1800;
@@ -220,11 +220,6 @@ export default function RaindropCanvas() {
         sg.addColorStop(1, "rgba(200,218,240,0.03)");
         cx.fillStyle = sg;
         cx.fill();
-        cx.font = `${Math.max(5, r * 2.2)}px 'Lato', sans-serif`;
-        cx.fillStyle = `rgba(80,90,100,${0.35 * opa})`;
-        cx.textAlign = "center";
-        cx.textBaseline = "middle";
-        cx.fillText(d.letter, x, y);
         cx.restore();
         return;
       }
@@ -301,14 +296,6 @@ export default function RaindropCanvas() {
       cx.stroke();
 
       cx.restore();
-
-      cx.save();
-      cx.font = `${d.letterSize}px 'Lato', sans-serif`;
-      cx.fillStyle = `rgba(60,70,80,${0.45 * opa})`;
-      cx.textAlign = "center";
-      cx.textBaseline = "middle";
-      cx.fillText(d.letter, x, y + 1);
-      cx.restore();
     };
 
     const drawMacroDrop = (cx: CanvasRenderingContext2D, mx: number, my: number, mr: number, elong = 0, letters: string[], time: number) => {
@@ -380,20 +367,6 @@ export default function RaindropCanvas() {
       cx.stroke();
       cx.restore();
 
-      if (letters.length > 0) {
-        cx.save();
-        cx.font = `${Math.min(13, mr * 0.45)}px 'Lato', sans-serif`;
-        cx.fillStyle = "rgba(50,60,70,0.4)";
-        cx.textAlign = "center";
-        cx.textBaseline = "middle";
-        const shown = letters.slice(-6);
-        const spacing = Math.min(mr * 0.3, 9);
-        shown.forEach((l, i) => {
-          const ox = (i - (shown.length - 1) / 2) * spacing;
-          cx.fillText(l, mx + ox, my);
-        });
-        cx.restore();
-      }
     };
 
     const drawTrail = (cx: CanvasRenderingContext2D, t: TrailDot) => {

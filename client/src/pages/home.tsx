@@ -1,7 +1,12 @@
 import RaindropCanvas from "@/components/raindrop-canvas";
 import Navigation from "@/components/navigation";
 import TypewriterBanner from "@/components/typewriter-banner";
+import SiteFooter from "@/components/site-footer";
 import { Link } from "wouter";
+
+const STEEL_TEAL = "#4A7C7E";
+const DARK_SIENNA = "#6B3A2A";
+const MAUVE_BROWN = "#8B6F5E";
 
 const featuredProjects = [
   {
@@ -63,6 +68,33 @@ const principles = [
   { num: "04", text: "Driving 100% decisions with 80% information." },
 ];
 
+function ArrowLink({ href, label, color, external = true }: { href: string; label: string; color: string; external?: boolean }) {
+  const cls = "group font-sans text-sm font-medium inline-flex items-center gap-1.5";
+  const children = (
+    <>
+      <span className="no-underline group-hover:underline group-hover:underline-offset-2 transition-all decoration-current">
+        {label}
+      </span>
+      <span
+        className="inline-flex items-center justify-center text-[14px] leading-none font-bold transition-transform duration-200 -rotate-45 group-hover:rotate-0"
+        style={{ width: "1em", height: "1em" }}
+      >
+        &#8594;
+      </span>
+    </>
+  );
+  const testId = `link-${label.toLowerCase().replace(/\s/g, "-")}`;
+
+  if (external) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" data-testid={testId} className={cls} style={{ color }}>
+        {children}
+      </a>
+    );
+  }
+  return <Link href={href} data-testid={testId} className={cls} style={{ color }}>{children}</Link>;
+}
+
 export default function Home() {
   return (
     <div data-testid="page-home">
@@ -101,36 +133,8 @@ export default function Home() {
                 Contact me at
               </p>
               <div className="flex items-center justify-end gap-5">
-                <a
-                  href="https://www.instagram.com/luna_in_kitchen/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-testid="link-instagram"
-                  className="font-sans text-sm font-medium inline-flex items-center gap-1.5 group"
-                  style={{ color: "rgba(255,255,255,0.8)" }}
-                >
-                  <span className="underline underline-offset-2 decoration-white/30 group-hover:decoration-white/70 transition-all">
-                    CookingInstagram
-                  </span>
-                  <span className="inline-block transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0 text-[10px]">
-                    →
-                  </span>
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/xumeng-zhang/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-testid="link-linkedin"
-                  className="font-sans text-sm font-medium inline-flex items-center gap-1.5 group"
-                  style={{ color: "rgba(255,255,255,0.8)" }}
-                >
-                  <span className="underline underline-offset-2 decoration-white/30 group-hover:decoration-white/70 transition-all">
-                    LinkedIn
-                  </span>
-                  <span className="inline-block transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0 text-[10px]">
-                    →
-                  </span>
-                </a>
+                <ArrowLink href="https://www.instagram.com/luna_in_kitchen/" label="CookingInstagram" color="rgba(255,255,255,0.8)" />
+                <ArrowLink href="https://www.linkedin.com/in/xumeng-zhang/" label="LinkedIn" color="rgba(255,255,255,0.8)" />
               </div>
             </div>
           </div>
@@ -165,16 +169,7 @@ export default function Home() {
                 Featured Projects
               </h2>
             </div>
-            <Link href="/work">
-              <span
-                className="font-sans text-sm inline-flex items-center gap-1.5 group"
-                style={{ color: "rgba(0,0,0,0.45)" }}
-                data-testid="link-all-work"
-              >
-                <span className="group-hover:underline transition-all">All work</span>
-                <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
-              </span>
-            </Link>
+            <ArrowLink href="/work" label="All work" color="rgba(0,0,0,0.45)" external={false} />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -193,11 +188,11 @@ export default function Home() {
                   <div
                     className="h-48 md:h-56 flex items-center justify-center"
                     style={{
-                      background: idx === 0 
-                        ? "linear-gradient(135deg, #e8e4df 0%, #d4cfc8 100%)" 
-                        : idx === 1 
-                        ? "linear-gradient(135deg, #eae7e2 0%, #ddd9d2 100%)" 
-                        : "linear-gradient(135deg, #ece9e4 0%, #dfdbd5 100%)",
+                      background: idx === 0
+                        ? `linear-gradient(135deg, #e8e4df 0%, #d4cfc8 100%)`
+                        : idx === 1
+                        ? `linear-gradient(135deg, #eae7e2 0%, #ddd9d2 100%)`
+                        : `linear-gradient(135deg, #ece9e4 0%, #dfdbd5 100%)`,
                     }}
                   >
                     <span
@@ -210,8 +205,10 @@ export default function Home() {
 
                   <div className="p-6">
                     <div className="flex items-center gap-2 mb-3">
-                      <span className="font-sans text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full"
-                        style={{ background: "rgba(0,0,0,0.04)", color: "rgba(0,0,0,0.45)" }}>
+                      <span
+                        className="font-sans text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full"
+                        style={{ background: `${STEEL_TEAL}12`, color: STEEL_TEAL }}
+                      >
                         {project.tag}
                       </span>
                       <span className="font-sans text-[10px]" style={{ color: "rgba(0,0,0,0.3)" }}>
@@ -224,9 +221,9 @@ export default function Home() {
                     <p className="font-sans text-sm leading-relaxed" style={{ color: "rgba(0,0,0,0.5)" }}>
                       {project.description}
                     </p>
-                    <div className="mt-4 flex items-center gap-1.5 font-sans text-xs" style={{ color: "rgba(0,0,0,0.35)" }}>
+                    <div className="mt-4 flex items-center gap-1.5 font-sans text-xs group" style={{ color: STEEL_TEAL }}>
                       <span className="group-hover:underline transition-all">View project</span>
-                      <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
+                      <span className="inline-block transition-transform duration-200 -rotate-45 group-hover:rotate-0 font-bold text-[12px]">&#8594;</span>
                     </div>
                   </div>
                 </div>
@@ -262,8 +259,8 @@ export default function Home() {
             <div className="flex items-center justify-center gap-3 mt-6">
               <Link href="/work">
                 <span
-                  className="font-sans text-sm px-5 py-2 rounded-full inline-block transition-all duration-200 hover:bg-black/[0.03]"
-                  style={{ border: "1px solid rgba(0,0,0,0.12)", color: "#1a1a1a" }}
+                  className="font-sans text-sm px-5 py-2 rounded-full inline-block transition-all duration-200 hover:bg-opacity-10"
+                  style={{ border: `1px solid ${STEEL_TEAL}40`, color: STEEL_TEAL }}
                   data-testid="link-more-work"
                 >
                   More work
@@ -271,8 +268,8 @@ export default function Home() {
               </Link>
               <Link href="/about">
                 <span
-                  className="font-sans text-sm px-5 py-2 rounded-full inline-block transition-all duration-200 hover:bg-black/[0.03]"
-                  style={{ border: "1px solid rgba(0,0,0,0.12)", color: "#1a1a1a" }}
+                  className="font-sans text-sm px-5 py-2 rounded-full inline-block transition-all duration-200 hover:bg-opacity-10"
+                  style={{ border: `1px solid ${MAUVE_BROWN}40`, color: MAUVE_BROWN }}
                   data-testid="link-more-about"
                 >
                   More about me
@@ -301,15 +298,15 @@ export default function Home() {
                 </div>
                 <Link href={`/work/${featuredProjects[0].id}`}>
                   <span
-                    className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
-                    style={{ background: "rgba(0,0,0,0.06)" }}
+                    className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 text-white font-bold"
+                    style={{ background: STEEL_TEAL }}
                     data-testid="link-experience-arrow"
                   >
-                    →
+                    &#8594;
                   </span>
                 </Link>
               </div>
-              <p className="font-sans text-sm mb-2 font-medium" style={{ color: "rgba(0,0,0,0.35)" }}>{latestExperience.sector}</p>
+              <p className="font-sans text-sm mb-2 font-medium" style={{ color: MAUVE_BROWN }}>{latestExperience.sector}</p>
               <p className="font-sans text-sm leading-relaxed" style={{ color: "rgba(0,0,0,0.55)" }}>{latestExperience.description}</p>
             </div>
 
@@ -353,7 +350,7 @@ export default function Home() {
         <div className="relative z-10 px-8 md:px-12 lg:px-16 max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             <div>
-              <p className="font-sans text-xs uppercase tracking-widest mb-4" style={{ color: "rgba(0,0,0,0.35)" }}>
+              <p className="font-sans text-xs uppercase tracking-widest mb-4" style={{ color: STEEL_TEAL }}>
                 How
               </p>
               <p
@@ -363,7 +360,7 @@ export default function Home() {
               >
                 Through profound user insights, I find harmony between user needs and product ecosystem, transforming complex features into intuitive and confident design solutions.
               </p>
-              <div className="mt-8 h-px w-16" style={{ background: "rgba(0,0,0,0.1)" }} />
+              <div className="mt-8 h-px w-16" style={{ background: MAUVE_BROWN + "30" }} />
               <p className="font-serif text-lg leading-relaxed mt-8" style={{ color: "rgba(0,0,0,0.55)" }}>
                 As a researcher, a keen curiosity fuels the exploration of human behaviors, uncovering patterns and making sense of complex datasets to bring clarity to the vast expanse of human data.
               </p>
@@ -377,12 +374,12 @@ export default function Home() {
                 <div
                   key={idx}
                   className="flex items-start gap-6 py-7"
-                  style={{ borderTop: idx === 0 ? "1px solid rgba(0,0,0,0.08)" : "1px solid rgba(0,0,0,0.05)" }}
+                  style={{ borderTop: idx === 0 ? `1px solid ${STEEL_TEAL}20` : "1px solid rgba(0,0,0,0.05)" }}
                   data-testid={`text-principle-${idx}`}
                 >
                   <span
                     className="font-serif text-3xl font-light flex-shrink-0 w-12"
-                    style={{ color: "rgba(0,0,0,0.15)" }}
+                    style={{ color: `${STEEL_TEAL}30` }}
                   >
                     {p.num}
                   </span>
@@ -397,45 +394,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer
-        className="py-12 px-8 md:px-12 lg:px-16"
-        data-testid="section-footer"
-        style={{ background: "#F7F4EF", borderTop: "1px solid rgba(0,0,0,0.06)" }}
-      >
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <span className="font-sans text-xs" style={{ color: "rgba(0,0,0,0.3)" }}>
-            © 2026 Xumeng Zhang
-          </span>
-          <div className="flex items-center gap-5">
-            <a
-              href="https://www.instagram.com/luna_in_kitchen/"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-testid="footer-link-instagram"
-              className="font-sans text-xs inline-flex items-center gap-1.5 group"
-              style={{ color: "rgba(0,0,0,0.4)" }}
-            >
-              <span className="underline underline-offset-2 decoration-black/20 group-hover:decoration-black/50 transition-all">
-                CookingInstagram
-              </span>
-              <span className="inline-block transition-transform duration-200 group-hover:translate-x-0.5 text-[9px]">→</span>
-            </a>
-            <a
-              href="https://www.linkedin.com/in/xumeng-zhang/"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-testid="footer-link-linkedin"
-              className="font-sans text-xs inline-flex items-center gap-1.5 group"
-              style={{ color: "rgba(0,0,0,0.4)" }}
-            >
-              <span className="underline underline-offset-2 decoration-black/20 group-hover:decoration-black/50 transition-all">
-                LinkedIn
-              </span>
-              <span className="inline-block transition-transform duration-200 group-hover:translate-x-0.5 text-[9px]">→</span>
-            </a>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
