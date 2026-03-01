@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>VortexMushroom — Brand Guide · Teal Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,200;0,300;0,400;0,600;0,700;1,200;1,300;1,400&family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    /* ── Brand Colours ── */
+    --cream:        #F7F4EF;
+    /* PRIMARY: Vivid Teal replaces Royal Blue */
+    --vivid-teal:   #0D9488;
+    --teal:         #0A5068;
+    --sienna:       #5C3020;
+    --pink:         #E2C4D4;
+    --sand:         #E8DFD0;
+    --light-teal:   #7ECECE;
+    --periwinkle:   #8BA3C4;
+    --lav-purple:   #A290C0;
+    --periw-purple: #6A6494;
+    --sage:         #7A9068;
+    --dusky-pink:   #C899B4;
+    --mauve:        #9A7268;
+    --dusty-blush:  #EDD8D0;
+    --forest:       #224128;
+    --dark-teal:    #0A3040;
+    --deep-forest:  #071E28;
+    --white:        #FFFFFF;
+
+    /* ── Portfolio / Digital Tokens ── */
+    --bg-light:     #F7F4EF;
+    --bg-dark:      #051C1C;
+    --text-dark:    #111111;
+    --text-light:   #F3F4F6;
+    --text-sec-lt:  #6B7280;
+    --text-sec-dk:  #9CA3AF;
+    --brand-sage:   #7A9068;
+    --brand-lavender:#A290C0;
+    --brand-violet:  #6A6494;
+    --brand-periwinkle:#8BA3C4;
+    --brand-dusky:   #C899B4;
+    /* Teal replaces blue in digital tokens */
+    --brand-teal:   #0D9488;
+    --brand-brown:  #8B5E3C;
+    --card-lt:      #FBFAF8;
+    --card-dk:      #0A2828;
+    --border-lt:    #E5E0D8;
+    --border-dk:    #163838;
+    /* ── Legacy text ── */
+    --text-mid:     #444444;
+    --text-muted:   #888888;
+  }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: #b8bebb;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── PAGE SYSTEM ─── */
+  .page {
+    width: 1122px;
+    height: 794px;
+    background: var(--cream);
+    position: relative;
+    overflow: hidden;
+    margin: 24px auto;
+    box-shadow: 0 4px 40px rgba(0,0,0,0.22);
+    display: flex;
+    flex-direction: column;
+  }
+  .page-header-stripe { height: 6px; background: var(--pink); flex-shrink: 0; }
+  .page-footer-stripe { height: 6px; background: var(--sienna); flex-shrink: 0; margin-top: auto; }
+
+  .running-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 48px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    flex-shrink: 0;
+  }
+  .running-header .brand-name { font-weight: 700; font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
+  .running-header .section-name { font-size: 8px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .running-header .page-num { font-size: 8px; color: var(--text-muted); }
+
+  .page-content { flex: 1; padding: 40px 48px 32px; display: flex; flex-direction: column; overflow: hidden; }
+
+  /* ─── TYPE ─── */
+  .display-xl { font-family: 'Bitter', serif; font-weight: 300; font-size: 72px; line-height: 1.0; color: var(--white); letter-spacing: -0.02em; }
+  /* Vivid Teal replaces Blue in display/heading colours */
+  .display-lg { font-family: 'Bitter', serif; font-weight: 300; font-size: 52px; line-height: 1.05; color: var(--vivid-teal); letter-spacing: -0.01em; }
+  .section-heading { font-family: 'Bitter', serif; font-weight: 300; font-size: 38px; line-height: 1.1; color: var(--vivid-teal); }
+  .section-heading .line2 { color: var(--teal); }
+  .body-text { font-family: 'Lato', sans-serif; font-weight: 400; font-size: 11px; line-height: 1.7; color: var(--text-mid); }
+  .eyebrow { font-family: 'Lato', sans-serif; font-weight: 700; font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); }
+  .label { font-family: 'Lato', sans-serif; font-weight: 700; font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+  .mono { font-family: 'DM Mono', monospace; }
+
+  /* ─── COVER ─── */
+  /* Cover background: Vivid Teal */
+  .page.cover { background: var(--vivid-teal); }
+  .cover .page-footer-stripe { background: var(--sienna); }
+  .cover-inner { flex: 1; display: grid; grid-template-columns: 1fr 1fr; }
+  .cover-left { padding: 48px 48px 0; display: flex; flex-direction: column; }
+  .cover-right { background: rgba(0,0,0,0.10); display: flex; align-items: flex-end; padding: 32px 40px; }
+  /* Cover tag: Steel Teal (darker) */
+  .cover-tag { display: inline-block; background: var(--teal); color: var(--white); font-weight: 700; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 16px; border-radius: 4px; margin-top: 24px; }
+  .cover-subtitle { font-weight: 700; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-top: 10px; }
+  .cover-edition { font-size: 9px; color: rgba(255,255,255,0.4); letter-spacing: 0.06em; margin-left: auto; align-self: flex-end; }
+
+  /* ─── SECTION DIVIDER ─── */
+  .page.section-divider { justify-content: space-between; }
+  .section-divider .section-word { font-family: 'Bitter', serif; font-weight: 200; font-size: 120px; line-height: 1; color: var(--white); padding: 36px 48px 0; letter-spacing: -0.03em; }
+
+  /* ─── INTRO ─── */
+  .intro-text { font-family: 'Bitter', serif; font-weight: 300; font-size: 28px; line-height: 1.45; color: var(--text-mid); max-width: 680px; }
+  .intro-text .highlight { color: var(--vivid-teal); }
+
+  /* ─── CONTENTS ─── */
+  .contents-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; flex: 1; border-top: 1px solid var(--sand); }
+  .contents-col { padding: 24px 20px 0; border-right: 1px solid var(--sand); }
+  .contents-col:last-child { border-right: none; }
+  /* Contents titles: Vivid Teal */
+  .contents-col-title { font-family: 'Bitter', serif; font-weight: 300; font-size: 28px; color: var(--vivid-teal); line-height: 1; margin-bottom: 4px; }
+  .contents-col-num { font-family: 'Bitter', serif; font-weight: 200; font-size: 44px; color: var(--sand); line-height: 1; margin-bottom: 12px; }
+  .contents-item { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid var(--sand); font-size: 9.5px; color: var(--text-mid); }
+  .contents-item .pg { color: var(--text-muted); }
+
+  /* ─── TWO-COL ─── */
+  .two-col { display: grid; grid-template-columns: 280px 1fr; gap: 48px; flex: 1; min-height: 0; }
+  .two-col-left, .two-col-right { min-height: 0; }
+
+  /* ─── SWATCHES ─── */
+  .swatch-row { display: flex; gap: 8px; flex: 1; min-height: 0; }
+  .swatch { flex: 1; border-radius: 8px; display: flex; flex-direction: column; padding: 12px 10px; min-height: 0; }
+  .swatch-name { font-family: 'Bitter', serif; font-weight: 300; font-size: 12px; line-height: 1.2; }
+  .swatch-meta { margin-top: auto; padding-top: 8px; }
+  .swatch-meta-row { display: flex; gap: 4px; font-size: 7px; line-height: 1.6; }
+  .swatch-meta-row .key { font-weight: 700; opacity: 0.7; min-width: 28px; }
+  .swatch-meta-row .val { opacity: 0.85; }
+
+  .swatch-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; flex: 1; }
+  .swatch-sm { border-radius: 6px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 8px 7px; }
+  .swatch-sm-name { font-family: 'Bitter', serif; font-weight: 300; font-size: 9px; line-height: 1.2; }
+  .swatch-sm-meta { font-size: 6.5px; line-height: 1.5; opacity: 0.75; }
+
+  /* ─── BALANCE BAR ─── */
+  .balance-bar { display: flex; height: 64px; border-radius: 8px; overflow: hidden; margin-bottom: 16px; }
+  .balance-segment { display: flex; align-items: flex-end; padding: 0 8px 6px; font-size: 8px; color: rgba(255,255,255,0.85); font-weight: 700; }
+
+  /* ─── TEXT RULES ─── */
+  .text-rule { display: inline-flex; align-items: center; padding: 5px 10px; border-radius: 4px; font-size: 9px; font-weight: 700; margin: 3px 0; letter-spacing: 0.04em; }
+
+  /* ─── A11Y ─── */
+  .a11y-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .a11y-cell { border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16px 8px; gap: 4px; }
+  .a11y-ratio { font-family: 'Bitter', serif; font-weight: 600; font-size: 20px; line-height: 1; }
+  .a11y-pass { font-weight: 700; font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.7; }
+
+  /* ─── TYPE SPECIMEN ─── */
+  .type-specimen-row { display: flex; align-items: baseline; gap: 24px; padding: 12px 0; border-bottom: 1px solid var(--sand); }
+  .type-specimen-row:last-child { border-bottom: none; }
+  .type-label-col { width: 80px; flex-shrink: 0; }
+  .type-sample-col { flex: 1; }
+  .type-spec-col { width: 160px; flex-shrink: 0; text-align: right; font-size: 8px; color: var(--text-muted); line-height: 1.5; }
+
+  /* ─── LOGO ─── */
+  .logo-mark { font-family: 'Bitter', serif; font-weight: 700; font-size: 36px; letter-spacing: -0.02em; }
+  .logo-mark .chip { color: var(--pink); }
+  .logo-usage-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .logo-usage-cell { border-radius: 8px; padding: 20px 16px; display: flex; flex-direction: column; gap: 10px; }
+  .logo-usage-label { font-size: 8px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.6; margin-top: auto; }
+
+  /* ─── GRAPHIC ELEMENTS ─── */
+  .rounded-cards-row { display: flex; gap: 8px; margin-top: 8px; }
+  .rounded-card { width: 72px; height: 72px; border-radius: 12px; }
+  .colour-blocks-row { display: flex; gap: 8px; margin-top: 8px; }
+  .colour-block { width: 56px; height: 56px; border-radius: 4px; }
+
+  /* ─── PHOTOGRAPHY ─── */
+  .photo-card { border-radius: 10px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 16px; min-height: 220px; }
+  .photo-card-title { font-family: 'Bitter', serif; font-weight: 300; font-size: 20px; line-height: 1.2; }
+  .photo-card-desc { font-size: 10px; line-height: 1.6; opacity: 0.85; margin-top: 6px; }
+
+  /* ─── TOV ─── */
+  .tov-card { border-radius: 10px; padding: 18px 16px; display: flex; flex-direction: column; gap: 6px; }
+  .tov-card-title { font-weight: 900; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; }
+  .tov-card-rule { height: 2px; width: 32px; border-radius: 1px; margin: 2px 0; }
+  .tov-card-body { font-size: 9.5px; line-height: 1.65; opacity: 0.85; }
+
+  /* ─── WRITING COLS ─── */
+  .writing-col { flex: 1; }
+  .writing-col-title { font-weight: 900; font-size: 24px; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; }
+  .writing-rule { height: 3px; width: 100%; margin-bottom: 12px; }
+  .writing-item { display: flex; align-items: flex-start; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--sand); font-size: 10px; color: var(--text-mid); line-height: 1.5; }
+  .writing-item .arrow { flex-shrink: 0; font-size: 10px; margin-top: 1px; }
+
+  /* ─── QUOTE ─── */
+  .quote-block { background: var(--dusty-blush); border-left: 3px solid var(--vivid-teal); border-radius: 0 8px 8px 0; padding: 18px 20px; margin: 16px 0; }
+  .quote-text { font-family: 'Bitter', serif; font-weight: 300; font-size: 16px; color: var(--text-dark); line-height: 1.5; font-style: italic; }
+  .quote-attr { font-size: 9px; color: var(--vivid-teal); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 8px; }
+
+  /* ─── BACK COVER ─── */
+  /* Back cover: Vivid Teal */
+  .page.back-cover { background: var(--vivid-teal); }
+  .back-cover-inner { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
+  .back-cover-brand { font-weight: 900; font-size: 64px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--white); }
+  .back-cover-sub { font-size: 12px; color: rgba(255,255,255,0.55); letter-spacing: 0.06em; }
+  .back-cover-contact { font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 24px; }
+
+  /* ─── PORTFOLIO / DIGITAL SYSTEM ─── */
+  .token-table { width: 100%; border-collapse: collapse; font-size: 9.5px; }
+  .token-table th { font-weight: 700; font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--sand); }
+  .token-table td { padding: 7px 10px; border-bottom: 1px solid var(--sand); color: var(--text-mid); vertical-align: middle; }
+  .token-table tr:last-child td { border-bottom: none; }
+  .token-chip { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 6px; vertical-align: middle; border: 1px solid rgba(0,0,0,0.08); }
+  .code-pill { font-family: 'DM Mono', monospace; font-size: 8.5px; background: var(--sand); border-radius: 3px; padding: 2px 6px; color: var(--sienna); }
+
+  .role-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; flex: 1; }
+  .role-card { border-radius: 10px; padding: 18px 16px; display: flex; flex-direction: column; gap: 8px; border: 1px solid var(--sand); background: var(--white); }
+  .role-card-bar { height: 4px; border-radius: 2px; }
+  .role-card-title { font-family: 'Bitter', serif; font-weight: 600; font-size: 14px; line-height: 1.2; }
+  .role-card-body { font-size: 9.5px; line-height: 1.6; color: var(--text-mid); }
+  .role-card-use { font-size: 8.5px; color: var(--text-muted); line-height: 1.6; margin-top: 4px; }
+
+  .demo-strip {
+    background: var(--bg-dark);
+    border-radius: 10px;
+    padding: 24px 28px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 24px;
+    flex: 1;
+  }
+  .demo-nav-row { display: flex; align-items: center; gap: 20px; margin-bottom: 20px; }
+  .demo-logo { font-family: 'Bitter', serif; font-weight: 700; font-size: 18px; color: var(--text-light); }
+  .demo-logo .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--brand-lavender); margin-right: 4px; }
+  .demo-nav-link { font-size: 9px; color: var(--text-sec-dk); letter-spacing: 0.06em; }
+  .demo-nav-link.active { color: var(--brand-teal); }
+  .demo-h1 { font-family: 'Bitter', serif; font-weight: 300; font-size: 30px; line-height: 1.1; color: var(--text-light); margin-bottom: 10px; }
+  .demo-h1 em { font-style: italic; color: var(--brand-lavender); }
+  .demo-sub { font-size: 9.5px; color: var(--text-sec-dk); line-height: 1.7; max-width: 340px; margin-bottom: 16px; }
+  .demo-btn { display: inline-block; padding: 8px 16px; border-radius: 6px; font-size: 9px; font-weight: 700; margin-right: 8px; }
+  .btn-m { background: var(--brand-lavender); color: white; }
+  .btn-b { background: transparent; color: #7ECECE; border: 1px solid var(--brand-teal); }
+  .demo-metrics-row { display: flex; gap: 20px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border-dk); }
+  .demo-metric-val { font-family: 'Bitter', serif; font-size: 20px; color: var(--brand-sage); line-height: 1; margin-bottom: 3px; }
+  .demo-metric-label { font-size: 8px; color: var(--text-sec-dk); }
+  .avatar-circle { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--brand-brown); background: linear-gradient(135deg, rgba(139,94,60,0.2), rgba(13,148,136,0.18)); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+  .dark-swatch-row { display: flex; gap: 8px; }
+  .dark-swatch { border-radius: 8px; padding: 12px 10px; flex: 1; display: flex; flex-direction: column; }
+  .dark-swatch-name { font-size: 9px; font-weight: 700; margin-bottom: 4px; }
+  .dark-swatch-hex { font-family: 'DM Mono', monospace; font-size: 8px; opacity: 0.7; }
+  .dark-swatch-role { font-size: 7.5px; margin-top: auto; padding-top: 8px; opacity: 0.65; line-height: 1.4; }
+
+  /* ─── PRINT ─── */
+  @page { size: 297mm 210mm landscape; margin: 0; }
+  @media print {
+    body { background: white; }
+    .page { width: 297mm; height: 210mm; margin: 0; box-shadow: none; page-break-after: always; break-after: page; overflow: hidden; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 1 — COVER
+══════════════════════════════════════════════════════════ -->
+<div class="page cover">
+  <div class="page-header-stripe"></div>
+  <div class="cover-inner">
+    <div class="cover-left">
+      <div class="display-xl" style="font-size:68px;">Brand guide</div>
+      <div class="cover-subtitle">Visual Identity &amp; Digital Design System</div>
+      <div class="cover-tag">VORTEXMUSHROOM</div>
+    </div>
+    <div class="cover-right">
+      <div class="cover-edition">Teal Edition · v3.0 · 2026</div>
+    </div>
+  </div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 2 — INTRODUCTION
+══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header-stripe"></div>
+  <div class="running-header">
+    <span class="brand-name">VortexMushroom</span>
+    <span class="section-name">Introduction</span>
+    <span class="page-num">2</span>
+  </div>
+  <div class="page-content" style="justify-content: center; gap: 28px;">
+    <div class="intro-text">
+      This unified guide covers brand strategy, visual identity, digital design tokens,
+      photography, and tone of voice — ensuring consistency and authenticity across
+      every touchpoint, from a printed deck to a <span class="highlight">live product interface.</span>
+    </div>
+    <div class="intro-text" style="font-size: 20px; margin-top: 0;">
+      The visual identity guidelines apply to the brand as a whole. The digital system extends
+      these principles into UI, portfolio, and web contexts — both light and dark.
+    </div>
+  </div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 3 — CONTENTS
+══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header-stripe"></div>
+  <div class="running-header">
+    <span class="brand-name">VortexMushroom</span>
+    <span class="section-name">Contents</span>
+    <span class="page-num">3</span>
+  </div>
+  <div class="page-content" style="padding-bottom:0;">
+    <div class="contents-grid">
+      <div class="contents-col">
+        <div class="contents-col-title">Strategy</div>
+        <div class="contents-col-num">4</div>
+        <div class="contents-item"><span>Brand Mission</span><span class="pg">4</span></div>
+        <div class="contents-item"><span>Brand Values</span><span class="pg">5</span></div>
+      </div>
+      <div class="contents-col">
+        <div class="contents-col-title">Design</div>
+        <div class="contents-col-num">6</div>
+        <div class="contents-item"><span>Logo</span><span class="pg">6</span></div>
+        <div class="contents-item"><span>Colour — Primary</span><span class="pg">7</span></div>
+        <div class="contents-item"><span>Colour — Secondary</span><span class="pg">8</span></div>
+        <div class="contents-item"><span>Colour — Balance</span><span class="pg">9</span></div>
+        <div class="contents-item"><span>Colour — Accessibility</span><span class="pg">10</span></div>
+        <div class="contents-item"><span>Typography</span><span class="pg">11</span></div>
+        <div class="contents-item"><span>Graphic Elements</span><span class="pg">12</span></div>
+      </div>
+      <div class="contents-col">
+        <div class="contents-col-title">Digital</div>
+        <div class="contents-col-num" style="color: var(--vivid-teal);">13</div>
+        <div class="contents-item"><span>Colour Roles</span><span class="pg">13</span></div>
+        <div class="contents-item"><span>Design Tokens</span><span class="pg">14</span></div>
+        <div class="contents-item"><span>Dark Mode</span><span class="pg">15</span></div>
+        <div class="contents-item"><span>Portfolio Demo</span><span class="pg">16</span></div>
+      </div>
+      <div class="contents-col">
+        <div class="contents-col-title">Photography</div>
+        <div class="contents-col-num" style="color: var(--sand);">17</div>
+        <div class="contents-item"><span>Introduction</span><span class="pg">17</span></div>
+        <div class="contents-item"><span>Principles</span><span class="pg">18</span></div>
+      </div>
+      <div class="contents-col">
+        <div class="contents-col-title">Voice</div>
+        <div class="contents-col-num" style="color: var(--sand);">19</div>
+        <div class="contents-item"><span>Introduction</span><span class="pg">19</span></div>
+        <div class="contents-item"><span>Characteristics</span><span class="pg">20</span></div>
+        <div class="contents-item"><span>Writing Guidelines</span><span class="pg">21</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 4 — STRATEGY DIVIDER
+══════════════════════════════════════════════════════════ -->
+<div class="page section-divider" style="background: var(--vivid-teal);">
+  <div class="page-header-stripe"></div>
+  <div class="section-word">Strategy</div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 5 — BRAND MISSION
+══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header-stripe"></div>
+  <div class="running-header">
+    <span class="brand-name">VortexMushroom</span>
+    <span class="section-name">Strategy — Brand Mission</span>
+    <span class="page-num">4</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div class="two-col-left">
+        <div class="section-heading">The Brand<br/><span class="line2">Mission:</span></div>
+        <div class="section-heading" style="color: var(--sand);">Guiding the brand</div>
+        <div class="body-text" style="margin-top: 20px;">
+          In an increasingly crowded creative market, it is more important than ever to make your rich experience, qualities, and values relevant today. The Brand Mission is the strategic guide for all communication and every creative decision — it is not a tagline or a slogan.
+        </div>
+      </div>
+      <div class="two-col-right" style="display: flex; flex-direction: column; gap: 12px; padding-top: 8px;">
+        <div style="background: var(--vivid-teal); border-radius: 10px; padding: 20px 22px; flex: 1;">
+          <div class="eyebrow" style="color: rgba(255,255,255,0.6); margin-bottom: 10px;">What the brand mission is not</div>
+          <div style="color: rgba(255,255,255,0.85); font-size: 11px; line-height: 1.8;">
+            › A creative concept<br/>› A tagline or slogan<br/>› External communication
+          </div>
+        </div>
+        <div style="background: var(--sienna); border-radius: 10px; padding: 20px 22px; flex: 1;">
+          <div class="eyebrow" style="color: rgba(255,255,255,0.6); margin-bottom: 10px;">What the brand mission is</div>
+          <div style="color: rgba(255,255,255,0.85); font-size: 11px; line-height: 1.8;">
+            › A strategic steering wheel<br/>› The core of your brand<br/>› An internal guide
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 6 — BRAND VALUES
+══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header-stripe"></div>
+  <div class="running-header">
+    <span class="brand-name">VortexMushroom</span>
+    <span class="section-name">Strategy — Brand Values</span>
+    <span class="page-num">5</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div class="two-col-left">
+        <div class="section-heading">Brand<br/><span class="line2">Values</span></div>
+        <div class="body-text" style="margin-top: 20px;">
+          Three core values define how VortexMushroom shows up in the world. They guide every design decision, every word written, and every interaction with an audience. They are not aspirational — they describe who we already are.
+        </div>
+      </div>
+      <div class="two-col-right" style="display: flex; flex-direction: column; gap: 10px; padding-top: 8px;">
+        <div style="background: var(--cream); border: 2px solid var(--vivid-teal); border-radius: 10px; padding: 18px 20px; flex: 1;">
+          <div style="font-family: 'Bitter', serif; font-weight: 600; font-size: 18px; color: var(--vivid-teal); margin-bottom: 6px;">Consistency</div>
+          <div class="body-text">Every touchpoint — from a LinkedIn post to a PDF deck — should feel unmistakably VortexMushroom. Visual language, tone, and quality are held to the same standard everywhere.</div>
+        </div>
+        <div style="background: var(--cream); border: 2px solid var(--teal); border-radius: 10px; padding: 18px 20px; flex: 1;">
+          <div style="font-family: 'Bitter', serif; font-weight: 600; font-size: 18px; color: var(--teal); margin-bottom: 6px;">Clarity</div>
+          <div class="body-text">Complexity is the enemy of connection. We simplify without dumbing down. Every design choice and every sentence should make things easier to understand, not harder.</div>
+        </div>
+        <div style="background: var(--cream); border: 2px solid var(--sienna); border-radius: 10px; padding: 18px 20px; flex: 1;">
+          <div style="font-family: 'Bitter', serif; font-weight: 600; font-size: 18px; color: var(--sienna); margin-bottom: 6px;">Constancy</div>
+          <div class="body-text">A brand is built over time. We show up reliably, with the same energy and quality, regardless of context or audience. Trust is earned through repetition and integrity.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 7 — DESIGN DIVIDER
+══════════════════════════════════════════════════════════ -->
+<div class="page section-divider" style="background: var(--sienna);">
+  <div class="page-header-stripe"></div>
+  <div class="section-word">Design</div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 8 — LOGO
+══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header-stripe"></div>
+  <div class="running-header">
+    <span class="brand-name">VortexMushroom</span>
+    <span class="section-name">Design — Logo</span>
+    <span class="page-num">6</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div class="two-col-left">
+        <div class="section-heading">Logo</div>
+        <div class="body-text" style="margin-top: 16px;">
+          The VortexMushroom wordmark is set in Bitter Bold. "Vortex" appears in the brand's primary cream and "Mushroom" in Soft Pink, always on a contrasting background. The wordmark should never be stretched, recoloured outside approved combinations, or placed on clashing backgrounds.
+        </div>
+        <div class="eyebrow" style="margin-top: 20px; margin-bottom: 8px;">Approved backgrounds</div>
+        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+          <div style="width:28px; height:28px; border-radius:4px; background: var(--vivid-teal);"></div>
+          <div style="width:28px; height:28px; border-radius:4px; background: var(--teal);"></div>
+          <div style="width:28px; height:28px; border-radius:4px; background: var(--sienna);"></div>
+          <div style="width:28px; height:28px; border-radius:4px; background: var(--sand);"></div>
+          <div style="width:28px; height:28px; border-radius:4px; background: var(--cream); border: 1px solid var(--sand);"></div>
+          <div style="width:28px; height:28px; border-radius:4px; background: var(--bg-dark);"></div>
+        </div>
+      </div>
+      <div class="two-col-right">
+        <div class="logo-usage-grid">
+          <div class="logo-usage-cell" style="background: var(--vivid-teal);">
+            <div class="logo-mark" style="color: var(--white);">Vortex<span class="chip"> Mushroom</span></div>
+            <div class="logo-usage-label" style="color: rgba(255,255,255,0.5);">On Vivid Teal (Primary)</div>
+          </div>
+          <div class="logo-usage-cell" style="background: var(--teal);">
+            <div class="logo-mark" style="color: var(--white);">Vortex<span class="chip"> Mushroom</span></div>
+            <div class="logo-usage-label" style="color: rgba(255,255,255,0.5);">On Steel Teal</div>
+          </div>
+          <div class="logo-usage-cell" style="background: var(--sienna);">
+            <div class="logo-mark" style="color: var(--white);">Vortex<span class="chip"> Mushroom</span></div>
+            <div class="logo-usage-label" style="color: rgba(255,255,255,0.5);">On Dark Sienna</div>
+          </div>
+          <div class="logo-usage-cell" style="background: var(--sand);">
+            <div class="logo-mark" style="color: var(--vivid-teal);">Pink<span style="color: var(--sienna);"> Chip</span></div>
+            <div class="logo-usage-label" style="color: var(--mauve);">On Warm Sand</div>
+          </div>
+          <div class="logo-usage-cell" style="background: var(--cream); border: 1px solid var(--sand);">
+            <div class="logo-mark" style="color: var(--vivid-teal);">Pink<span style="color: var(--sienna);"> Chip</span></div>
+            <div class="logo-usage-label" style="color: var(--mauve);">On Brand Cream</div>
+          </div>
+          <div class="logo-usage-cell" style="background: var(--bg-dark);">
+            <div class="logo-mark" style="color: var(--white);">Vortex<span class="chip"> Mushroom</span></div>
+            <div class="logo-usage-label" style="color: rgba(255,255,255,0.4);">On Deep Ink (Dark Mode)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 9 — COLOUR PRIMARY
+══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header-stripe"></div>
+  <div class="running-header">
+    <span class="brand-name">VortexMushroom</span>
+    <span class="section-name">Design — Colour Primary Palette</span>
+    <span class="page-num">7</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div class="two-col-left">
+        <div class="section-heading">Colour<br/><span class="line2">Primary</span></div>
+        <div class="section-heading" style="color: var(--sand);">palette</div>
+        <div class="body-text" style="margin-top: 20px;">
+          Vivid Teal is our primary colour — fresh, confident, and distinctly modern. Steel Teal is our deep dark anchor, providing gravitas and depth as the darker variant of the primary. Dark Sienna grounds the palette with warmth. Soft Pink adds lightness. Warm Sand provides the neutral foundation. <strong>#F7F4EF</strong> is the brand cream and the canonical light-mode background across all brand and digital contexts.
+        </div>
+      </div>
+      <div class="two-col-right" style="display: flex; flex-direction: column;">
+        <div class="swatch-row" style="flex: 1;">
+          <div class="swatch" style="background: var(--vivid-teal); color: white;">
+            <div class="swatch-name">Vivid Teal</div>
+            <div class="swatch-meta">
+              <div class="swatch-meta-row"><span class="key">CMYK</span><span class="val">91/0/10/42</span></div>
+              <div class="swatch-meta-row"><span class="key">RGB</span><span class="val">13/148/136</span></div>
+              <div class="swatch-meta-row"><span class="key">HEX</span><span class="val">#0D9488</span></div>
+            </div>
+          </div>
+          <div class="swatch" style="background: var(--teal); color: white;">
+            <div class="swatch-name">Steel Teal</div>
+            <div class="swatch-meta">
+              <div class="swatch-meta-row"><span class="key">CMYK</span><span class="val">90/23/0/68</span></div>
+              <div class="swatch-meta-row"><span class="key">RGB</span><span class="val">10/80/104</span></div>
+              <div class="swatch-meta-row"><span class="key">HEX</span><span class="val">#0A5068</span></div>
+            </div>
+          </div>
+          <div class="swatch" style="background: var(--sienna); color: white;">
+            <div class="swatch-name">Dark Sienna</div>
+            <div class="swatch-meta">
+              <div class="swatch-meta-row"><span class="key">CMYK</span><span class="val">0/65/72/64</span></div>
+              <div class="swatch-meta-row"><span class="key">RGB</span><span class="val">92/48/32</span></div>
+              <div class="swatch-meta-row"><span class="key">HEX</span><span class="val">#5C3020</span></div>
+            </div>
+          </div>
+          <div class="swatch" style="background: var(--pink); color: var(--sienna);">
+            <div class="swatch-name">Soft Pink</div>
+            <div class="swatch-meta">
+              <div class="swatch-meta-row"><span class="key">RGB</span><span class="val">226/196/212</span></div>
+              <div class="swatch-meta-row"><span class="key">HEX</span><span class="val">#E2C4D4</span></div>
+            </div>
+          </div>
+          <div class="swatch" style="background: var(--sand); color: var(--sienna);">
+            <div class="swatch-name">Warm Sand</div>
+            <div class="swatch-meta">
+              <div class="swatch-meta-row"><span class="key">RGB</span><span class="val">232/223/208</span></div>
+              <div class="swatch-meta-row"><span class="key">HEX</span><span class="val">#E8DFD0</span></div>
+            </div>
+          </div>
+          <div class="swatch" style="background: var(--cream); color: var(--sienna); border: 1px solid var(--sand);">
+            <div class="swatch-name">Brand Cream</div>
+            <div class="swatch-meta">
+              <div class="swatch-meta-row"><span class="key">RGB</span><span class="val">247/244/239</span></div>
+              <div class="swatch-meta-row"><span class="key">HEX</span><span class="val">#F7F4EF</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 10 — COLOUR SECONDARY
+══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header-stripe"></div>
+  <div class="running-header">
+    <span class="brand-name">VortexMushroom</span>
+    <span class="section-name">Design — Colour Secondary Palette</span>
+    <span class="page-num">8</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div class="two-col-left">
+        <div class="section-heading">Colour<br/><span class="line2">Secondary</span></div>
+        <div class="section-heading" style="color: var(--sand);">palette</div>
+        <div class="body-text" style="margin-top: 20px;">
+          A secondary palette extends beyond the core identity. Intended primarily for data visualisations, infographics, and supporting design elements. The Light Teal has been brightened to harmonise with the new Vivid Teal primary. Secondary colours should never dominate — they support and extend, never replace, the primary palette.
+        </div>
+      </div>
+      <div class="two-col-right" style="display: flex; flex-direction: column; gap: 10px; min-height: 0;">
+        <div class="swatch-grid" style="flex: 1;">
+          <div class="swatch-sm" style="background: var(--light-teal); color: var(--dark-teal);">
+            <div class="swatch-sm-name">Light Teal</div>
+            <div class="swatch-sm-meta">RGB 126/206/206<br/>#7ECECE</div>
+          </div>
+          <div class="swatch-sm" style="background: var(--periwinkle); color: white;">
+            <div class="swatch-sm-name">Periwinkle</div>
+            <div class="swatch-sm-meta">RGB 139/163/196<br/>#8BA3C4</div>
+          </div>
+          <div class="swatch-sm" style="background: var(--lav-purple); color: white;">
+            <div class="swatch-sm-name">Lav. Purple</div>
+            <div class="swatch-sm-meta">RGB 162/144/192<br/>#A290C0</div>
+          </div>
+          <div class="swatch-sm" style="background: var(--periw-purple); color: white;">
+            <div class="swatch-sm-name">Periw. Purple</div>
+            <div class="swatch-sm-meta">RGB 106/100/148<br/>#6A6494</div>
+          </div>
+          <div class="swatch-sm" style="background: var(--sage); color: white;">
+            <div class="swatch-sm-name">Sage</div>
+            <div class="swatch-sm-meta">RGB 122/144/104<br/>#7A9068</div>
+          </div>
+          <div class="swatch-sm" style="background: var(--dusky-pink); color: white;">
+            <div class="swatch-sm-name">Dusky Pink</div>
+            <div class="swatch-sm-meta">RGB 200/153/180<br/>#C899B4</div>
+          </div>
+        </div>
+        <div class="swatch-grid" style="flex: 1;">
+          <div class="swatch-sm" style="background: var(--mauve); color: white;">
+            <div class="swatch-sm-name">Mauve Brown</div>
+            <div class="swatch-sm-meta">RGB 154/114/104<br/>#9A7268</div>
+          </div>
+          <div class="swatch-sm" style="background: var(--dusty-blush); color: var(--sienna);">
+            <div class="swatch-sm-name">Dusty Blush</div>
+            <div class="swatch-sm-meta">RGB 237/216/208<br/>#EDD8D0</div>
+          </div>
+          <div class="swatch-sm" style="background: var(--forest); color: white;">
+            <div class="swatch-sm-name">Forest</div>
+            <div class="swatch-sm-meta">RGB 34/65/40<br/>#224128</div>
+          </div>
+          <div class="swatch-sm" style="background: var(--dark-teal); color: white;">
+            <div class="swatch-sm-name">Dark Teal</div>
+            <div class="swatch-sm-meta">RGB 10/48/64<br/>#0A3040</div>
+          </div>
+          <div class="swatch-sm" style="background: var(--deep-forest); color: white;">
+            <div class="swatch-sm-name">Deep Forest</div>
+            <div class="swatch-sm-meta">RGB 7/30/40<br/>#071E28</div>
+          </div>
+          <div class="swatch-sm" style="background: var(--white); color: var(--text-mid); border: 1px solid var(--sand);">
+            <div class="swatch-sm-name">White</div>
+            <div class="swatch-sm-meta">RGB 255/255/255<br/>#FFFFFF</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 11 — COLOUR BALANCE
+══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header-stripe"></div>
+  <div class="running-header">
+    <span class="brand-name">VortexMushroom</span>
+    <span class="section-name">Design — Colour Balance</span>
+    <span class="page-num">9</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div class="two-col-left">
+        <div class="section-heading">Colour<br/><span class="line2">Balance</span></div>
+        <div class="body-text" style="margin-top: 20px;">
+          Vivid Teal now holds the most prominent role as the primary brand colour, followed by the brand cream and warm sand. Steel Teal plays a strengthened subordinate role as the deep anchor. Dark Sienna is a warm grounding accent. Soft Pink and secondary colours are used as accents and highlights only.
+        </div>
+        <div class="eyebrow" style="margin-top: 24px; margin-bottom: 10px;">Text usage rules</div>
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+          <div class="text-rule" style="background: var(--vivid-teal); color: white; width: fit-content;">White on Vivid Teal</div>
+          <div class="text-rule" style="background: var(--teal); color: white; width: fit-content;">White on Steel Teal</div>
+          <div class="text-rule" style="background: var(--sienna); color: white; width: fit-content;">White on Dark Sienna</div>
+          <div class="text-rule" style="background: var(--sand); color: var(--vivid-teal); width: fit-content;">Vivid Teal on Warm Sand</div>
+          <div class="text-rule" style="background: var(--cream); color: var(--teal); border: 1px solid var(--sand); width: fit-content;">Steel Teal on Brand Cream</div>
+        </div>
+      </div>
+      <div class="two-col-right" style="display: flex; flex-direction: column; justify-content: center; gap: 16px;">
+        <div class="balance-bar">
+          <div class="balance-segment" style="background: var(--vivid-teal); width: 30%;">30%</div>
+          <div class="balance-segment" style="background: var(--cream); width: 22%; color: var(--sienna); border: 1px solid var(--sand);">22%</div>
+          <div class="balance-segment" style="background: var(--teal); width: 16%;">16%</div>
+          <div class="balance-segment" style="background: var(--sand); width: 14%; color: var(--sienna);">14%</div>
+          <div class="balance-segment" style="background: var(--sienna); width: 10%;">10%</div>
+          <div class="balance-segment" style="background: var(--pink); width: 5%; color: var(--sienna);">5%</div>
+          <div class="balance-segment" style="background: var(--mauve); width: 3%; color: white; font-size: 6px;">3%</div>
+        </div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 4px;"><div style="width:10px;height:10px;border-radius:2px;background:var(--vivid-teal);"></div><span style="font-size:9px;color:var(--text-mid);">Vivid Teal 30%</span></div>
+          <div style="display: flex; align-items: center; gap: 4px;"><div style="width:10px;height:10px;border-radius:2px;background:var(--cream);border:1px solid var(--sand);"></div><span style="font-size:9px;color:var(--text-mid);">Brand Cream 22%</span></div>
+          <div style="display: flex; align-items: center; gap: 4px;"><div style="width:10px;height:10px;border-radius:2px;background:var(--teal);"></div><span style="font-size:9px;color:var(--text-mid);">Steel Teal 16%</span></div>
+          <div style="display: flex; align-items: center; gap: 4px;"><div style="width:10px;height:10px;border-radius:2px;background:var(--sand);"></div><span style="font-size:9px;color:var(--text-mid);">Warm Sand 14%</span></div>
+          <div style="display: flex; align-items: center; gap: 4px;"><div style="width:10px;height:10px;border-radius:2px;background:var(--sienna);"></div><span style="font-size:9px;color:var(--text-mid);">Dark Sienna 10%</span></div>
+          <div style="display: flex; align-items: center; gap: 4px;"><div style="width:10px;height:10px;border-radius:2px;background:var(--pink);"></div><span style="font-size:9px;color:var(--text-mid);">Soft Pink 5%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 12 — COLOUR ACCESSIBILITY
+══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header-stripe"></div>
+  <div class="running-header">
+    <span class="brand-name">VortexMushroom</span>
+    <span class="section-name">Design — Colour Accessibility</span>
+    <span class="page-num">10</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div class="two-col-left">
+        <div class="section-heading">Colour<br/><span class="line2">Accessibility</span></div>
+        <div class="body-text" style="margin-top: 20px;">
+          Include all types of audiences when combining colours, especially with text. Most small text should have a contrast ratio of at least 4.5:1 (WCAG AA). Large or bold text requires a minimum of 3:1. These rules apply equally in light and dark digital contexts.
+        </div>
+      </div>
+      <div class="two-col-right">
+        <div class="a11y-grid" style="margin-bottom: 12px;">
+          <div class="a11y-cell" style="background: var(--white); border: 1px solid var(--sand);">
+            <div class="a11y-ratio" style="color: var(--vivid-teal);">4.6:1</div>
+            <div class="a11y-pass" style="color: var(--teal);">PASS AA</div>
+          </div>
+          <div class="a11y-cell" style="background: var(--white); border: 1px solid var(--sand);">
+            <div class="a11y-ratio" style="color: var(--teal);">8.1:1</div>
+            <div class="a11y-pass" style="color: var(--teal);">PASS AAA</div>
+          </div>
+          <div class="a11y-cell" style="background: var(--white); border: 1px solid var(--sand);">
+            <div class="a11y-ratio" style="color: var(--sienna);">7.2:1</div>
+            <div class="a11y-pass" style="color: var(--teal);">PASS AAA</div>
+          </div>
+          <div class="a11y-cell" style="background: var(--white); border: 1px solid var(--sand);">
+            <div class="a11y-ratio" style="color: var(--brand-lavender);">4.8:1</div>
+            <div class="a11y-pass" style="color: var(--teal);">PASS AA</div>
+          </div>
+        </div>
+        <div class="a11y-grid">
+          <div class="a11y-cell" style="background: var(--vivid-teal);">
+            <div class="a11y-ratio" style="color: white;">4.6:1</div>
+            <div class="a11y-pass" style="color: rgba(255,255,255,0.6);">White on Teal</div>
+          </div>
+          <div class="a11y-cell" style="background: var(--bg-dark);">
+            <div class="a11y-ratio" style="color: var(--text-light);">14.2:1</div>
+            <div class="a11y-pass" style="color: rgba(255,255,255,0.5);">Light on Ink</div>
+          </div>
+          <div class="a11y-cell" style="background: var(--bg-dark);">
+            <div class="a11y-ratio" style="color: var(--brand-sage);">5.1:1</div>
+            <div class="a11y-pass" style="color: rgba(255,255,255,0.5);">Green on Ink</div>
+          </div>
+          <div class="a11y-cell" style="background: var(--bg-dark);">
+            <div class="a11y-ratio" style="color: var(--brand-lavender);">4.8:1</div>
+            <div class="a11y-pass" style="color: rgba(255,255,255,0.5);">Lavender on Ink</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 13 — TYPOGRAPHY
+══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header-stripe"></div>
+  <div class="running-header">
+    <span class="brand-name">VortexMushroom</span>
+    <span class="section-name">Design — Typography</span>
+    <span class="page-num">11</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div class="two-col-left">
+        <div class="section-heading">Typography</div>
+        <div class="body-text" style="margin-top: 16px;">
+          Bitter (serif) is used for all headings, display text, and expressive typographic moments — its weight variation from 200–700 gives a broad expressive range. Lato (sans-serif) is used for all body copy and UI labels. DM Mono is used exclusively for code, data, tokens, and technical labels in digital contexts.
+        </div>
+        <div class="eyebrow" style="margin-top: 20px; margin-bottom: 6px;">Typefaces</div>
+        <div style="font-family: 'Bitter', serif; font-size: 13px; color: var(--vivid-teal); margin-bottom: 2px;">Bitter — Display / Headings</div>
+        <div style="font-family: 'Lato', sans-serif; font-size: 13px; color: var(--teal); margin-bottom: 2px;">Lato — Body / UI</div>
+        <div style="font-family: 'DM Mono', monospace; font-size: 12px; color: var(--sienna);">DM Mono — Code / Tokens</div>
+      </div>
+      <div class="two-col-right">
+        <div class="type-specimen-row">
+          <div class="type-label-col"><div class="label">Display XL</div></div>
+          <div class="type-sample-col" style="font-family: 'Bitter', serif; font-weight: 300; font-size: 36px; color: var(--vivid-teal); letter-spacing: -0.02em; line-height: 1;">Brand guide</div>
+          <div class="type-spec-col">Bitter Light 300<br/>36px / –0.02em</div>
+        </div>
+        <div class="type-specimen-row">
+          <div class="type-label-col"><div class="label">Heading 1</div></div>
+          <div class="type-sample-col" style="font-family: 'Bitter', serif; font-weight: 300; font-size: 24px; color: var(--vivid-teal);">Section heading</div>
+          <div class="type-spec-col">Bitter Light 300<br/>24px / –0.01em</div>
+        </div>
+        <div class="type-specimen-row">
+          <div class="type-label-col"><div class="label">Heading 2</div></div>
+          <div class="type-sample-col" style="font-family: 'Bitter', serif; font-weight: 600; font-size: 18px; color: var(--sienna);">Subheading style</div>
+          <div class="type-spec-col">Bitter SemiBold 600<br/>18px</div>
+        </div>
+        <div class="type-specimen-row">
+          <div class="type-label-col"><div class="label">Body</div></div>
+          <div class="type-sample-col" style="font-family: 'Lato', sans-serif; font-size: 11px; color: var(--text-mid); line-height: 1.7;">The body text carries the editorial weight of the brand. It is set in Lato Regular with a generous line height for readability.</div>
+          <div class="type-spec-col">Lato Regular 400<br/>11px / 1.7lh</div>
+        </div>
+        <div class="type-specimen-row">
+          <div class="type-label-col"><div class="label">Eyebrow</div></div>
+          <div class="type-sample-col" style="font-family: 'Lato', sans-serif; font-weight: 700; font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal);">Section label · Eyebrow</div>
+          <div class="type-spec-col">Lato Bold 700<br/>8px / 0.14em ALLCAPS</div>
+        </div>
+        <div class="type-specimen-row">
+          <div class="type-label-col"><div class="label">Mono</div></div>
+          <div class="type-sample-col" style="font-family: 'DM Mono', monospace; font-size: 9px; color: var(--sienna);">color.brand.teal = #0D9488</div>
+          <div class="type-spec-col">DM Mono Regular<br/>9px / code &amp; tokens</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 14 — GRAPHIC ELEMENTS
+══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header-stripe"></div>
+  <div class="running-header">
+    <span class="brand-name">VortexMushroom</span>
+    <span class="section-name">Design — Graphic Elements</span>
+    <span class="page-num">12</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div class="two-col-left">
+        <div class="section-heading">Graphic<br/><span class="line2">Elements</span></div>
+        <div class="body-text" style="margin-top: 16px;">
+          A controlled set of graphic elements — rounded shapes, rule lines, colour blocks — reinforces the brand's visual language without overpowering the content. All elements draw exclusively from the brand palette.
+        </div>
+      </div>
+      <div class="two-col-right" style="display: flex; flex-direction: column; gap: 20px;">
+        <div>
+          <div class="eyebrow" style="margin-bottom: 8px;">Rounded Cards</div>
+          <div class="rounded-cards-row">
+            <div class="rounded-card" style="background: var(--vivid-teal);"></div>
+            <div class="rounded-card" style="background: var(--teal);"></div>
+            <div class="rounded-card" style="background: var(--sienna);"></div>
+            <div class="rounded-card" style="background: var(--brand-lavender);"></div>
+            <div class="rounded-card" style="background: var(--brand-violet);"></div>
+            <div class="rounded-card" style="background: var(--brand-periwinkle);"></div>
+            <div class="rounded-card" style="background: var(--brand-sage);"></div>
+          </div>
+        </div>
+        <div>
+          <div class="eyebrow" style="margin-bottom: 8px;">Rule Lines</div>
+          <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 4px;">
+            <div style="height: 2px; background: var(--vivid-teal); border-radius: 1px;"></div>
+            <div style="height: 2px; background: var(--teal); border-radius: 1px;"></div>
+            <div style="height: 1px; background: var(--sand);"></div>
+            <div style="height: 4px; background: var(--brand-lavender); border-radius: 2px;"></div>
+            <div style="height: 2px; background: var(--brand-violet); border-radius: 1px;"></div>
+            <div style="height: 1px; background: var(--border-lt);"></div>
+          </div>
+        </div>
+        <div>
+          <div class="eyebrow" style="margin-bottom: 8px;">Colour Blocks</div>
+          <div class="colour-blocks-row">
+            <div class="colour-block" style="background: var(--vivid-teal);"></div>
+            <div class="colour-block" style="background: var(--cream); border: 1px solid var(--sand);"></div>
+            <div class="colour-block" style="background: var(--brand-lavender);"></div>
+            <div class="colour-block" style="background: var(--brand-violet);"></div>
+            <div class="colour-block" style="background: var(--brand-periwinkle);"></div>
+            <div class="colour-block" style="background: var(--brand-sage);"></div>
+            <div class="colour-block" style="background: var(--bg-dark);"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 15 — DIGITAL DIVIDER
+══════════════════════════════════════════════════════════ -->
+<div class="page section-divider" style="background: var(--teal);">
+  <div class="page-header-stripe"></div>
+  <div class="section-word">Digital</div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 16 — COLOUR ROLES (DIGITAL)
+══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header-stripe"></div>
+  <div class="running-header">
+    <span class="brand-name">VortexMushroom</span>
+    <span class="section-name">Digital — Colour Roles</span>
+    <span class="page-num">13</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div class="two-col-left">
+        <div class="section-heading">Colour<br/><span class="line2">Roles</span></div>
+        <div class="body-text" style="margin-top: 16px;">
+          To avoid visual chaos, each portfolio and product colour has a single, clear job. These role definitions apply across UI, portfolio website, and all digital product contexts. Never use a colour outside its designated role.
+        </div>
+        <div style="margin-top: 20px; padding: 14px 16px; background: var(--dusty-blush); border-left: 3px solid var(--brand-violet); border-radius: 0 8px 8px 0;">
+          <div style="font-size: 9px; font-weight: 700; color: var(--sienna); letter-spacing: 0.06em; margin-bottom: 6px; text-transform: uppercase;">Critical rule</div>
+          <div class="body-text">Sage must stay purposeful. The moment it appears decoratively, it loses its signal power. Every sage element must point to a real, measurable outcome.</div>
+        </div>
+      </div>
+      <div class="two-col-right">
+        <div class="role-grid" style="grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr);">
+          <div class="role-card">
+            <div class="role-card-bar" style="background: var(--brand-lavender);"></div>
+            <div class="role-card-title" style="color: var(--brand-violet);">Lavender</div>
+            <div class="role-card-body">Primary CTA and singular emphasis. Every lavender element must be clickable or the most important item on screen.</div>
+            <div class="role-card-use">Use: Main buttons, key links, important labels, hover accents</div>
+            <div style="font-family: 'DM Mono', monospace; font-size: 7.5px; color: var(--text-muted); margin-top: 8px;">#A290C0 · color.primary</div>
+          </div>
+          <div class="role-card">
+            <div class="role-card-bar" style="background: var(--brand-sage);"></div>
+            <div class="role-card-title" style="color: var(--brand-sage);">Sage</div>
+            <div class="role-card-body">Performance, proof, success. Appears only when something measurably worked — never decorative.</div>
+            <div class="role-card-use">Use: Metrics, charts, success badges, positive states, data</div>
+            <div style="font-family: 'DM Mono', monospace; font-size: 7.5px; color: var(--text-muted); margin-top: 8px;">#7A9068 · color.secondary</div>
+          </div>
+          <div class="role-card">
+            <div class="role-card-bar" style="background: var(--brand-teal);"></div>
+            <div class="role-card-title" style="color: var(--brand-teal);">Identity Teal</div>
+            <div class="role-card-body">Structure and anchor. Reliable, consistent — never purely decorative. Appears wherever the eye needs orientation.</div>
+            <div class="role-card-use">Use: Section headings, icons, card borders, active nav, illustrations</div>
+            <div style="font-family: 'DM Mono', monospace; font-size: 7.5px; color: var(--text-muted); margin-top: 8px;">#0D9488 · color.identity.teal</div>
+          </div>
+          <div class="role-card">
+            <div class="role-card-bar" style="background: var(--brand-violet);"></div>
+            <div class="role-card-title" style="color: var(--brand-violet);">Violet</div>
+            <div class="role-card-body">Depth and mood. Used in dark surfaces, section dividers, and data visualisation as a grounding third line.</div>
+            <div class="role-card-use">Use: Dark backgrounds, chart third line, tag backgrounds, dark mode accents</div>
+            <div style="font-family: 'DM Mono', monospace; font-size: 7.5px; color: var(--text-muted); margin-top: 8px;">#6A6494 · color.accent.depth</div>
+          </div>
+          <div class="role-card">
+            <div class="role-card-bar" style="background: var(--brand-periwinkle);"></div>
+            <div class="role-card-title" style="color: var(--brand-periwinkle);">Periwinkle</div>
+            <div class="role-card-body">Lightness and interaction. Used for hover states, secondary chart lines, and as a gentle mid-tone between lavender and teal.</div>
+            <div class="role-card-use">Use: Hover/focus states, chart alt line, data tags, light backgrounds</div>
+            <div style="font-family: 'DM Mono', monospace; font-size: 7.5px; color: var(--text-muted); margin-top: 8px;">#8BA3C4 · color.accent.hover</div>
+          </div>
+          <div class="role-card">
+            <div class="role-card-bar" style="background: var(--brand-brown);"></div>
+            <div class="role-card-title" style="color: var(--brand-brown);">Identity Brown</div>
+            <div class="role-card-body">Warmth, grounding, craft. Never dominant — always the detail that makes the viewer lean in.</div>
+            <div class="role-card-use">Use: Avatar frame, dividers, illustration details, subtle gradients with cream</div>
+            <div style="font-family: 'DM Mono', monospace; font-size: 7.5px; color: var(--text-muted); margin-top: 8px;">#8B5E3C · color.identity.brown</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 17 — DESIGN TOKENS
+══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header-stripe"></div>
+  <div class="running-header">
+    <span class="brand-name">VortexMushroom</span>
+    <span class="section-name">Digital — Design Tokens</span>
+    <span class="page-num">14</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div class="two-col-left">
+        <div class="section-heading">Design<br/><span class="line2">Tokens</span></div>
+        <div class="body-text" style="margin-top: 16px;">
+          Design tokens are the single source of truth for colour in all digital contexts. Drop these into your Figma variables, CSS custom properties, or design system to ensure brand consistency across every component and theme.
+        </div>
+        <div class="eyebrow" style="margin-top: 20px; margin-bottom: 8px;">Semantic roles</div>
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+          <div style="font-family: 'DM Mono', monospace; font-size: 8px; color: var(--brand-lavender);">color.primary → color.brand.lavender</div>
+          <div style="font-family: 'DM Mono', monospace; font-size: 8px; color: var(--brand-sage);">color.secondary → color.brand.sage</div>
+          <div style="font-family: 'DM Mono', monospace; font-size: 8px; color: var(--brand-teal);">color.identity.teal → color.brand.teal</div>
+          <div style="font-family: 'DM Mono', monospace; font-size: 8px; color: var(--brand-brown);">color.identity.brown → color.brand.brown</div>
+          <div style="font-family: 'DM Mono', monospace; font-size: 8px; color: var(--brand-violet);">color.accent.depth → color.brand.violet</div>
+          <div style="font-family: 'DM Mono', monospace; font-size: 8px; color: var(--brand-periwinkle);">color.accent.hover → color.brand.periwinkle</div>
+          <div style="font-family: 'DM Mono', monospace; font-size: 8px; color: var(--brand-dusky);">color.accent.soft → color.brand.dusky</div>
+          <div style="font-family: 'DM Mono', monospace; font-size: 8px; color: var(--text-muted);">color.chart.line.main → color.brand.sage</div>
+          <div style="font-family: 'DM Mono', monospace; font-size: 8px; color: var(--text-muted);">color.chart.line.alt → color.brand.periwinkle</div>
+        </div>
+      </div>
+      <div class="two-col-right" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; align-content: start;">
+        <table class="token-table">
+          <thead>
+            <tr><th>Token</th><th>Value</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="token-chip" style="background:#F7F4EF;border:1px solid #E5E0D8;"></span>color.bg.light</td><td><span class="code-pill">#F7F4EF</span></td></tr>
+            <tr><td><span class="token-chip" style="background:#051C1C;"></span>color.bg.dark</td><td><span class="code-pill">#051C1C</span></td></tr>
+            <tr><td><span class="token-chip" style="background:#111111;"></span>color.text.primary.light</td><td><span class="code-pill">#111111</span></td></tr>
+            <tr><td><span class="token-chip" style="background:#6B7280;"></span>color.text.secondary.light</td><td><span class="code-pill">#6B7280</span></td></tr>
+            <tr><td><span class="token-chip" style="background:#F3F4F6;border:1px solid #ddd;"></span>color.text.primary.dark</td><td><span class="code-pill">#F3F4F6</span></td></tr>
+            <tr><td><span class="token-chip" style="background:#9CA3AF;"></span>color.text.secondary.dark</td><td><span class="code-pill">#9CA3AF</span></td></tr>
+            <tr><td><span class="token-chip" style="background:#FBFAF8;border:1px solid #E5E0D8;"></span>color.surface.card.light</td><td><span class="code-pill">#FBFAF8</span></td></tr>
+            <tr><td><span class="token-chip" style="background:#0A2828;"></span>color.surface.card.dark</td><td><span class="code-pill">#0A2828</span></td></tr>
+            <tr><td><span class="token-chip" style="background:#E5E0D8;border:1px solid #ccc;"></span>color.border.subtle.light</td><td><span class="code-pill">#E5E0D8</span></td></tr>
+            <tr><td><span class="token-chip" style="background:#163838;"></span>color.border.subtle.dark</td><td><span class="code-pill">#163838</span></td></tr>
+          </tbody>
+        </table>
+        <table class="token-table">
+          <thead>
+            <tr><th>Token</th><th>Value</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="token-chip" style="background:#A290C0;"></span>color.brand.lavender</td><td><span class="code-pill">#A290C0</span></td></tr>
+            <tr><td><span class="token-chip" style="background:#7A9068;"></span>color.brand.sage</td><td><span class="code-pill">#7A9068</span></td></tr>
+            <tr><td><span class="token-chip" style="background:#0D9488;"></span>color.brand.teal</td><td><span class="code-pill">#0D9488</span></td></tr>
+            <tr><td><span class="token-chip" style="background:#8B5E3C;"></span>color.brand.brown</td><td><span class="code-pill">#8B5E3C</span></td></tr>
+            <tr><td><span class="token-chip" style="background:#6A6494;"></span>color.brand.violet</td><td><span class="code-pill">#6A6494</span></td></tr>
+            <tr><td><span class="token-chip" style="background:#8BA3C4;"></span>color.brand.periwinkle</td><td><span class="code-pill">#8BA3C4</span></td></tr>
+            <tr><td><span class="token-chip" style="background:#C899B4;"></span>color.brand.dusky</td><td><span class="code-pill">#C899B4</span></td></tr>
+            <tr><td><span class="token-chip" style="background:#7A9068;"></span>color.chart.line.main</td><td><span class="code-pill">brand.sage</span></td></tr>
+            <tr><td><span class="token-chip" style="background:#8BA3C4;"></span>color.chart.line.alt</td><td><span class="code-pill">brand.periwinkle</span></td></tr>
+            <tr><td><span class="token-chip" style="background:#6A6494;"></span>color.chart.line.third</td><td><span class="code-pill">brand.violet</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 18 — DARK MODE PALETTE
+══════════════════════════════════════════════════════════ -->
+<div class="page" style="background: var(--bg-dark);">
+  <div style="height: 6px; background: var(--brand-lavender); flex-shrink: 0;"></div>
+  <div class="running-header" style="border-bottom-color: var(--border-dk);">
+    <span class="brand-name" style="color: var(--text-sec-dk);">VortexMushroom</span>
+    <span class="section-name" style="color: var(--text-sec-dk);">Digital — Dark Mode</span>
+    <span class="page-num" style="color: var(--text-sec-dk);">15</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div class="two-col-left">
+        <div class="section-heading" style="color: var(--text-light); font-family: 'Bitter', serif; font-weight: 300; font-size: 38px; line-height: 1.1;">Dark<br/><span style="color: var(--brand-lavender);">Mode</span></div>
+        <div class="body-text" style="color: var(--text-sec-dk); margin-top: 16px;">
+          Dark mode is not a simple colour inversion — it is a premium, focused experience. The Deep Teal-Ink base (#051C1C) carries a rich teal quality that makes Identity Teal, Sage, and Lavender luminous against it. Default to dark mode for the portfolio hero.
+        </div>
+        <div style="margin-top: 20px; padding: 14px 16px; background: var(--card-dk); border-left: 3px solid var(--brand-teal); border-radius: 0 8px 8px 0;">
+          <div style="font-size: 9px; font-weight: 700; color: var(--brand-teal); letter-spacing: 0.06em; margin-bottom: 6px; text-transform: uppercase;">Key principle</div>
+          <div class="body-text" style="color: var(--text-sec-dk);">Let lavender glow softly. Teal anchors structure. Sage only appears when something shipped or succeeded. Violet adds depth — use it sparingly in dark backgrounds.</div>
+        </div>
+      </div>
+      <div class="two-col-right" style="display: flex; flex-direction: column; gap: 12px;">
+        <div class="dark-swatch-row">
+          <div class="dark-swatch" style="background: #051C1C; border: 1px solid var(--border-dk);">
+            <div class="dark-swatch-name" style="color: var(--text-light);">Deep Teal Ink</div>
+            <div class="dark-swatch-hex" style="color: var(--text-sec-dk);">#051C1C</div>
+            <div class="dark-swatch-role" style="color: var(--text-sec-dk);">Page background</div>
+          </div>
+          <div class="dark-swatch" style="background: #0A2828;">
+            <div class="dark-swatch-name" style="color: var(--text-light);">Card Dark</div>
+            <div class="dark-swatch-hex" style="color: var(--text-sec-dk);">#0A2828</div>
+            <div class="dark-swatch-role" style="color: var(--text-sec-dk);">Card surfaces</div>
+          </div>
+          <div class="dark-swatch" style="background: #163838;">
+            <div class="dark-swatch-name" style="color: var(--text-light);">Border Dark</div>
+            <div class="dark-swatch-hex" style="color: var(--text-sec-dk);">#163838</div>
+            <div class="dark-swatch-role" style="color: var(--text-sec-dk);">Subtle borders</div>
+          </div>
+          <div class="dark-swatch" style="background: var(--brand-lavender);">
+            <div class="dark-swatch-name" style="color: #111;">Lavender</div>
+            <div class="dark-swatch-hex" style="color: rgba(255,255,255,0.7);">#A290C0</div>
+            <div class="dark-swatch-role" style="color: rgba(255,255,255,0.6);">CTA — glows on dark</div>
+          </div>
+        </div>
+        <div class="dark-swatch-row">
+          <div class="dark-swatch" style="background: var(--brand-teal);">
+            <div class="dark-swatch-name" style="color: white;">Identity Teal</div>
+            <div class="dark-swatch-hex" style="color: rgba(255,255,255,0.7);">#0D9488</div>
+            <div class="dark-swatch-role" style="color: rgba(255,255,255,0.6);">Nav active / headings</div>
+          </div>
+          <div class="dark-swatch" style="background: var(--brand-sage);">
+            <div class="dark-swatch-name" style="color: white;">Sage</div>
+            <div class="dark-swatch-hex" style="color: rgba(255,255,255,0.7);">#7A9068</div>
+            <div class="dark-swatch-role" style="color: rgba(255,255,255,0.6);">Metrics only</div>
+          </div>
+          <div class="dark-swatch" style="background: var(--brand-violet);">
+            <div class="dark-swatch-name" style="color: white;">Violet</div>
+            <div class="dark-swatch-hex" style="color: rgba(255,255,255,0.7);">#6A6494</div>
+            <div class="dark-swatch-role" style="color: rgba(255,255,255,0.6);">Depth / dark accents</div>
+          </div>
+          <div class="dark-swatch" style="background: var(--brand-periwinkle);">
+            <div class="dark-swatch-name" style="color: #222;">Periwinkle</div>
+            <div class="dark-swatch-hex" style="color: rgba(0,0,0,0.5);">#8BA3C4</div>
+            <div class="dark-swatch-role" style="color: rgba(0,0,0,0.4);">Hover / chart alt</div>
+          </div>
+        </div>
+        <!-- Live dark-mode mini demo -->
+        <div style="background: var(--card-dk); border: 1px solid var(--border-dk); border-radius: 10px; padding: 16px 20px; flex: 1;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px; padding-bottom:10px; border-bottom:1px solid var(--border-dk);">
+            <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--brand-lavender);"></span>
+            <span style="font-family:'Bitter',serif;font-weight:700;font-size:14px;color:var(--text-light);">VortexMushroom</span>
+            <span style="margin-left:auto;font-family:'DM Mono',monospace;font-size:7.5px;color:var(--brand-teal);">Work</span>
+            <span style="font-family:'DM Mono',monospace;font-size:7.5px;color:var(--text-sec-dk);">About</span>
+            <span style="font-family:'DM Mono',monospace;font-size:7.5px;color:var(--text-sec-dk);">Contact</span>
+          </div>
+          <div style="font-family:'Bitter',serif;font-weight:300;font-size:20px;color:var(--text-light);line-height:1.1;margin-bottom:8px;">Building products that <em style="font-style:italic;color:var(--brand-lavender);">actually ship.</em></div>
+          <div style="font-size:9px;color:var(--text-sec-dk);line-height:1.7;margin-bottom:12px;">I sit at the intersection of design and engineering — focused on outcomes, not artifacts.</div>
+          <div style="display:flex;gap:8px;">
+            <span style="background:var(--brand-lavender);color:#1e0f4a;padding:6px 14px;border-radius:6px;font-size:8.5px;font-weight:700;">View work →</span>
+            <span style="border:1px solid var(--brand-teal);color:#7ECECE;padding:6px 14px;border-radius:6px;font-size:8.5px;font-weight:700;">Download CV</span>
+            <span style="background:#7A906818;color:var(--brand-sage);padding:6px 10px;border-radius:6px;font-size:8.5px;font-family:'DM Mono',monospace;">↑ 142% retention</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="height: 6px; background: var(--brand-brown); flex-shrink: 0;"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 19 — PORTFOLIO DEMO (LIGHT MODE)
+══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header-stripe"></div>
+  <div class="running-header">
+    <span class="brand-name">VortexMushroom</span>
+    <span class="section-name">Digital — Portfolio in Practice</span>
+    <span class="page-num">16</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div class="two-col-left">
+        <div class="section-heading">In<br/><span class="line2">Practice</span></div>
+        <div class="body-text" style="margin-top: 16px;">
+          This spread shows how the unified brand and digital system works at the portfolio scale — light mode. Brand Cream (#F7F4EF) is the page base. Vivid Teal structures the layout. Lavender is the sole CTA. Sage only appears when labelling real outcomes.
+        </div>
+        <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 8px;">
+          <div style="display: flex; align-items: center; gap: 8px;"><div style="width:8px;height:8px;border-radius:50%;background:var(--brand-lavender);"></div><span class="body-text">Lavender = action only</span></div>
+          <div style="display: flex; align-items: center; gap: 8px;"><div style="width:8px;height:8px;border-radius:50%;background:var(--brand-sage);"></div><span class="body-text">Sage = proof only</span></div>
+          <div style="display: flex; align-items: center; gap: 8px;"><div style="width:8px;height:8px;border-radius:50%;background:var(--brand-teal);"></div><span class="body-text">Teal = structure only</span></div>
+          <div style="display: flex; align-items: center; gap: 8px;"><div style="width:8px;height:8px;border-radius:50%;background:var(--brand-violet);"></div><span class="body-text">Violet = depth / tags</span></div>
+          <div style="display: flex; align-items: center; gap: 8px;"><div style="width:8px;height:8px;border-radius:50%;background:var(--brand-brown);"></div><span class="body-text">Brown = quiet craft accent</span></div>
+        </div>
+      </div>
+      <div class="two-col-right" style="display: flex; flex-direction: column; gap: 10px;">
+        <!-- Simulated light-mode portfolio -->
+        <div style="background: var(--bg-light); border: 1px solid var(--border-lt); border-radius: 10px; overflow: hidden; flex: 1; display: flex; flex-direction: column;">
+          <!-- Nav -->
+          <div style="background: var(--cream); padding: 10px 20px; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid var(--border-lt);">
+            <span style="font-family:'Bitter',serif;font-weight:700;font-size:13px;color:var(--vivid-teal);">Vortex<span style="color:var(--sienna);"> Mushroom</span></span>
+            <span style="margin-left:auto;font-size:8px;color:var(--brand-teal);font-weight:700;">Work</span>
+            <span style="font-size:8px;color:var(--text-sec-lt);">About</span>
+            <span style="font-size:8px;color:var(--text-sec-lt);">Writing</span>
+          </div>
+          <!-- Hero -->
+          <div style="padding: 24px 20px 16px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--brand-teal);margin-bottom:10px;">Product · Design · Engineering</div>
+              <div style="font-family:'Bitter',serif;font-weight:300;font-size:22px;color:var(--text-dark);line-height:1.1;margin-bottom:8px;">Building products<br/>that <em style="color:var(--brand-lavender);">actually ship.</em></div>
+              <div style="font-size:9px;color:var(--text-sec-lt);line-height:1.7;margin-bottom:14px;max-width:300px;">Senior IC focused on outcomes, not artifacts. Fintech · Design Systems · 0→1.</div>
+              <div style="display:flex;gap:8px;">
+                <span style="background:var(--brand-lavender);color:#2D1B69;padding:6px 14px;border-radius:6px;font-size:8px;font-weight:700;">See my work →</span>
+                <span style="border:1px solid var(--brand-teal);color:var(--brand-teal);padding:6px 14px;border-radius:6px;font-size:8px;font-weight:700;">Download CV</span>
+              </div>
+            </div>
+            <div style="display:flex;gap:0;border-top:1px solid var(--border-lt);margin-top:16px;">
+              <div style="flex:1;padding:10px 0;">
+                <div style="font-family:'Bitter',serif;font-size:16px;color:var(--brand-sage);line-height:1;">↑ 142%</div>
+                <div style="font-size:7.5px;color:var(--text-sec-lt);">Revenue, VortexMushroom v2</div>
+              </div>
+              <div style="flex:1;padding:10px 0;border-left:1px solid var(--border-lt);padding-left:12px;">
+                <div style="font-family:'Bitter',serif;font-size:16px;color:var(--brand-sage);line-height:1;">4 shipped</div>
+                <div style="font-size:7.5px;color:var(--text-sec-lt);">0→1 products</div>
+              </div>
+              <div style="flex:1;padding:10px 0;border-left:1px solid var(--border-lt);padding-left:12px;">
+                <div style="font-family:'Bitter',serif;font-size:16px;color:var(--brand-sage);line-height:1;">38ms</div>
+                <div style="font-size:7.5px;color:var(--text-sec-lt);">p95 latency</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 20 — PHOTOGRAPHY DIVIDER
+══════════════════════════════════════════════════════════ -->
+<div class="page section-divider" style="background: var(--forest);">
+  <div class="page-header-stripe"></div>
+  <div class="section-word">Photography</div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 21 — PHOTOGRAPHY INTRO
+══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header-stripe"></div>
+  <div class="running-header">
+    <span class="brand-name">VortexMushroom</span>
+    <span class="section-name">Photography — Introduction</span>
+    <span class="page-num">17</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div class="two-col-left">
+        <div class="section-heading">Photography</div>
+        <div class="body-text" style="margin-top: 16px;">
+          Photography is one of our most powerful tools for communicating brand character. Every image we use must reinforce our core values — confidence, clarity, and warmth — and complement our visual identity without competing with it.
+        </div>
+      </div>
+      <div class="two-col-right" style="display: flex; gap: 10px;">
+        <div class="photo-card" style="background: var(--vivid-teal); color: white;">
+          <div>
+            <div class="photo-card-title" style="color: white;">Human &amp; authentic</div>
+            <div class="photo-card-desc" style="color: rgba(255,255,255,0.8);">Real people in real moments. Avoid staged, overly composed shots that feel artificial or stock-like.</div>
+          </div>
+        </div>
+        <div class="photo-card" style="background: var(--sand); color: var(--sienna);">
+          <div>
+            <div class="photo-card-title" style="color: var(--sienna);">Natural light</div>
+            <div class="photo-card-desc" style="color: var(--text-mid);">Prefer soft, natural, or mixed light sources. Harsh studio lighting can feel corporate and cold.</div>
+          </div>
+        </div>
+        <div class="photo-card" style="background: var(--sienna); color: white;">
+          <div>
+            <div class="photo-card-title" style="color: white;">Purposeful palette</div>
+            <div class="photo-card-desc" style="color: rgba(255,255,255,0.8);">Select images whose dominant tones complement the primary brand palette — warm neutrals, teals, and earth tones.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 22 — PHOTOGRAPHY PRINCIPLES
+══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header-stripe"></div>
+  <div class="running-header">
+    <span class="brand-name">VortexMushroom</span>
+    <span class="section-name">Photography — Principles</span>
+    <span class="page-num">18</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div class="two-col-left">
+        <div class="section-heading">Photography<br/><span class="line2">Principles</span></div>
+        <div class="body-text" style="margin-top: 16px;">
+          Four principles govern every image selection and editing decision. They apply across all channels — digital product, portfolio, and social.
+        </div>
+      </div>
+      <div class="two-col-right" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div style="background: var(--cream); border: 1px solid var(--sand); border-radius: 10px; padding: 16px;">
+          <div style="font-family: 'Bitter', serif; font-weight: 600; font-size: 14px; color: var(--sienna); margin-bottom: 6px;">Depth &amp; texture</div>
+          <div class="body-text">Embrace grain, texture, and depth. Flat, over-processed images feel lifeless. A little imperfection signals authenticity and craft.</div>
+        </div>
+        <div style="background: var(--cream); border: 1px solid var(--sand); border-radius: 10px; padding: 16px;">
+          <div style="font-family: 'Bitter', serif; font-weight: 600; font-size: 14px; color: var(--vivid-teal); margin-bottom: 6px;">Brand palette</div>
+          <div class="body-text">When selecting or editing photography, favour images whose colour temperature and dominant tones complement the primary brand palette.</div>
+        </div>
+        <div style="background: var(--cream); border: 1px solid var(--sand); border-radius: 10px; padding: 16px;">
+          <div style="font-family: 'Bitter', serif; font-weight: 600; font-size: 14px; color: var(--teal); margin-bottom: 6px;">Purposeful framing</div>
+          <div class="body-text">Every element in the frame should earn its place. Avoid clutter. Use negative space deliberately to let the subject breathe.</div>
+        </div>
+        <div style="background: var(--cream); border: 1px solid var(--sand); border-radius: 10px; padding: 16px;">
+          <div style="font-family: 'Bitter', serif; font-weight: 600; font-size: 14px; color: var(--sienna); margin-bottom: 6px;">Never over-edit</div>
+          <div class="body-text">Avoid heavy filters, extreme colour grading, or AI-generated imagery. The brand's visual credibility depends on images that feel real.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 23 — TONE OF VOICE DIVIDER
+══════════════════════════════════════════════════════════ -->
+<div class="page section-divider" style="background: var(--periw-purple);">
+  <div class="page-header-stripe"></div>
+  <div class="section-word">Tone of Voice</div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 24 — TOV INTRO
+══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header-stripe"></div>
+  <div class="running-header">
+    <span class="brand-name">VortexMushroom</span>
+    <span class="section-name">Tone of Voice — Introduction</span>
+    <span class="page-num">19</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div class="two-col-left">
+        <div class="section-heading">Tone of<br/><span class="line2">Voice</span></div>
+        <div class="body-text" style="margin-top: 16px;">
+          How we speak is as important as what we say. Our tone of voice reflects our brand personality — it is the verbal expression of our visual identity. Every word we write should feel consistent, purposeful, and true to who we are.
+        </div>
+      </div>
+      <div class="two-col-right" style="display: flex; flex-direction: column; justify-content: center;">
+        <div class="quote-block">
+          <div class="quote-text">"We speak with clarity, warmth, and conviction."</div>
+          <div class="quote-attr">Brand Voice Principle</div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px;">
+          <div>
+            <div style="font-weight: 700; font-size: 12px; color: var(--vivid-teal); margin-bottom: 4px;">Confident</div>
+            <div class="body-text">We speak with authority and do not over-qualify our statements.</div>
+          </div>
+          <div>
+            <div style="font-weight: 700; font-size: 12px; color: var(--teal); margin-bottom: 4px;">Clear</div>
+            <div class="body-text">We use plain language and explain complex ideas accessibly.</div>
+          </div>
+          <div>
+            <div style="font-weight: 700; font-size: 12px; color: var(--sienna); margin-bottom: 4px;">Warm</div>
+            <div class="body-text">We are human and approachable. We speak to people, not at them.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 25 — TOV CHARACTERISTICS
+══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header-stripe"></div>
+  <div class="running-header">
+    <span class="brand-name">VortexMushroom</span>
+    <span class="section-name">Tone of Voice — Characteristics</span>
+    <span class="page-num">20</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div class="two-col-left">
+        <div class="section-heading">Tone of Voice<br/><span class="line2">Characteristics</span></div>
+        <div class="body-text" style="margin-top: 16px;">
+          Six characteristics define our brand voice. Together they create a recognisable, consistent, and human way of communicating.
+        </div>
+      </div>
+      <div class="two-col-right" style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 8px;">
+        <div class="tov-card" style="background: var(--vivid-teal); color: white;">
+          <div class="tov-card-title">Confident</div>
+          <div class="tov-card-rule" style="background: rgba(255,255,255,0.3);"></div>
+          <div class="tov-card-body">We know our subject matter deeply and speak with authority. We do not hedge or over-qualify.</div>
+        </div>
+        <div class="tov-card" style="background: var(--teal); color: white;">
+          <div class="tov-card-title">Clear</div>
+          <div class="tov-card-rule" style="background: rgba(255,255,255,0.3);"></div>
+          <div class="tov-card-body">We use plain language. We avoid jargon where possible and explain complex ideas accessibly.</div>
+        </div>
+        <div class="tov-card" style="background: var(--sienna); color: white;">
+          <div class="tov-card-title">Warm</div>
+          <div class="tov-card-rule" style="background: rgba(255,255,255,0.3);"></div>
+          <div class="tov-card-body">We are human and approachable. We speak to people, not at them. Inclusive and considerate.</div>
+        </div>
+        <div class="tov-card" style="background: var(--periw-purple); color: white;">
+          <div class="tov-card-title">Purposeful</div>
+          <div class="tov-card-rule" style="background: rgba(255,255,255,0.3);"></div>
+          <div class="tov-card-body">Every word earns its place. We are concise and direct, respecting our audience's time.</div>
+        </div>
+        <div class="tov-card" style="background: var(--brand-lavender); color: white;">
+          <div class="tov-card-title">Distinctive</div>
+          <div class="tov-card-rule" style="background: rgba(255,255,255,0.3);"></div>
+          <div class="tov-card-body">Our voice is recognisable. We have a point of view and express it with conviction.</div>
+        </div>
+        <div class="tov-card" style="background: var(--mauve); color: white;">
+          <div class="tov-card-title">Honest</div>
+          <div class="tov-card-rule" style="background: rgba(255,255,255,0.3);"></div>
+          <div class="tov-card-body">We say what we mean. Transparent about our intentions, straightforward in communication.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 26 — WRITING GUIDELINES
+══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header-stripe"></div>
+  <div class="running-header">
+    <span class="brand-name">VortexMushroom</span>
+    <span class="section-name">Tone of Voice — Writing Guidelines</span>
+    <span class="page-num">21</span>
+  </div>
+  <div class="page-content">
+    <div class="two-col">
+      <div class="two-col-left">
+        <div class="section-heading">Writing<br/><span class="line2">Guidelines</span></div>
+        <div class="body-text" style="margin-top: 16px;">
+          The following guidelines ensure consistency across all written communications. They apply to all channels — digital, print, and social — unless otherwise specified.
+        </div>
+      </div>
+      <div class="two-col-right" style="display: flex; gap: 24px; min-height: 0;">
+        <div class="writing-col">
+          <div class="writing-col-title" style="color: var(--vivid-teal);">DO</div>
+          <div class="writing-rule" style="background: var(--vivid-teal);"></div>
+          <div class="writing-item"><span class="arrow">›</span><span>Use active voice wherever possible.</span></div>
+          <div class="writing-item"><span class="arrow">›</span><span>Write in short, punchy sentences.</span></div>
+          <div class="writing-item"><span class="arrow">›</span><span>Use contractions to sound natural.</span></div>
+          <div class="writing-item"><span class="arrow">›</span><span>Address the reader directly as 'you'.</span></div>
+          <div class="writing-item"><span class="arrow">›</span><span>Use numerals for numbers above ten.</span></div>
+          <div class="writing-item"><span class="arrow">›</span><span>Lead with the most important information.</span></div>
+          <div class="writing-item"><span class="arrow">›</span><span>Use sentence case for headings.</span></div>
+        </div>
+        <div class="writing-col">
+          <div class="writing-col-title" style="color: var(--sienna);">DON'T</div>
+          <div class="writing-rule" style="background: var(--sienna);"></div>
+          <div class="writing-item"><span class="arrow">›</span><span>Use passive voice unnecessarily.</span></div>
+          <div class="writing-item"><span class="arrow">›</span><span>Over-use exclamation marks.</span></div>
+          <div class="writing-item"><span class="arrow">›</span><span>Use jargon without explanation.</span></div>
+          <div class="writing-item"><span class="arrow">›</span><span>Write in the third person about the brand.</span></div>
+          <div class="writing-item"><span class="arrow">›</span><span>Use clichés or hollow superlatives.</span></div>
+          <div class="writing-item"><span class="arrow">›</span><span>Pad sentences with unnecessary qualifiers.</span></div>
+          <div class="writing-item"><span class="arrow">›</span><span>Use ALL CAPS for emphasis in body copy.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE 27 — BACK COVER
+══════════════════════════════════════════════════════════ -->
+<div class="page back-cover">
+  <div class="page-header-stripe"></div>
+  <div class="back-cover-inner">
+    <div class="back-cover-brand">VORTEXMUSHROOM</div>
+    <div class="back-cover-sub">Brand Guide · Teal Edition v3.0 · 2026</div>
+    <div class="back-cover-contact">For questions regarding brand usage, contact: brand@vortexmushroom.com</div>
+    <div style="margin-top: 32px; display: flex; gap: 16px; align-items: center;">
+      <div style="display:flex;gap:6px;">
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--brand-lavender);"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--brand-violet);"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--brand-periwinkle);"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--brand-sage);"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--brand-brown);"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--teal);"></div>
+      </div>
+      <span style="font-size:8px;color:rgba(255,255,255,0.3);letter-spacing:0.08em;">© 2026 VortexMushroom. All rights reserved.</span>
+    </div>
+  </div>
+  <div class="page-footer-stripe"></div>
+</div>
+
+</body>
+</html>

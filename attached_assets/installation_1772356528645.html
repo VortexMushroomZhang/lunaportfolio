@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Foggy Window Installation</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: #111;
+      }
+
+      /* The "Memory" behind the glass - heavily blurred */
+      #background-blurred {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("https://picsum.photos/1920/1080?random=1"); /* Placeholder Memory */
+        background-size: cover;
+        background-position: center;
+        filter: blur(15px) brightness(0.7); /* Foggy glass effect */
+        z-index: 1;
+      }
+
+      /* The sharp memory that will only be visible through the drops */
+      #sharp-image {
+        display: none; /* Hidden from DOM, used by Canvas for rendering */
+      }
+
+      /* The Canvas where the drops and physical interactions live */
+      #glass-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        cursor: crosshair;
+        /* Using a subtle CSS filter to help drops look like they merge (metaball effect) */
+        filter: contrast(1.2) drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.5));
+      }
+    </style>
+  </head>
+  <body>
+    <div id="background-blurred"></div>
+
+    <img
+      id="sharp-image"
+      src="https://picsum.photos/1920/1080?random=1"
+      crossorigin="anonymous"
+      alt="memory"
+    />
+
+    <canvas id="glass-canvas"></canvas>
+
+    <script>
+      const canvas = document.getElementById("glass-canvas");
+      const ctx = canvas.getContext("2d");
+      const sharpImage = document.getElementById("sharp-image");
+
+      let width, height;
+      let drops = [];
+      let macroDrop = null;
+
+      // --- ART DIRECTOR CONTROLS --- //
+      const NUM_BACKGROUND_DROPS = 150;
+      const ATTRACTION_RADIUS = 150; // How far the mouse reaches to pull drops
+      const GRAVITY = 0.4; // Speed of falling drops
+      const WIND_SWAY = 0.5; // Horizontal sway when falling
+      const IDLE_TIMEOUT_MS = 2000; // 2 seconds before macro drop falls
+
+      let mouse = { x: -1000, y: -1000, active: false };
+      let idleTimer = null;
+
+      // Resize handler
+      function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      }
+      window.addEventListener("resize", resize);
+      resize();
+
+      // Drop Class Definition
+      class Drop {
+        constructor(x, y, radius, isMacro = false) {
+          this.x = x;
+          this.y = y;
+          this.radius = radius;
+          this.baseRadius = radius;
+          this.isMacro = isMacro;
+          this.vx = 0;
+          this.vy = 0;
+          this.falling = false;
+        }
+
+        update() {
+          if (this.isMacro) {
+            if (!this.falling && mouse.active) {
+              // Macro drop follows mouse smoothly
+              this.x += (mouse.x - this.x) * 0.1;
+              this.y += (mouse.y - this.y) * 0.1;
+
+              // Attract and absorb smaller drops
+              for (let i = drops.length - 1; i >= 0; i--) {
+                let d = drops[i];
+                let dx = this.x - d.x;
+                let dy = this.y - d.y;
+                let dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist < ATTRACTION_RADIUS) {
+                  // Pull small drops in
+                  d.x += dx * 0.05;
+                  d.y += dy * 0.05;
+                }
+
+                if (dist < this.radius) {
+                  // Absorb the drop, grow slightly, and remove small drop
+                  this.radius = Math.min(this.radius + d.radius * 0.2, 100);
+                  drops.splice(i, 1);
+                  // Spawn a new random drop to replace it
+                  drops.push(
+                    new Drop(
+                      Math.random() * width,
+                      Math.random() * height,
+                      Math.random() * 4 + 2
+                    )
+                  );
+                }
+              }
+            } else if (this.falling) {
+              // Apply Gravity and Wind when mouse leaves
+              this.vy += GRAVITY;
+              this.vx = Math.sin(Date.now() * 0.005) * WIND_SWAY; // Natural wobble
+              this.y += this.vy;
+              this.x += this.vx;
+
+              // Leave a tiny trail (shrink slowly)
+              if (this.radius > 5) this.radius -= 0.2;
+
+              // Reset if it falls off screen
+              if (this.y - this.radius > height) {
+                resetMacroDrop();
+              }
+            }
+          } else {
+            // Static background drops occasionally trickle
+            if (Math.random() < 0.001) {
+              this.y += 1;
+            }
+          }
+        }
+
+        draw() {
+          // We draw the drop shape (mask)
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+          ctx.closePath();
+          ctx.fill();
+
+          // Add a subtle inner shadow to mimic 3D water volume
+          ctx.lineWidth = 2;
+          ctx.strokeStyle = "rgba(255, 255, 255, 0.4)";
+          ctx.stroke();
+        }
+      }
+
+      function init() {
+        // Populate initial background drops
+        for (let i = 0; i < NUM_BACKGROUND_DROPS; i++) {
+          drops.push(
+            new Drop(
+              Math.random() * width,
+              Math.random() * height,
+              Math.random() * 5 + 2
+            )
+          );
+        }
+        // Create the hidden macro drop
+        macroDrop = new Drop(-1000, -1000, 30, true);
+      }
+
+      function resetMacroDrop() {
+        macroDrop.x = -1000;
+        macroDrop.y = -1000;
+        macroDrop.radius = 30;
+        macroDrop.falling = false;
+        macroDrop.vy = 0;
+        mouse.active = false;
+      }
+
+      // Interaction Listeners
+      window.addEventListener("mousemove", (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+        mouse.active = true;
+
+        if (macroDrop.falling) {
+          // If it was falling, catch it again
+          macroDrop.falling = false;
+          macroDrop.vy = 0;
+          macroDrop.radius = 30; // reset size on new hover
+        }
+
+        // Reset the idle timer
+        clearTimeout(idleTimer);
+        idleTimer = setTimeout(() => {
+          if (mouse.active) {
+            macroDrop.falling = true; // Let it fall
+            mouse.active = false;
+          }
+        }, IDLE_TIMEOUT_MS);
+      });
+
+      window.addEventListener("mouseout", () => {
+        // Drop falls immediately if mouse leaves screen
+        macroDrop.falling = true;
+        mouse.active = false;
+        clearTimeout(idleTimer);
+      });
+
+      // Main Render Loop
+      function animate() {
+        requestAnimationFrame(animate);
+
+        // 1. Clear the canvas entirely
+        ctx.clearRect(0, 0, width, height);
+
+        // 2. Setup the mask: draw all drops in solid white
+        ctx.globalCompositeOperation = "source-over";
+        ctx.fillStyle = "#fff";
+
+        drops.forEach((drop) => {
+          drop.update();
+          drop.draw();
+        });
+
+        if (mouse.active || macroDrop.falling) {
+          macroDrop.update();
+          macroDrop.draw();
+        }
+
+        // 3. The Magic: Draw the sharp image ONLY where the drops (mask) exist
+        if (sharpImage.complete) {
+          ctx.globalCompositeOperation = "source-in"; // Replaces white drops with the image
+
+          // Calculate aspect ratio to cover the screen like CSS background-size: cover
+          const imgRatio = sharpImage.width / sharpImage.height;
+          const screenRatio = width / height;
+          let drawWidth = width;
+          let drawHeight = height;
+          let offsetX = 0;
+          let offsetY = 0;
+
+          if (screenRatio > imgRatio) {
+            drawHeight = width / imgRatio;
+            offsetY = (height - drawHeight) / 2;
+          } else {
+            drawWidth = height * imgRatio;
+            offsetX = (width - drawWidth) / 2;
+          }
+
+          ctx.drawImage(sharpImage, offsetX, offsetY, drawWidth, drawHeight);
+        }
+
+        // 4. Add glassy highlights over the image
+        ctx.globalCompositeOperation = "source-over";
+        // We use the same drops loop just to draw highlights
+        ctx.fillStyle = "rgba(255,255,255,0.1)";
+        drops.forEach((drop) => {
+          ctx.beginPath();
+          ctx.arc(
+            drop.x - drop.radius * 0.2,
+            drop.y - drop.radius * 0.2,
+            drop.radius * 0.3,
+            0,
+            Math.PI * 2
+          );
+          ctx.fill();
+        });
+        if (mouse.active || macroDrop.falling) {
+          ctx.beginPath();
+          ctx.arc(
+            macroDrop.x - macroDrop.radius * 0.2,
+            macroDrop.y - macroDrop.radius * 0.2,
+            macroDrop.radius * 0.3,
+            0,
+            Math.PI * 2
+          );
+          ctx.fill();
+        }
+      }
+
+      // Wait for image to load to avoid flickering, then start
+      sharpImage.onload = () => {
+        init();
+        animate();
+      };
+      // Fallback in case image is already cached
+      if (sharpImage.complete) {
+        init();
+        animate();
+      }
+    </script>
+  </body>
+</html>
