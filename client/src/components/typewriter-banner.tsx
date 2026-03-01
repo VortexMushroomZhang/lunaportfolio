@@ -55,13 +55,13 @@ export default function TypewriterBanner() {
       >
         Xumeng Zhang
       </h1>
-      <div className="mt-2 flex items-baseline">
+      <div className="mt-2 flex items-baseline h-[1.4em] text-xl md:text-2xl lg:text-3xl">
         <span
-          className="font-sans text-xl md:text-2xl lg:text-3xl font-light"
+          className="font-sans font-light whitespace-pre"
           style={{ color: "rgba(255,255,255,0.6)" }}
           data-testid="text-role"
         >
-          {displayed}
+          {displayed || "\u200B"}
         </span>
         <span
           className="ml-0.5 inline-block w-[2px] h-[1.1em] align-baseline"
