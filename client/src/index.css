@@ -24,11 +24,43 @@ html, body {
   transition: all 150ms ease;
 }
 .btn-pill:hover {
-  background: rgba(0,0,0,0.06) !important;
+  background: #0A5068 !important;
+  color: #fff !important;
+  border-color: #0A5068 !important;
 }
 .btn-pill:active {
-  background: rgba(0,0,0,0.12) !important;
+  background: #083F52 !important;
+  color: #fff !important;
   transform: scale(0.97);
+}
+
+.view-project-btn {
+  transition: all 150ms ease;
+}
+.view-project-btn:hover {
+  background: #0A5068 !important;
+  color: #fff !important;
+  border-color: #0A5068 !important;
+}
+.view-project-btn:hover .arrow-icon {
+  transform: rotate(0deg);
+}
+.view-project-btn:active {
+  background: #083F52 !important;
+  color: #fff !important;
+  transform: scale(0.97);
+}
+
+.project-card {
+  transition: background-color 200ms ease;
+}
+.project-card:hover {
+  background-color: rgba(255,255,255,0.6);
+}
+.project-card:hover .view-project-btn {
+  background: #0A5068 !important;
+  color: #fff !important;
+  border-color: #0A5068 !important;
 }
 
 .ascii-art-blend {

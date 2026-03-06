@@ -54,7 +54,7 @@ export default function SiteFooter() {
                   rel="noopener noreferrer"
                   data-testid="footer-link-instagram"
                   className="group font-sans text-sm font-medium inline-flex items-center gap-1.5"
-                  style={{ color: "#8B6F5E" }}
+                  style={{ color: "#A290C0" }}
                 >
                   <span className="no-underline group-hover:underline group-hover:underline-offset-2 transition-all decoration-current">
                     CookingInstagram
