@@ -93,27 +93,10 @@ function SunsetViewer() {
   const [next, setNext] = useState(1);
   const [transitioning, setTransitioning] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const DURATION = 6000;
-  const FADE = 2000;
+  const DURATION = 8000;
+  const FADE = 1200;
 
-  const advance = useCallback(() => {
-    const nextIdx = (current + 1) % sunsets.length;
-    setNext(nextIdx);
-    setTransitioning(true);
-    setTimeout(() => {
-      setCurrent(nextIdx);
-      setTransitioning(false);
-    }, FADE);
-  }, [current]);
-
-  useEffect(() => {
-    timerRef.current = setTimeout(advance, DURATION);
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
-  }, [advance]);
-
-  const goTo = (idx: number) => {
+  const goToIdx = useCallback((idx: number) => {
     if (idx === current || transitioning) return;
     if (timerRef.current) clearTimeout(timerRef.current);
     setNext(idx);
@@ -122,77 +105,112 @@ function SunsetViewer() {
       setCurrent(idx);
       setTransitioning(false);
     }, FADE);
-  };
+  }, [current, transitioning]);
+
+  const advance = useCallback(() => {
+    const nextIdx = (current + 1) % sunsets.length;
+    goToIdx(nextIdx);
+  }, [current, goToIdx]);
+
+  const goPrev = useCallback(() => {
+    const prevIdx = (current - 1 + sunsets.length) % sunsets.length;
+    goToIdx(prevIdx);
+  }, [current, goToIdx]);
+
+  useEffect(() => {
+    timerRef.current = setTimeout(advance, DURATION);
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, [advance]);
+
+  // Keyboard left/right
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "ArrowRight") advance();
+      else if (e.key === "ArrowLeft") goPrev();
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [advance, goPrev]);
 
   return (
     <div className="sticky top-0 w-full h-screen overflow-hidden bg-black">
-      <img
-        key={`current-${current}`}
-        src={sunsets[current].src}
-        alt={sunsets[current].title}
-        className="absolute inset-0 w-full h-full object-cover"
-      />
+      {/* Next image sits behind, always visible */}
       <img
         key={`next-${next}`}
         src={sunsets[next].src}
         alt={sunsets[next].title}
         className="absolute inset-0 w-full h-full object-cover"
+      />
+      {/* Current image sits on top, fades out to reveal next */}
+      <img
+        key={`current-${current}`}
+        src={sunsets[current].src}
+        alt={sunsets[current].title}
+        className="absolute inset-0 w-full h-full object-cover"
         style={{
-          opacity: transitioning ? 1 : 0,
+          opacity: transitioning ? 0 : 1,
           transition: `opacity ${FADE}ms ease-in-out`,
         }}
       />
 
       {/* Bottom gradient */}
       <div
-        className="absolute inset-x-0 bottom-0 h-1/3 pointer-events-none"
-        style={{ background: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%)" }}
+        className="absolute inset-x-0 bottom-0 h-1/4 pointer-events-none"
+        style={{ background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%)" }}
       />
 
-      {/* Title + location */}
-      <div className="absolute bottom-0 inset-x-0 flex flex-col items-center pb-14 md:pb-20 z-10">
-        <h3
-          className="font-serif text-2xl md:text-4xl font-light tracking-tight text-white mb-2"
-          style={{
-            opacity: transitioning ? 0 : 1,
-            transition: `opacity ${FADE * 0.4}ms ease`,
-          }}
-        >
-          {sunsets[current].title}
-        </h3>
+      {/* Location + date — fades with the image */}
+      <div
+        className="absolute bottom-0 inset-x-0 flex flex-col items-center pb-12 md:pb-16 z-10"
+        style={{
+          opacity: transitioning ? 0 : 1,
+          transition: `opacity ${FADE}ms ease-in-out`,
+        }}
+      >
         <p
-          className="font-sans text-xs md:text-sm tracking-widest uppercase"
-          style={{
-            color: "rgba(255,255,255,0.6)",
-            opacity: transitioning ? 0 : 1,
-            transition: `opacity ${FADE * 0.4}ms ease`,
-          }}
+          className="font-sans text-xs tracking-widest uppercase mb-1"
+          style={{ color: "rgba(255,255,255,0.7)" }}
         >
           {sunsets[current].location}
         </p>
+        <p
+          className="font-sans text-[10px] tracking-wider"
+          style={{ color: "rgba(255,255,255,0.45)" }}
+        >
+          {sunsets[current].title}
+        </p>
       </div>
 
+      {/* Left / Right tap zones */}
+      <button
+        className="absolute left-0 top-0 w-1/4 h-full z-10 cursor-w-resize"
+        style={{ background: "transparent" }}
+        onClick={goPrev}
+        aria-label="Previous sunset"
+      />
+      <button
+        className="absolute right-0 top-0 w-1/4 h-full z-10 cursor-e-resize"
+        style={{ background: "transparent" }}
+        onClick={advance}
+        aria-label="Next sunset"
+      />
+
       {/* Dot indicators */}
-      <div className="absolute bottom-5 inset-x-0 flex justify-center gap-2 z-10">
+      <div className="absolute bottom-4 inset-x-0 flex justify-center gap-2 z-10">
         {sunsets.map((_, idx) => (
           <button
             key={idx}
-            onClick={() => goTo(idx)}
-            className="w-2 h-2 rounded-full transition-all duration-300"
+            onClick={() => goToIdx(idx)}
+            className="w-1.5 h-1.5 rounded-full transition-all duration-300"
             style={{
-              background: idx === current ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.3)",
-              transform: idx === current ? "scale(1.3)" : "scale(1)",
+              background: idx === current ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.25)",
+              transform: idx === current ? "scale(1.4)" : "scale(1)",
             }}
             aria-label={`View sunset ${idx + 1}`}
           />
         ))}
-      </div>
-
-      {/* Scroll hint */}
-      <div className="absolute bottom-5 right-6 z-10">
-        <p className="font-sans text-[10px] tracking-wider uppercase" style={{ color: "rgba(255,255,255,0.35)" }}>
-          Scroll to continue
-        </p>
       </div>
     </div>
   );
@@ -213,11 +231,11 @@ export default function Exploration() {
         <InteractiveTree />
       </section>
 
-      {/* ═══ Section 2: Vibe Coding Projects — home page card style on lavender ═══ */}
+      {/* ═══ Section 2: interest Projects — home page card style on lavender ═══ */}
       <section
         className="relative"
         style={{ background: LAV_PURPLE }}
-        data-testid="section-vibe-projects"
+        data-testid="section-interest-projects"
       >
         <div className={`${CONTENT} px-6 py-20 md:py-28`}>
           <div className="mb-16">

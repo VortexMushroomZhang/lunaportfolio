@@ -25,6 +25,8 @@ interface Vec2 { x: number; y: number }
 interface BranchSeg {
   start: Vec2;
   end: Vec2;
+  cp1: Vec2; // cubic bezier control point 1
+  cp2: Vec2; // cubic bezier control point 2
   thickness: number;
   depth: number;
   angle: number;
@@ -68,20 +70,34 @@ function buildBranch(
     x: start.x + Math.cos(angle) * length,
     y: start.y + Math.sin(angle) * length,
   };
-  const seg: BranchSeg = { start, end, thickness, depth, angle, length, children: [], baseAngle: angle };
+
+  // Generate organic cubic bezier control points — perpendicular offsets for natural curves
+  const perpAngle = angle + Math.PI / 2;
+  const curviness = length * (0.1 + Math.random() * 0.2) * (Math.random() > 0.5 ? 1 : -1);
+  const curviness2 = length * (0.05 + Math.random() * 0.15) * (Math.random() > 0.5 ? 1 : -1);
+  const cp1: Vec2 = {
+    x: lerp(start.x, end.x, 0.33) + Math.cos(perpAngle) * curviness,
+    y: lerp(start.y, end.y, 0.33) + Math.sin(perpAngle) * curviness,
+  };
+  const cp2: Vec2 = {
+    x: lerp(start.x, end.x, 0.66) + Math.cos(perpAngle) * curviness2,
+    y: lerp(start.y, end.y, 0.66) + Math.sin(perpAngle) * curviness2,
+  };
+
+  const seg: BranchSeg = { start, end, cp1, cp2, thickness, depth, angle, length, children: [], baseAngle: angle };
 
   if (depth < maxDepth) {
-    // More children at lower depths for a fuller tree
-    const numChildren = depth < 1 ? 3 + Math.floor(Math.random() * 2)
-      : depth < 3 ? 2 + Math.floor(Math.random() * 2)
+    // More children for a bigger, fuller crown
+    const numChildren = depth < 1 ? 4 + Math.floor(Math.random() * 2)
+      : depth < 3 ? 3 + Math.floor(Math.random() * 2)
       : 1 + Math.floor(Math.random() * 2);
     for (let i = 0; i < numChildren; i++) {
-      const spread = 0.25 + Math.random() * 0.55;
+      const spread = 0.4 + Math.random() * 0.7;
       const side = i % 2 === 0 ? 1 : -1;
-      const childAngle = angle + side * spread + (Math.random() - 0.5) * 0.15;
-      const childLen = length * (0.55 + Math.random() * 0.25);
+      const childAngle = angle + side * spread + (Math.random() - 0.5) * 0.2;
+      const childLen = length * (0.65 + Math.random() * 0.3);
       const childThick = thickness * (depth < 2 ? 0.6 : 0.55);
-      const t = 0.45 + Math.random() * 0.5;
+      const t = 0.4 + Math.random() * 0.5;
       const branchStart: Vec2 = { x: lerp(start.x, end.x, t), y: lerp(start.y, end.y, t) };
       seg.children.push(buildBranch(branchStart, childAngle, childLen, childThick, depth + 1, maxDepth));
     }
@@ -91,26 +107,28 @@ function buildBranch(
 
 function buildGrowBranch(start: Vec2, color: string): BranchSeg[] {
   const branches: BranchSeg[] = [];
-  const num = 2 + Math.floor(Math.random() * 2);
+  const num = 2 + Math.floor(Math.random() * 2); // 2-3 thin tendrils
   for (let i = 0; i < num; i++) {
     const angle = -Math.PI / 2 + (Math.random() - 0.5) * 1.8;
-    const length = 20 + Math.random() * 40;
-    branches.push(buildBranch(start, angle, length, 1.5, 0, 2));
+    const length = 45 + Math.random() * 65;
+    branches.push(buildBranch(start, angle, length, 1.2, 0, 1)); // depth 1 = single branch, no sub-branching
   }
   (branches as any)._color = color;
   return branches;
 }
 
 function collectPoints(seg: BranchSeg, depth: number, results: { pos: Vec2; branch: BranchSeg }[]) {
-  // Collect endpoints AND midpoints from depth 1+ for more dot placement options
+  // Collect from depth 1+ (main branches + crown, skip trunk at depth 0)
   if (depth >= 1) {
     results.push({ pos: { ...seg.end }, branch: seg });
-    // Also add a midpoint
-    const mid: Vec2 = {
-      x: lerp(seg.start.x, seg.end.x, 0.5 + (Math.random() - 0.5) * 0.3),
-      y: lerp(seg.start.y, seg.end.y, 0.5 + (Math.random() - 0.5) * 0.3),
-    };
-    results.push({ pos: mid, branch: seg });
+    // Add midpoint on outer branches for better spread
+    if (depth >= 2) {
+      const mid: Vec2 = {
+        x: lerp(seg.start.x, seg.end.x, 0.4 + Math.random() * 0.3),
+        y: lerp(seg.start.y, seg.end.y, 0.4 + Math.random() * 0.3),
+      };
+      results.push({ pos: mid, branch: seg });
+    }
   }
   for (const child of seg.children) {
     collectPoints(child, depth + 1, results);
@@ -242,11 +260,11 @@ export default function InteractiveTree() {
     // Build background neuron shape (pre-generated, stable)
     s.neuron = buildNeuronShape(w / 1200);
 
-    // Trunk starts from bottom-right, grows toward upper-left
-    const trunkStart: Vec2 = { x: w * 0.72, y: h * 0.95 };
-    const trunkAngle = -Math.PI / 2 - 0.2 + (Math.random() - 0.5) * 0.1; // slightly left-leaning upward
-    const trunkLen = h * 0.42;
-    s.tree = buildBranch(trunkStart, trunkAngle, trunkLen, 14, 0, 6);
+    // Trunk starts from bottom-right, touching the very bottom, grows toward upper-left
+    const trunkStart: Vec2 = { x: w * 0.72, y: h * 1.02 };
+    const trunkAngle = -Math.PI / 2 - 0.2 + (Math.random() - 0.5) * 0.1;
+    const trunkLen = h * 0.3; // short trunk, big crown
+    s.tree = buildBranch(trunkStart, trunkAngle, trunkLen, 14, 0, 7);
 
     // Collect branch points to place dots
     const points: { pos: Vec2; branch: BranchSeg }[] = [];
@@ -377,38 +395,38 @@ export default function InteractiveTree() {
         ctx!.restore();
       }
 
-      // Draw tree with wind — thicker trunk with organic variation
+      // Draw tree with wind — organic cubic bezier branches
       function drawBranch(seg: BranchSeg, parentWindX: number) {
         const windX = windOffset(seg.start.x, seg.start.y, seg.depth);
-        const startX = seg.start.x + parentWindX;
-        const endX = seg.end.x + windX;
-        const startY = seg.start.y;
-        const endY = seg.end.y;
-
-        // Draw with tapering: thick at start, thinner at end
-        const startThick = seg.thickness;
-        const endThick = seg.thickness * (seg.depth < 2 ? 0.7 : 0.6);
-
-        ctx!.beginPath();
-        ctx!.moveTo(startX, startY);
-        const midX = (startX + endX) / 2 + windX * 0.3;
-        const midY = (startY + endY) / 2;
-        ctx!.quadraticCurveTo(midX, midY, endX, endY);
+        const windScale = seg.depth < 2 ? 0.3 : 1; // trunk sways less
+        const sx = seg.start.x + parentWindX * windScale;
+        const sy = seg.start.y;
+        const ex = seg.end.x + windX * windScale;
+        const ey = seg.end.y;
+        const c1x = seg.cp1.x + lerp(parentWindX, windX, 0.33) * windScale;
+        const c1y = seg.cp1.y;
+        const c2x = seg.cp2.x + lerp(parentWindX, windX, 0.66) * windScale;
+        const c2y = seg.cp2.y;
 
         const alpha = Math.max(0.12, 0.55 - seg.depth * 0.07);
+
+        // Main branch stroke — cubic bezier for natural curves
+        ctx!.beginPath();
+        ctx!.moveTo(sx, sy);
+        ctx!.bezierCurveTo(c1x, c1y, c2x, c2y, ex, ey);
         ctx!.strokeStyle = `rgba(10, 80, 104, ${alpha})`;
-        // Use average of start/end thickness for the stroke
-        ctx!.lineWidth = Math.max(0.5, (startThick + endThick) / 2);
+        ctx!.lineWidth = Math.max(0.5, seg.thickness);
         ctx!.lineCap = "round";
         ctx!.stroke();
 
-        // For thick trunk segments, draw a second slightly offset stroke for organic feel
-        if (seg.thickness > 6) {
+        // For thick segments, add a parallel stroke for organic volume
+        if (seg.thickness > 5) {
+          const off = seg.thickness * 0.25;
           ctx!.beginPath();
-          ctx!.moveTo(startX + 1, startY);
-          ctx!.quadraticCurveTo(midX + 1.5, midY - 1, endX + 0.5, endY);
-          ctx!.strokeStyle = `rgba(10, 80, 104, ${alpha * 0.4})`;
-          ctx!.lineWidth = seg.thickness * 0.4;
+          ctx!.moveTo(sx + off, sy + off * 0.5);
+          ctx!.bezierCurveTo(c1x + off, c1y - off * 0.3, c2x - off * 0.5, c2y + off * 0.3, ex, ey);
+          ctx!.strokeStyle = `rgba(10, 80, 104, ${alpha * 0.3})`;
+          ctx!.lineWidth = seg.thickness * 0.35;
           ctx!.stroke();
         }
 
@@ -465,25 +483,29 @@ export default function InteractiveTree() {
           const p = Math.min(1, depthProgress);
 
           const sx = seg.start.x + windX;
-          const ex = lerp(seg.start.x, seg.end.x, p) + windX;
           const sy = seg.start.y;
+          const ex = lerp(seg.start.x, seg.end.x, p) + windX;
           const ey = lerp(seg.start.y, seg.end.y, p);
+          const c1x = lerp(seg.start.x, seg.cp1.x, p) + windX;
+          const c1y = lerp(seg.start.y, seg.cp1.y, p);
+          const c2x = lerp(seg.start.x, seg.cp2.x, p) + windX;
+          const c2y = lerp(seg.start.y, seg.cp2.y, p);
 
           ctx!.beginPath();
           ctx!.moveTo(sx, sy);
-          ctx!.lineTo(ex, ey);
+          ctx!.bezierCurveTo(c1x, c1y, c2x, c2y, ex, ey);
           ctx!.strokeStyle = color + "90";
           ctx!.lineWidth = Math.max(0.5, seg.thickness * p);
           ctx!.lineCap = "round";
           ctx!.stroke();
 
           for (const child of seg.children) {
-            drawSeg(child, depthProgress - 0.4);
+            drawSeg(child, depthProgress - 0.35);
           }
         }
 
         for (const branch of branches) {
-          drawSeg(branch, progress * 2);
+          drawSeg(branch, progress * 2.5);
         }
       }
 
