@@ -48,9 +48,10 @@ const IDLE_MS = 1800;
 const MACRO_GRAVITY = 0.45;
 const MACRO_WIND = 0.6;
 
+const BASE = import.meta.env.BASE_URL;
 const BG_IMAGES = [
-  "/images/bg-city-sunset.jpg",
-  "/images/bg-street-rain.jpg",
+  `${BASE}images/bg-city-sunset.jpg`,
+  `${BASE}images/bg-street-rain.jpg`,
 ];
 
 function pickBg(): string {
