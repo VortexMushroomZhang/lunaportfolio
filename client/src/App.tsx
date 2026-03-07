@@ -8,11 +8,13 @@ import FilmGrain from "@/components/film-grain";
 import BackgroundGrid from "@/components/background-grid";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
+import Exploration from "@/pages/exploration";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/exploration" component={Exploration} />
       <Route component={NotFound} />
     </Switch>
   );
