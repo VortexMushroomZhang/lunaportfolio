@@ -12,6 +12,11 @@ export default function Navigation() {
   const [scrolledPastHero, setScrolledPastHero] = useState(false);
   const isHomePage = location === "/";
 
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+
   useEffect(() => {
     if (!isHomePage) {
       setScrolledPastHero(true);

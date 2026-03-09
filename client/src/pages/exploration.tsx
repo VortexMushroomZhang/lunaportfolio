@@ -256,12 +256,10 @@ export default function Exploration() {
 
         <div className="w-full h-px" style={{ background: "rgba(255,255,255,0.12)" }} />
 
-        {/* Sparse 5-col grid — small cards, text at bottom */}
+        {/* Desktop: sparse 5-col grid; Mobile: 3-col simple grid */}
         <div
-          className={`${CONTENT} relative grid border-l border-r`}
+          className={`${CONTENT} relative grid grid-cols-3 md:grid-cols-5 md:[grid-template-rows:repeat(3,auto)] border-l border-r`}
           style={{
-            gridTemplateColumns: "repeat(5, 1fr)",
-            gridTemplateRows: "repeat(3, auto)",
             borderColor: "rgba(255,255,255,0.12)",
           }}
         >
@@ -271,15 +269,15 @@ export default function Exploration() {
               <a
                 key={project.id}
                 href="#"
-                className="group block transition-all duration-200"
+                className="group block transition-all duration-200 md:[grid-row:var(--gr)] md:[grid-column:var(--gc)]"
                 style={{
-                  gridRow: row + 1,
-                  gridColumn: col + 1,
+                  "--gr": row + 1,
+                  "--gc": col + 1,
                   background: "transparent",
                   border: "1px solid rgba(255,255,255,0.12)",
                   marginTop: "-1px",
                   marginLeft: "-1px",
-                }}
+                } as React.CSSProperties}
               >
                 <div
                   className="aspect-square flex flex-col overflow-hidden p-4 transition-colors duration-200 group-hover:bg-white/10"
