@@ -3,6 +3,7 @@ import Navigation from "@/components/navigation";
 import TypewriterBanner from "@/components/typewriter-banner";
 import SiteFooter from "@/components/site-footer";
 import { Link } from "wouter";
+import { useEffect, useRef } from "react";
 import vlkWorkImg from "@images/VLK_work.svg";
 import clientVoiceImg from "@images/ClientVoice.png";
 import masteryLoopImg from "@images/MasteryLoop.jpg";
@@ -111,10 +112,81 @@ function FullLine() {
   return <div className="w-full h-px" style={{ background: LINE }} />;
 }
 
+const BASE = import.meta.env.BASE_URL;
+
 export default function Home() {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const heroRef = useRef<HTMLElement | null>(null);
+  const fadingRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    const audio = new Audio(`${BASE}Rain.mp3`);
+    audio.loop = true;
+    audio.volume = 0;
+    audioRef.current = audio;
+
+    const tryPlay = () => {
+      audio.play().catch(() => {});
+    };
+
+    const fadeVolume = (targetVol: number) => {
+      if (fadingRef.current) clearInterval(fadingRef.current);
+      fadingRef.current = setInterval(() => {
+        const cur = audioRef.current;
+        if (!cur) return;
+        const diff = targetVol - cur.volume;
+        if (Math.abs(diff) < 0.02) {
+          cur.volume = targetVol;
+          if (fadingRef.current) clearInterval(fadingRef.current);
+          if (targetVol === 0) cur.pause();
+        } else {
+          cur.volume = Math.max(0, Math.min(1, cur.volume + diff * 0.1));
+        }
+      }, 50);
+    };
+
+    const onScroll = () => {
+      const hero = heroRef.current;
+      if (!hero) return;
+      const rect = hero.getBoundingClientRect();
+      const inHero = rect.bottom > window.innerHeight * 0.2;
+      if (inHero) {
+        if (audioRef.current!.paused) {
+          audioRef.current!.play().catch(() => {});
+        }
+        fadeVolume(0.3);
+      } else {
+        fadeVolume(0);
+      }
+    };
+
+    // Start on first interaction (browser autoplay policy)
+    const onInteract = () => {
+      tryPlay();
+      fadeVolume(0.3);
+      window.removeEventListener("click", onInteract);
+      window.removeEventListener("keydown", onInteract);
+      window.removeEventListener("touchstart", onInteract);
+    };
+    window.addEventListener("click", onInteract);
+    window.addEventListener("keydown", onInteract);
+    window.addEventListener("touchstart", onInteract);
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      audio.pause();
+      if (fadingRef.current) clearInterval(fadingRef.current);
+      window.removeEventListener("click", onInteract);
+      window.removeEventListener("keydown", onInteract);
+      window.removeEventListener("touchstart", onInteract);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
   return (
     <div data-testid="page-home">
       <section
+        ref={heroRef}
         className="relative w-full h-screen overflow-hidden"
         data-testid="section-hero"
       >
