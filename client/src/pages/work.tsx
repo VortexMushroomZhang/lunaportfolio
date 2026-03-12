@@ -19,7 +19,7 @@ const projects = [
     company: "Van Lanschot Kempen",
     desc: "Leading research on banker-facing CRM and data analysis toolings, internal AI chat assistant, and client-facing mobile applications.",
     tags: ["Research", "AI", "Mobile"],
-    quote: '"Design that moves at the speed of finance."',
+    quote: '"Accuracy and craftmanship in Finance."',
     envBg: "#0A3040",
   },
   {
@@ -252,12 +252,12 @@ export default function Work() {
               ))}
             </div>
 
-            {/* ── Clip photo group — right side, bottom-aligned to envelope ── */}
+            {/* ── Clip photo group — far right, bottom-aligned to envelope ── */}
             <div
               ref={photosRef}
               style={{
                 position: "absolute",
-                right: 8,
+                right: -48,
                 bottom: 158,
                 width: 175,
                 zIndex: 22,
@@ -385,25 +385,6 @@ export default function Work() {
               zIndex: 29, transform: "rotate(5deg)",
             }} />
 
-            {/* ── Paper clip ── */}
-            <div style={{
-              position: "absolute",
-              top: 90, right: 62,
-              zIndex: 30, width: 11, height: 32,
-              border: "2px solid #888",
-              borderRadius: "6px 6px 0 0",
-              borderBottom: "none",
-            }}>
-              <div style={{
-                position: "absolute",
-                top: 5, left: 1,
-                width: 5, height: 19,
-                border: "2px solid #888",
-                borderRadius: "3px 3px 0 0",
-                borderBottom: "none",
-              }} />
-            </div>
-
             {/* ── Map / illustration polaroid ── */}
             <div
               ref={mapRef}
@@ -424,7 +405,7 @@ export default function Work() {
                 whiteSpace: "nowrap", lineHeight: 1.5,
                 fontStyle: "italic",
               }}>
-                Note —<br />consistent, clear, fun
+                consistent, clear, fun
               </div>
               <div style={{
                 background: "#e8e2d5",
@@ -465,12 +446,12 @@ export default function Work() {
               </div>
             </div>
 
-            {/* ── Ticket — slides up on hover ── */}
+            {/* ── Ticket — peeks out of envelope, slides fully up on hover ── */}
             <div style={{
               position: "absolute",
-              bottom: hovered ? 300 : 52,
+              bottom: hovered ? 360 : 130,
               left: "50%",
-              transform: `translateX(-50%) rotate(${hovered ? "-0.4deg" : "-1deg"})`,
+              transform: `translateX(-50%) rotate(${hovered ? "-0.4deg" : "-0.8deg"})`,
               width: 370,
               zIndex: 15,
               transition: "bottom 0.72s cubic-bezier(0.16,1,0.3,1), transform 0.72s cubic-bezier(0.16,1,0.3,1)",
@@ -600,37 +581,51 @@ export default function Work() {
               </div>
             </div>
 
-            {/* ── Envelope shell ── */}
+            {/* ── Envelope — open flap + body ── */}
             <div style={{
               position: "absolute",
               bottom: 30, left: "50%",
-              transform: `translateX(-50%) rotate(-1deg)${hovered ? " translateY(-4px)" : ""}`,
-              width: 360, height: 205,
+              transform: `translateX(-50%) rotate(-1deg)${hovered ? " translateY(-3px)" : ""}`,
+              width: 360,
               zIndex: 20,
               filter: "drop-shadow(0 24px 60px rgba(0,0,0,0.22))",
               transition: "transform 0.4s cubic-bezier(0.23,1,0.32,1)",
             }}>
+              {/* Open flap — triangle pointing up, sits above body */}
               <div style={{
-                position: "absolute", inset: 0, borderRadius: 2, overflow: "hidden",
+                width: "100%", height: 88,
+                background: p.envBg,
+                clipPath: "polygon(0% 100%, 50% 0%, 100% 100%)",
+                filter: "brightness(0.78)",
+                transition: "background 0.5s",
+                marginBottom: -1,
+              }} />
+
+              {/* Envelope body */}
+              <div style={{
+                height: 205, borderRadius: "0 0 2px 2px", overflow: "hidden",
                 background: p.envBg, transition: "background 0.5s",
+                position: "relative",
               }}>
                 <div style={{
                   position: "absolute", inset: 0,
                   background: "repeating-linear-gradient(0deg,transparent,transparent 18px,rgba(255,255,255,0.015) 18px,rgba(255,255,255,0.015) 19px)",
                   pointerEvents: "none",
                 }} />
+                {/* X fold lines */}
                 <div style={{
                   position: "absolute", bottom: 0, left: 0,
                   width: "50%", height: "100%",
                   clipPath: "polygon(0 100%,0 0,100% 100%)",
-                  background: "rgba(0,0,0,0.22)",
+                  background: "rgba(0,0,0,0.18)",
                 }} />
                 <div style={{
                   position: "absolute", bottom: 0, right: 0,
                   width: "50%", height: "100%",
                   clipPath: "polygon(100% 0,0 100%,100% 100%)",
-                  background: "rgba(0,0,0,0.14)",
+                  background: "rgba(0,0,0,0.11)",
                 }} />
+                {/* Address box */}
                 <div style={{
                   position: "absolute", top: 10, left: 12,
                   border: `1px solid ${TEAL}70`,
@@ -644,11 +639,12 @@ export default function Work() {
                     letterSpacing: "0.25em", color: TEAL,
                     borderBottom: `1px solid ${TEAL}40`,
                     paddingBottom: 3, marginBottom: 4, fontWeight: 600,
-                  }}>RESEARCH CASE</div>
+                  }}>CASE {p.num}</div>
                   {p.company.toUpperCase()}<br />
                   {p.type.toUpperCase()}<br />
                   {p.period}
                 </div>
+                {/* Sticker */}
                 <div style={{
                   position: "absolute", bottom: 14, right: 14,
                   background: TEAL, color: "white",
@@ -667,7 +663,7 @@ export default function Work() {
               color: "rgba(0,0,0,0.2)", whiteSpace: "nowrap",
               pointerEvents: "none", zIndex: 35,
               opacity: hovered ? 0 : 1, transition: "opacity 0.3s",
-            }}>hover to retrieve ↑</div>
+            }}>pull to read ↑</div>
 
             {/* Dots */}
             <div style={{
