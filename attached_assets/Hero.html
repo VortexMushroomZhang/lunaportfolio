@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Archive — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=Caveat:wght@500;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #111210;
+  --paper: #e8e0d0;
+  --paper-aged: #d4c9b0;
+  --paper-dark: #b5a88a;
+  --ink: #1a1710;
+  --ink-faded: #3d3828;
+  --teal: #2d5a52;
+  --teal-light: #3d7a6e;
+  --rust: #8b3a1a;
+  --rust-light: #c04a20;
+  --stamp-red: #c0392b;
+  --cream: #f5efe0;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  background: var(--bg);
+  overflow: hidden;
+  font-family: 'Space Mono', monospace;
+  cursor: crosshair;
+}
+
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 9999;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity: 0.055;
+  mix-blend-mode: overlay;
+}
+
+.scene {
+  position: relative;
+  width: 100vw; height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+/* ── LEFT PANEL ── */
+.left-panel {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 46vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 0 0 56px;
+}
+
+.archive-stamp {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.45em;
+  color: rgba(255,255,255,0.12);
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.archive-stamp::before {
+  content: '';
+  display: block;
+  width: 20px; height: 1px;
+  background: rgba(255,255,255,0.12);
+}
+
+.main-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(54px, 6.5vw, 84px);
+  line-height: 0.88;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(213,199,170,0.18);
+  letter-spacing: 0.03em;
+  margin-bottom: 28px;
+  user-select: none;
+}
+
+.confidential-line {
+  font-size: 8px;
+  letter-spacing: 0.3em;
+  color: rgba(45,90,82,0.5);
+  text-transform: uppercase;
+  margin-bottom: 44px;
+  border-left: 2px solid rgba(45,90,82,0.3);
+  padding-left: 12px;
+}
+
+.nav-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Special Elite', cursive;
+  font-size: 12px;
+  color: rgba(213,199,170,0.22);
+  cursor: pointer;
+  padding: 8px 0;
+  transition: color 0.3s;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  position: relative;
+}
+.nav-item:hover, .nav-item.active { color: rgba(213,199,170,0.75); }
+.nav-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  color: rgba(45,90,82,0.5);
+  min-width: 24px;
+}
+.nav-item.active .nav-num { color: var(--teal-light); }
+.nav-tag {
+  margin-left: auto;
+  font-family: 'Space Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 0.15em;
+  color: rgba(139,58,26,0.4);
+}
+.nav-item.active .nav-tag { color: rgba(139,58,26,0.8); }
+
+/* ── RIGHT AREA ── */
+.envelope-area {
+  position: absolute;
+  right: 6vw;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48vw;
+  max-width: 560px;
+  height: 85vh;
+  max-height: 740px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+/* Folder */
+.folder {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-52%) rotate(1.5deg);
+  width: 360px;
+  height: 460px;
+  z-index: 1;
+  filter: drop-shadow(0 20px 60px rgba(0,0,0,0.8));
+}
+.folder-back {
+  position: absolute;
+  inset: 0;
+  background: #5a3515;
+  border-radius: 2px 2px 3px 3px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+}
+.folder-tab {
+  position: absolute;
+  top: -18px; left: 20px;
+  width: 80px; height: 20px;
+  background: #5a3515;
+  border-radius: 3px 3px 0 0;
+  font-family: 'Space Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.3);
+  display: flex; align-items: center; padding-left: 8px;
+}
+.folder-label {
+  position: absolute;
+  top: 16px; left: 20px; right: 20px;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 8px 10px;
+  font-size: 7px;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 0.15em;
+  line-height: 2;
+}
+.redact {
+  display: inline-block;
+  background: rgba(0,0,0,0.6);
+  height: 9px;
+  vertical-align: middle;
+  margin: 0 2px;
+}
+.folder-conf {
+  position: absolute;
+  bottom: 20px; right: 16px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  color: rgba(192,57,43,0.3);
+  transform: rotate(-4deg);
+}
+
+/* ── FILM STRIP (vertical, behind everything) ── */
+.film-strip-vert {
+  position: absolute;
+  left: 50%;
+  top: 0; bottom: 0;
+  transform: translateX(-148px) rotate(-1deg);
+  width: 52px;
+  z-index: 0;
+  background: #050505;
+  border-left: 3px solid #111;
+  border-right: 3px solid #111;
+  overflow: hidden;
+}
+.film-strip-vert::before,
+.film-strip-vert::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 10px;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 6px,
+    #111 6px, #111 7px,
+    transparent 7px,
+    transparent 10px,
+    #050505 10px, #050505 13px,
+    transparent 13px, transparent 16px
+  );
+}
+.film-strip-vert::before { left: 1px; }
+.film-strip-vert::after  { right: 1px; }
+
+.film-holes-col {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  top: 10px;
+}
+.film-holes-col.lft { left: 3px; }
+.film-holes-col.rgt { right: 3px; }
+.fhole {
+  width: 9px; height: 7px;
+  background: #181818;
+  border: 1px solid #2a2a2a;
+  border-radius: 1px;
+}
+
+.film-frame-vert {
+  position: absolute;
+  left: 14px; right: 14px;
+  border: 1px solid #1e1e1e;
+  overflow: hidden;
+}
+/* Colorful light-leak frames like reference image */
+.film-frame-vert:nth-child(1) { top: 18px;  height: 70px; background: linear-gradient(160deg, #1a0a2e 0%, #3a1060 40%, #0d0520 100%); }
+.film-frame-vert:nth-child(2) { top: 98px;  height: 70px; background: linear-gradient(170deg, #001a30 0%, #003a6a 50%, #0a2040 100%); }
+.film-frame-vert:nth-child(3) { top: 178px; height: 70px; background: linear-gradient(150deg, #0d1a0d 0%, #1a4a1a 50%, #0a1505 100%); }
+.film-frame-vert:nth-child(4) { top: 258px; height: 70px; background: linear-gradient(165deg, #2a1500 0%, #7a3a00 45%, #3a1a00 100%); }
+.film-frame-vert:nth-child(5) { top: 338px; height: 70px; background: linear-gradient(155deg, #1a0505 0%, #4a0a0a 50%, #200505 100%); }
+.film-frame-vert:nth-child(6) { top: 418px; height: 70px; background: linear-gradient(160deg, #050520 0%, #0a0a3a 50%, #050510 100%); }
+.film-frame-vert:nth-child(7) { top: 498px; height: 70px; background: linear-gradient(160deg, #1a1a0a 0%, #3a3a10 50%, #101005 100%); }
+.film-frame-vert:nth-child(8) { top: 578px; height: 70px; background: linear-gradient(170deg, #0a1a1a 0%, #104040 50%, #051515 100%); }
+
+/* light leak overlay per frame */
+.film-frame-vert::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 30% 60%, rgba(255,180,80,0.12) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 20%, rgba(100,180,255,0.1) 0%, transparent 50%);
+}
+
+/* ── CLIP PHOTOS ── */
+.clip-photo-group {
+  position: absolute;
+  top: 20px;
+  left: -20px;
+  width: 175px;
+  z-index: 22;
+  transform: rotate(-2deg);
+}
+
+/* Big binder clip */
+.binder-clip {
+  position: absolute;
+  top: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  width: 44px;
+}
+.bc-bar {
+  width: 44px; height: 14px;
+  background: linear-gradient(180deg, #d0d0d0 0%, #909090 40%, #b0b0b0 100%);
+  border-radius: 3px 3px 0 0;
+  position: relative;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+.bc-bar::before {
+  content: '';
+  position: absolute;
+  top: 3px; left: 50%; transform: translateX(-50%);
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #e8e8e8, #888);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.4);
+}
+.bc-wings {
+  display: flex; justify-content: space-between;
+  padding: 0 4px;
+}
+.bc-wing {
+  width: 16px; height: 20px;
+  background: linear-gradient(180deg, #b0b0b0, #787878);
+  clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
+}
+
+/* Photo cards held by clip */
+.clip-photo {
+  position: relative;
+  margin-bottom: -60px;
+}
+.clip-photo:nth-child(2) { transform: rotate(-4deg); margin-left: -8px; }
+.clip-photo:nth-child(3) { transform: rotate(3deg);  margin-left: 10px; }
+.clip-photo:nth-child(4) { transform: rotate(-2deg); margin-left: -4px; }
+
+.cp-inner {
+  background: #c8c0b0;
+  padding: 5px 5px 24px;
+  width: 160px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.6);
+}
+.cp-img {
+  width: 150px; height: 110px;
+  position: relative;
+  overflow: hidden;
+}
+.cp-img::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.07) 0%, transparent 60%);
+  mix-blend-mode: overlay;
+}
+/* Grainy monochrome look like the reference B&W photos */
+.cp-img::before {
+  content: '';
+  position: absolute; inset: 0;
+  z-index: 1;
+  background: inherit;
+  filter: grayscale(0.6) contrast(1.1);
+  mix-blend-mode: luminosity;
+  opacity: 0.4;
+}
+.cp-cap {
+  font-family: 'Space Mono', monospace;
+  font-size: 7px;
+  color: #444;
+  letter-spacing: 0.12em;
+  margin-top: 5px;
+  text-align: right;
+}
+
+/* ── SULFURIC / TRACING PAPER ── */
+.sulfuric-paper {
+  position: absolute;
+  top: 10px;
+  left: -14px;
+  transform: rotate(-1deg);
+  width: 168px;
+  height: 275px;
+  z-index: 28;
+  pointer-events: none;
+}
+.sp-inner {
+  width: 100%; height: 100%;
+  background: rgba(210, 220, 200, 0.13);
+  border: 1px solid rgba(200,210,190,0.2);
+  backdrop-filter: blur(0.5px);
+  position: relative;
+  overflow: hidden;
+}
+/* Subtle horizontal lines like tracing paper */
+.sp-inner::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 13px,
+    rgba(150,160,140,0.07) 13px,
+    rgba(150,160,140,0.07) 14px
+  );
+}
+/* Faint text visible through the paper */
+.sp-inner::after {
+  content: 'REACTION TO EXPOSURE IN A\nVIBRATION ENVIRONMENT\n\nTest No.:\nR-01\nR-02\nR-03\nR-04\n\n— expose the rock to a\nlow-temperature\nenvironment (−13°C)';
+  position: absolute;
+  top: 18px; left: 14px; right: 14px;
+  font-family: 'Special Elite', cursive;
+  font-size: 7px;
+  line-height: 2;
+  color: rgba(40,50,30,0.35);
+  white-space: pre-line;
+  letter-spacing: 0.05em;
+}
+/* Edge darkening - paper curl effect */
+.sp-shadow {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to right,  rgba(0,0,0,0.08) 0%, transparent 12%),
+    linear-gradient(to left,   rgba(0,0,0,0.05) 0%, transparent 10%),
+    linear-gradient(to bottom, rgba(0,0,0,0.06) 0%, transparent 8%),
+    linear-gradient(to top,    rgba(0,0,0,0.10) 0%, transparent 12%);
+  pointer-events: none;
+}
+
+/* Tape */
+.tape-strip {
+  position: absolute;
+  background: rgba(180,160,110,0.2);
+  border-top: 1px solid rgba(180,160,110,0.12);
+  border-bottom: 1px solid rgba(180,160,110,0.12);
+  z-index: 25;
+}
+/* Teal tape pieces on left cluster — like the reference image */
+.tape-h { width: 22px; height: 22px; top: 62%; left: 4px; transform: rotate(-3deg); background: rgba(40,110,80,0.55); border: none; }
+.tape-h2 { width: 18px; height: 18px; top: 78%; left: 8px; transform: rotate(5deg); background: rgba(40,110,80,0.45); border: none; }
+
+/* ── MAP POLAROID (illustrated, like the reference) ── */
+.map-polaroid {
+  position: absolute;
+  bottom: 120px;
+  left: -40px;
+  transform: rotate(-5deg);
+  z-index: 6;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.7));
+}
+.map-pol-inner {
+  background: #e8e2d5;
+  padding: 8px 8px 32px;
+  width: 155px;
+  box-shadow: 2px 4px 14px rgba(0,0,0,0.5);
+}
+.map-pol-img {
+  width: 139px;
+  height: 120px;
+  background: #ddd8cc;
+  position: relative;
+  overflow: hidden;
+}
+/* SVG-drawn map illustration like the reference */
+.map-pol-img svg {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  opacity: 0.85;
+}
+.map-pol-note {
+  position: absolute;
+  top: -36px; left: -5px;
+  font-family: 'Caveat', cursive;
+  font-size: 11px;
+  color: rgba(30,30,20,0.55);
+  transform: rotate(1deg);
+  white-space: nowrap;
+  line-height: 1.5;
+}
+.map-pol-cap {
+  font-family: 'Caveat', cursive;
+  font-size: 10px;
+  color: #555;
+  text-align: center;
+  margin-top: 6px;
+}
+
+/* Paper clip */
+.paperclip {
+  position: absolute;
+  top: 90px; right: 58px;
+  z-index: 30;
+  width: 11px; height: 32px;
+  border: 2px solid #777;
+  border-radius: 6px 6px 0 0;
+  border-bottom: none;
+}
+.paperclip::after {
+  content: '';
+  position: absolute;
+  top: 5px; left: 1px;
+  width: 5px; height: 19px;
+  border: 2px solid #777;
+  border-radius: 3px 3px 0 0;
+  border-bottom: none;
+}
+
+/* ── TICKET ── */
+.ticket-wrapper {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-1deg);
+  width: 314px;
+  z-index: 15;
+  transition: transform 0.72s cubic-bezier(0.16, 1, 0.3, 1),
+              bottom 0.72s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: drop-shadow(0 -4px 40px rgba(0,0,0,0.55));
+}
+
+.envelope-area:hover .ticket-wrapper {
+  bottom: 290px;
+  transform: translateX(-50%) rotate(-0.4deg);
+}
+
+.ticket { background: var(--paper); position: relative; }
+
+.perf-row {
+  height: 14px;
+  background: var(--paper);
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  gap: 6px;
+}
+.perf-row.top { border-bottom: 1.5px dashed rgba(0,0,0,0.2); }
+.perf-row.bot { border-top: 1.5px dashed rgba(0,0,0,0.2); }
+.perf-hole {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--bg);
+  flex-shrink: 0;
+}
+.perf-line {
+  flex: 1; height: 1px;
+  background: repeating-linear-gradient(to right, rgba(0,0,0,0.12) 0, rgba(0,0,0,0.12) 4px, transparent 4px, transparent 8px);
+}
+
+.t-head {
+  padding: 12px 16px 10px;
+  border-bottom: 1px dotted rgba(0,0,0,0.2);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.t-icon {
+  width: 34px; height: 34px;
+  border: 1.5px solid rgba(0,0,0,0.25);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+  background: rgba(0,0,0,0.04);
+  color: var(--ink);
+}
+.t-title-blk { flex: 1; }
+.t-proj-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 26px;
+  line-height: 1;
+  color: var(--ink);
+  letter-spacing: 0.05em;
+}
+.t-proj-sub {
+  font-size: 7px;
+  letter-spacing: 0.18em;
+  color: var(--ink-faded);
+  margin-top: 2px;
+  text-transform: uppercase;
+}
+.t-year {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px;
+  color: rgba(0,0,0,0.22);
+  margin-top: 3px;
+}
+
+.t-meta {
+  padding: 9px 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 7px 0;
+  border-bottom: 1px dotted rgba(0,0,0,0.2);
+}
+.m-label {
+  font-size: 6px;
+  letter-spacing: 0.28em;
+  color: rgba(0,0,0,0.32);
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.m-val {
+  font-size: 9.5px;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+}
+
+.t-body {
+  padding: 10px 16px;
+  border-bottom: 1px dotted rgba(0,0,0,0.2);
+}
+.t-body-text {
+  font-family: 'Special Elite', cursive;
+  font-size: 9px;
+  line-height: 1.8;
+  color: var(--ink-faded);
+  white-space: pre-line;
+}
+
+.t-stamp-row {
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px dotted rgba(0,0,0,0.2);
+}
+.class-stamp {
+  border: 2px solid var(--stamp-red);
+  color: var(--stamp-red);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  padding: 3px 7px;
+  transform: rotate(-3deg);
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+.t-tags { display: flex; gap: 4px; flex-wrap: wrap; flex: 1; justify-content: flex-end; }
+.t-tag {
+  font-size: 6px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border: 1px solid rgba(0,0,0,0.18);
+  padding: 2px 5px;
+  color: rgba(0,0,0,0.38);
+}
+
+.t-quote {
+  padding: 9px 16px 10px;
+  font-family: 'Caveat', cursive;
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.t-scallop {
+  height: 13px;
+  background: var(--paper);
+  position: relative;
+  overflow: hidden;
+}
+.t-scallop::before {
+  content: '';
+  position: absolute;
+  bottom: -6px; left: -4px; right: -4px;
+  height: 18px;
+  background: radial-gradient(circle at 50% 0%, var(--bg) 6px, var(--paper) 6px);
+  background-size: 16px 12px;
+  background-repeat: repeat-x;
+}
+
+/* ── ENVELOPE SHELL ── */
+.env-shell {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-1deg);
+  width: 340px;
+  height: 195px;
+  z-index: 20;
+  filter: drop-shadow(0 24px 60px rgba(0,0,0,0.85));
+  transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
+}
+.envelope-area:hover .env-shell {
+  transform: translateX(-50%) rotate(-0.5deg) translateY(-4px);
+}
+
+.env-body {
+  position: absolute; inset: 0;
+  border-radius: 2px;
+  overflow: hidden;
+  transition: background 0.5s;
+}
+.env-body::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 18px,
+    rgba(255,255,255,0.015) 18px, rgba(255,255,255,0.015) 19px
+  );
+  pointer-events: none;
+}
+.env-fold-l {
+  position: absolute; bottom: 0; left: 0;
+  width: 50%; height: 100%;
+  clip-path: polygon(0 100%, 0 0, 100% 100%);
+  background: rgba(0,0,0,0.22);
+}
+.env-fold-r {
+  position: absolute; bottom: 0; right: 0;
+  width: 50%; height: 100%;
+  clip-path: polygon(100% 0, 0 100%, 100% 100%);
+  background: rgba(0,0,0,0.14);
+}
+.env-liner {
+  position: absolute; inset: 2px;
+  background: repeating-linear-gradient(
+    45deg, transparent, transparent 6px,
+    rgba(45,90,82,0.07) 6px, rgba(45,90,82,0.07) 7px
+  );
+}
+.env-box {
+  position: absolute;
+  top: 10px; left: 12px;
+  border: 1px solid rgba(45,90,82,0.45);
+  padding: 6px 10px;
+  font-size: 6.5px;
+  line-height: 2;
+  color: rgba(45,90,82,0.65);
+  letter-spacing: 0.12em;
+  z-index: 2;
+}
+.env-box-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: rgba(45,90,82,0.9);
+  border-bottom: 1px solid rgba(45,90,82,0.25);
+  padding-bottom: 3px;
+  margin-bottom: 4px;
+}
+.env-sticker {
+  position: absolute;
+  bottom: 14px; right: 14px;
+  background: var(--teal);
+  color: white;
+  font-family: 'Space Mono', monospace;
+  font-size: 7.5px;
+  letter-spacing: 0.08em;
+  padding: 5px 10px;
+  border-radius: 1px;
+  z-index: 2;
+}
+.env-classified {
+  position: absolute;
+  bottom: 14px; left: 50%;
+  transform: translateX(-50%) rotate(-5deg);
+  border: 1.5px solid rgba(192,57,43,0.4);
+  color: rgba(192,57,43,0.4);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  padding: 3px 9px;
+  z-index: 2;
+}
+
+/* Hint + dots */
+.hint-text {
+  position: absolute;
+  bottom: 14px; left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Caveat', cursive;
+  font-size: 12px;
+  color: rgba(213,199,170,0.2);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 35;
+  transition: opacity 0.3s;
+}
+.envelope-area:hover .hint-text { opacity: 0; }
+
+.dots-row {
+  position: absolute;
+  bottom: 6px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: 7px;
+  z-index: 40;
+}
+.dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: rgba(213,199,170,0.18);
+  border: none; cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+.dot.active { background: rgba(45,90,82,0.85); transform: scale(1.4); }
+
+/* Trail */
+.trail {
+  position: fixed;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: rgba(45,90,82,0.8);
+  pointer-events: none;
+  z-index: 9998;
+  transition: opacity 0.4s;
+}
+</style>
+</head>
+<body>
+<div class="scene" id="scene">
+
+  <div class="left-panel">
+    <div class="archive-stamp">CONFIDENTIAL ARCHIVE</div>
+    <div class="main-title">WORK<br>FILES<br>2024</div>
+    <div class="confidential-line">Clearance Level A — Authorized Access Only</div>
+    <ul class="nav-list" id="navList">
+      <li class="nav-item active" data-index="0">
+        <span class="nav-num">01</span>Brand Identity — Noire<span class="nav-tag">BRANDING</span>
+      </li>
+      <li class="nav-item" data-index="1">
+        <span class="nav-num">02</span>Editorial — Far East<span class="nav-tag">PRINT</span>
+      </li>
+      <li class="nav-item" data-index="2">
+        <span class="nav-num">03</span>Web — Blue Horizon<span class="nav-tag">DIGITAL</span>
+      </li>
+      <li class="nav-item" data-index="3">
+        <span class="nav-num">04</span>Motion — Velvet<span class="nav-tag">MOTION</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="envelope-area" id="envelopeArea">
+
+    <!-- Folder -->
+    <div class="folder">
+      <div class="folder-tab">PROJ-FILES</div>
+      <div class="folder-back">
+        <div class="folder-label">
+          CLASSIFICATION: <span class="redact" style="width:60px;"></span><br>
+          PROJECT REF: <span class="redact" style="width:40px;"></span><br>
+          AUTHORIZATION: DR. <span class="redact" style="width:50px;"></span>
+        </div>
+        <div class="folder-conf">CONFIDENTIAL</div>
+      </div>
+    </div>
+
+    <!-- Film strip vertical (behind everything) -->
+    <div class="film-strip-vert">
+      <div class="film-holes-col lft">
+        <div class="fhole"></div><div class="fhole"></div><div class="fhole"></div>
+        <div class="fhole"></div><div class="fhole"></div><div class="fhole"></div>
+        <div class="fhole"></div><div class="fhole"></div><div class="fhole"></div>
+        <div class="fhole"></div><div class="fhole"></div><div class="fhole"></div>
+        <div class="fhole"></div><div class="fhole"></div><div class="fhole"></div>
+        <div class="fhole"></div><div class="fhole"></div><div class="fhole"></div>
+      </div>
+      <div class="film-holes-col rgt">
+        <div class="fhole"></div><div class="fhole"></div><div class="fhole"></div>
+        <div class="fhole"></div><div class="fhole"></div><div class="fhole"></div>
+        <div class="fhole"></div><div class="fhole"></div><div class="fhole"></div>
+        <div class="fhole"></div><div class="fhole"></div><div class="fhole"></div>
+        <div class="fhole"></div><div class="fhole"></div><div class="fhole"></div>
+        <div class="fhole"></div><div class="fhole"></div><div class="fhole"></div>
+      </div>
+      <div class="film-frame-vert"></div>
+      <div class="film-frame-vert"></div>
+      <div class="film-frame-vert"></div>
+      <div class="film-frame-vert"></div>
+      <div class="film-frame-vert"></div>
+      <div class="film-frame-vert"></div>
+      <div class="film-frame-vert"></div>
+      <div class="film-frame-vert"></div>
+    </div>
+
+    <!-- Clip photo group (on top of folder, below envelope) -->
+    <div class="clip-photo-group">
+      <!-- Binder clip at top -->
+      <div class="binder-clip">
+        <div class="bc-bar"></div>
+        <div class="bc-wings">
+          <div class="bc-wing"></div>
+          <div class="bc-wing"></div>
+        </div>
+      </div>
+
+      <!-- Photo 1 — deep background -->
+      <div class="clip-photo">
+        <div class="cp-inner">
+          <div class="cp-img" style="background: linear-gradient(170deg,#0a0f0a 0%,#1a2a1a 40%,#080c08 100%);
+            filter: grayscale(0.8) contrast(1.3);"></div>
+          <div class="cp-cap">34156301 · 5A6205</div>
+        </div>
+      </div>
+      <!-- Photo 2 — anomalous object scan -->
+      <div class="clip-photo">
+        <div class="cp-inner">
+          <div class="cp-img" style="background: radial-gradient(ellipse at 45% 55%, #e8e8e8 0%, #a0a0a0 20%, #303030 55%, #080808 100%);
+            filter: grayscale(1) contrast(1.6);"></div>
+          <div class="cp-cap">ANOMALOUS OBJ · 3/4</div>
+        </div>
+      </div>
+      <!-- Photo 3 — topographic scan -->
+      <div class="clip-photo">
+        <div class="cp-inner">
+          <div class="cp-img" style="background: linear-gradient(145deg,#181818 0%,#2a2a2a 30%,#101010 60%, #1e1e1e 100%);
+            filter: grayscale(0.9);"></div>
+          <div class="cp-cap">FIELD SCAN · NR-001</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sulfuric / tracing paper (over photos) -->
+    <div class="sulfuric-paper">
+      <div class="sp-inner">
+        <div class="sp-shadow"></div>
+      </div>
+    </div>
+
+    <div class="paperclip"></div>
+    <!-- Teal tape pieces (left cluster, like reference) -->
+    <div class="tape-strip tape-h"></div>
+    <div class="tape-strip tape-h2"></div>
+
+    <!-- Map / illustration polaroid -->
+    <div class="map-polaroid">
+      <div class="map-pol-note">Note —<br>field sketch, obj. vicinity</div>
+      <div class="map-pol-inner">
+        <div class="map-pol-img">
+          <svg viewBox="0 0 139 120" xmlns="http://www.w3.org/2000/svg" fill="none">
+            <!-- Background tint -->
+            <rect width="139" height="120" fill="#ccc8be"/>
+            <!-- Organic blob / landmass shape like reference illustration -->
+            <path d="M30,20 C18,22 10,35 14,48 C8,55 12,68 20,72 C16,82 22,95 35,98 C42,108 58,112 68,105 C78,112 92,108 96,96 C110,94 118,80 112,68 C122,58 118,42 108,36 C112,24 100,14 88,18 C78,8 58,10 50,18 C42,12 34,16 30,20Z" 
+                  fill="#e8e4da" stroke="#2a2820" stroke-width="1.2"/>
+            <!-- Internal contour lines -->
+            <path d="M38,32 C30,38 28,50 34,58 C30,66 36,78 46,80" stroke="#2a2820" stroke-width="0.7" opacity="0.6"/>
+            <path d="M55,22 C48,30 50,42 58,46 C52,54 56,66 64,68" stroke="#2a2820" stroke-width="0.7" opacity="0.6"/>
+            <path d="M75,20 C70,28 74,40 80,44 C76,52 78,64 86,66" stroke="#2a2820" stroke-width="0.7" opacity="0.6"/>
+            <path d="M95,32 C100,40 98,52 92,58 C98,66 96,78 88,82" stroke="#2a2820" stroke-width="0.7" opacity="0.6"/>
+            <!-- Small detail marks -->
+            <circle cx="44" cy="55" r="3" fill="#2a2820" opacity="0.5"/>
+            <circle cx="70" cy="45" r="2" fill="#2a2820" opacity="0.4"/>
+            <circle cx="88" cy="60" r="2.5" fill="#2a2820" opacity="0.5"/>
+            <!-- Measurement lines -->
+            <line x1="35" y1="90" x2="100" y2="90" stroke="#2a2820" stroke-width="0.5" opacity="0.4"/>
+            <line x1="35" y1="88" x2="35" y2="92" stroke="#2a2820" stroke-width="0.5" opacity="0.4"/>
+            <line x1="100" y1="88" x2="100" y2="92" stroke="#2a2820" stroke-width="0.5" opacity="0.4"/>
+            <!-- tiny text label -->
+            <text x="60" y="99" font-family="monospace" font-size="5" fill="#2a2820" opacity="0.5">~3.2 km</text>
+            <!-- Scattered small marks -->
+            <path d="M55,68 L58,62 L61,68" stroke="#2a2820" stroke-width="0.6" opacity="0.45"/>
+            <path d="M76,72 L79,66 L82,72" stroke="#2a2820" stroke-width="0.6" opacity="0.45"/>
+            <rect x="48" y="46" width="6" height="4" stroke="#2a2820" stroke-width="0.5" opacity="0.4" fill="none"/>
+            <rect x="80" y="36" width="5" height="4" stroke="#2a2820" stroke-width="0.5" opacity="0.4" fill="none"/>
+          </svg>
+        </div>
+        <div class="map-pol-cap">containment site vicinity</div>
+      </div>
+    </div>
+
+    <!-- TICKET -->
+    <div class="ticket-wrapper" id="ticketWrapper">
+      <div class="ticket">
+        <div class="perf-row top">
+          <div class="perf-hole"></div><div class="perf-line"></div><div class="perf-hole"></div>
+        </div>
+
+        <div class="t-head">
+          <div class="t-icon" id="tIcon">◈</div>
+          <div class="t-title-blk">
+            <div class="t-proj-name" id="tName">NOIRE</div>
+            <div class="t-proj-sub" id="tSub">Brand Identity · Fragrance</div>
+          </div>
+          <div class="t-year" id="tYear">(2024)</div>
+        </div>
+
+        <div class="t-meta">
+          <div><div class="m-label">TYPE :</div><div class="m-val" id="mType">Branding</div></div>
+          <div><div class="m-label">STATUS :</div><div class="m-val" id="mStatus">Delivered</div></div>
+          <div><div class="m-label">REF :</div><div class="m-val" id="mRef">NR-001</div></div>
+          <div><div class="m-label">CLIENT :</div><div class="m-val" id="mClient">Studio X</div></div>
+          <div><div class="m-label">DURATION :</div><div class="m-val" id="mDur">6 weeks</div></div>
+          <div><div class="m-label">FILED :</div><div class="m-val" id="mDate">14/Mar/2024</div></div>
+        </div>
+
+        <div class="t-body">
+          <div class="t-body-text" id="tDesc">A complete visual identity for an independent fragrance house.
+Dark, sensorial, architectural. Brand language drawn from
+brutalist structure and natural decay. Packaging system
+spans primary, secondary and tertiary touchpoints.</div>
+        </div>
+
+        <div class="t-stamp-row">
+          <div class="class-stamp" id="tClass">APPROVED</div>
+          <div class="t-tags" id="tTags">
+            <span class="t-tag">Typography</span>
+            <span class="t-tag">Packaging</span>
+            <span class="t-tag">Art Direction</span>
+          </div>
+        </div>
+
+        <div class="t-quote" id="tQuote">"Objects carry the weight of their making."</div>
+
+        <div class="perf-row bot">
+          <div class="perf-hole"></div><div class="perf-line"></div><div class="perf-hole"></div>
+        </div>
+        <div class="t-scallop"></div>
+      </div>
+    </div>
+
+    <!-- Envelope shell -->
+    <div class="env-shell" id="envShell">
+      <div class="env-body" id="envBody">
+        <div class="env-liner"></div>
+        <div class="env-fold-l"></div>
+        <div class="env-fold-r"></div>
+        <div class="env-box">
+          <div class="env-box-title">RESEARCH CASE</div>
+          NEGATIVE PROC.<br>
+          ROLL No. — <span class="redact" style="width:28px;height:7px;"></span><br>
+          SCAN 30+<br>
+          INSPECT.
+        </div>
+        <div class="env-classified">CLASSIFIED</div>
+        <div class="env-sticker" id="envSticker">PROJECT FILES</div>
+      </div>
+    </div>
+
+    <div class="hint-text">hover to retrieve ↑</div>
+
+    <div class="dots-row">
+      <button class="dot active" data-index="0"></button>
+      <button class="dot" data-index="1"></button>
+      <button class="dot" data-index="2"></button>
+      <button class="dot" data-index="3"></button>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+const projects = [
+  {
+    icon:"◈", name:"NOIRE", sub:"Brand Identity · Fragrance", year:"(2024)",
+    type:"Branding", status:"Delivered", ref:"NR-001", client:"Studio X", dur:"6 weeks", date:"14/Mar/2024",
+    desc:"A complete visual identity for an independent fragrance house.\nDark, sensorial, architectural. Brand language drawn from\nbrutalist structure and natural decay. Packaging system\nspans primary, secondary and tertiary touchpoints.",
+    cls:"APPROVED", tags:["Typography","Packaging","Art Direction"],
+    quote:'"Objects carry the weight of their making."',
+    envBg:"#1c2e4a", sticker:"PROJECT FILES"
+  },
+  {
+    icon:"⊕", name:"FAR EAST", sub:"Editorial Design · Zine", year:"(2024)",
+    type:"Print", status:"Published", ref:"FE-002", client:"Self-Init.", dur:"4 weeks", date:"01/Sep/2024",
+    desc:"Dual-language editorial exploring the intersection of ancient\nChinese manuscript culture and contemporary archival aesthetics.\nPublished as a limited-run zine. 300 copies. Hand-numbered.",
+    cls:"RESTRICTED", tags:["Editorial","Zine","Bilingual"],
+    quote:'"The archive does not remember — it collects."',
+    envBg:"#2a1008", sticker:"CASE DOCUMENTS"
+  },
+  {
+    icon:"⊞", name:"BLUE HORIZON", sub:"Web Design · Photography", year:"(2023)",
+    type:"Digital", status:"Live", ref:"BH-003", client:"Indep.", dur:"8 weeks", date:"20/Nov/2023",
+    desc:"Photography portfolio built around the metaphor of film\ndevelopment — content reveals itself slowly, like images\nemerging from a darkroom. Nature series, Part III.\nBuilt in Webflow + custom JS.",
+    cls:"PUBLIC", tags:["Web","Motion","Photography"],
+    quote:'"Nature / Part ③ — is life always this hard?"',
+    envBg:"#0a1f4a", sticker:"FIELD REPORT"
+  },
+  {
+    icon:"⊗", name:"VELVET", sub:"Motion Design · Music", year:"(2023)",
+    type:"Motion", status:"Released", ref:"VL-004", client:"手裡劍", dur:"3 weeks", date:"05/Dec/2023",
+    desc:"Title sequence and visual system for an independent music\nrelease. Tactile textures and slow-burn animation language\ndrawn entirely from analog processes. Super-8 film transfer\ncombined with letterpress print photography.",
+    cls:"APPROVED", tags:["Motion","Music","Analog"],
+    quote:'"In case I don\'t see you — good night."',
+    envBg:"#1a0d1a", sticker:"AUDIO-VISUAL"
+  }
+];
+
+let current = 0;
+function setProject(i) {
+  current = i;
+  const p = projects[i];
+  document.getElementById('tIcon').textContent = p.icon;
+  document.getElementById('tName').textContent = p.name;
+  document.getElementById('tSub').textContent = p.sub;
+  document.getElementById('tYear').textContent = p.year;
+  document.getElementById('mType').textContent = p.type;
+  document.getElementById('mStatus').textContent = p.status;
+  document.getElementById('mRef').textContent = p.ref;
+  document.getElementById('mClient').textContent = p.client;
+  document.getElementById('mDur').textContent = p.dur;
+  document.getElementById('mDate').textContent = p.date;
+  document.getElementById('tDesc').textContent = p.desc;
+  document.getElementById('tClass').textContent = p.cls;
+  document.getElementById('tQuote').textContent = p.quote;
+  document.getElementById('envSticker').textContent = p.sticker;
+  document.getElementById('envBody').style.background = p.envBg;
+  document.getElementById('tTags').innerHTML = p.tags.map(t=>`<span class="t-tag">${t}</span>`).join('');
+  document.querySelectorAll('.dot').forEach((d,j)=>d.classList.toggle('active',j===i));
+  document.querySelectorAll('.nav-item').forEach((n,j)=>n.classList.toggle('active',j===i));
+}
+
+document.querySelectorAll('.dot').forEach(d=>d.addEventListener('click',e=>{e.stopPropagation();setProject(+d.dataset.index);}));
+document.querySelectorAll('.nav-item').forEach(n=>n.addEventListener('click',()=>setProject(+n.dataset.index)));
+
+// Parallax
+document.getElementById('scene').addEventListener('mousemove', e => {
+  const cx = window.innerWidth/2, cy = window.innerHeight/2;
+  const dx = (e.clientX-cx)/cx, dy = (e.clientY-cy)/cy;
+
+  const fs = document.querySelector('.film-strip-vert');
+  if(fs) fs.style.transform = `translateX(-148px) rotate(-1deg) translate3d(${dx*2}px,${dy*2}px,0)`;
+
+  const fd = document.querySelector('.folder');
+  if(fd) fd.style.transform = `translateX(-52%) rotate(1.5deg) translate3d(${dx*4}px,${dy*4}px,0)`;
+
+  const cg = document.querySelector('.clip-photo-group');
+  if(cg) cg.style.transform = `rotate(-2deg) translate3d(${dx*5}px,${dy*5}px,0)`;
+
+  const sp = document.querySelector('.sulfuric-paper');
+  if(sp) sp.style.transform = `rotate(-1deg) translate3d(${dx*5}px,${dy*5}px,0)`;
+
+  const mp = document.querySelector('.map-polaroid');
+  if(mp) mp.style.transform = `rotate(-5deg) translate3d(${dx*3}px,${dy*3}px,0)`;
+});
+
+// Trail
+let lastT = 0;
+document.addEventListener('mousemove', e=>{
+  if(Date.now()-lastT<90) return; lastT=Date.now();
+  const t=document.createElement('div'); t.className='trail';
+  t.style.cssText=`left:${e.clientX}px;top:${e.clientY}px`;
+  document.body.appendChild(t);
+  setTimeout(()=>t.style.opacity='0',80);
+  setTimeout(()=>t.remove(),500);
+});
+</script>
+</body>
+</html>

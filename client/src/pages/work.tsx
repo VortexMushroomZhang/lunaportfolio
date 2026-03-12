@@ -20,7 +20,7 @@ const projects = [
     desc: "Leading research on banker-facing CRM and data analysis toolings, internal AI chat assistant, and client-facing mobile applications.",
     tags: ["Research", "AI", "Mobile"],
     quote: '"Design that moves at the speed of finance."',
-    envBg: "#1c2a38",
+    envBg: "#0A3040",
   },
   {
     id: "client-voice",
@@ -34,7 +34,7 @@ const projects = [
     desc: "Transforming scattered client feedback into one dynamic source of truth that organizes, highlights, and accelerates what matters for the product team.",
     tags: ["Research Ops", "Data", "UX"],
     quote: '"One source of truth for everything that matters."',
-    envBg: "#1a2a1c",
+    envBg: "#224128",
   },
   {
     id: "mastery-loop",
@@ -48,7 +48,7 @@ const projects = [
     desc: "An old-school inspired language practice tool for listening, reading, writing, and dictation through a continuous cycle of focused exercises.",
     tags: ["EdTech", "Learning", "Design"],
     quote: '"Practice with intention, improve by design."',
-    envBg: "#2a1a0a",
+    envBg: "#6A6494",
   },
 ];
 
@@ -424,7 +424,7 @@ export default function Work() {
                 whiteSpace: "nowrap", lineHeight: 1.5,
                 fontStyle: "italic",
               }}>
-                Note —<br />field sketch, obj. vicinity
+                Note —<br />consistent, clear, fun
               </div>
               <div style={{
                 background: "#e8e2d5",
@@ -461,7 +461,7 @@ export default function Work() {
                   fontFamily: "var(--font-serif)", fontSize: 10,
                   color: "#555", textAlign: "center",
                   marginTop: 6, fontStyle: "italic",
-                }}>containment site vicinity</div>
+                }}>Storytelling</div>
               </div>
             </div>
 
