@@ -469,39 +469,64 @@ export default function Work() {
                 transform: "rotate(-4deg)",
               }}
             >
-              {/* Layer 3 — back label card, shifted LEFT, bigger, tilted left */}
+              {/* ── Catenary string — curves from above the dossier down to the hole ── */}
+              <svg
+                width="0" height="0"
+                style={{
+                  position: "absolute", top: 0, left: 0,
+                  overflow: "visible", zIndex: 25, pointerEvents: "none",
+                }}
+              >
+                {/* Natural hanging cord: from upper-left (over the dossier) to hole at (97.5, 22.5) */}
+                <path
+                  d="M -145,-215 C -145,-75 12,-8 97.5,22.5"
+                  stroke="rgba(22,14,5,0.72)"
+                  strokeWidth="1.8"
+                  fill="none"
+                  strokeLinecap="round"
+                />
+              </svg>
+
+              {/* ── Tag layer 3 — beige background card with pattern, tilted left ── */}
               <div style={{
-                position: "absolute",
-                top: -6, left: -18, right: 6, bottom: -10,
-                background: "#f0e8d4",
+                position: "absolute", inset: 0,
+                background: "#f0e6c8",
+                backgroundImage:
+                  "radial-gradient(circle, rgba(100,70,30,0.13) 1.5px, transparent 1.5px)",
+                backgroundSize: "14px 14px",
                 borderRadius: 3,
-                transform: "rotate(-2.5deg)",
+                transform: "rotate(-3deg)",
                 transformOrigin: "top center",
-                boxShadow: "0 8px 26px rgba(0,0,0,0.24)",
-              }} />
+                boxShadow: "0 10px 30px rgba(0,0,0,0.22)",
+              }}>
+                {/* Inner decorative frame */}
+                <div style={{
+                  position: "absolute", inset: 10,
+                  border: "0.5px solid rgba(100,70,30,0.18)",
+                  borderRadius: 2, pointerEvents: "none",
+                }} />
+                {/* Hole */}
+                <div style={{
+                  position: "absolute", top: 16, left: "50%",
+                  transform: "translateX(-50%)",
+                  width: 13, height: 13, borderRadius: "50%",
+                  background: BG, border: "1px solid rgba(100,70,30,0.22)",
+                }} />
+              </div>
 
-              {/* String — passes through all holes (highest z) */}
-              <div style={{
-                position: "absolute",
-                top: -82, left: "50%",
-                transform: "translateX(-50%)",
-                width: 2, height: 110,
-                background: "linear-gradient(180deg,rgba(28,18,8,0.5),rgba(28,18,8,0.82) 55%,rgba(28,18,8,0.55))",
-                borderRadius: 1,
-                zIndex: 20,
-                pointerEvents: "none",
-              }} />
-
-              {/* Layer 2 — project image */}
+              {/* ── Tag layer 2 — photo card, slightly tilted ── */}
               <div style={{
                 position: "absolute", inset: 0,
                 borderRadius: 3, overflow: "hidden",
+                transform: "rotate(-1.5deg)",
+                transformOrigin: "top center",
+                boxShadow: "0 6px 20px rgba(0,0,0,0.18)",
               }}>
                 <img
                   src={p.image} alt={p.name}
                   style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                 />
-                {/* Hole punch cutout on image layer */}
+                {/* Hole punch */}
                 <div style={{
                   position: "absolute", top: 16, left: "50%",
                   transform: "translateX(-50%)",
@@ -510,24 +535,24 @@ export default function Work() {
                 }} />
               </div>
 
-              {/* Layer 1 — sulfuric acid / vellum paper on top */}
+              {/* ── Tag layer 1 — sulfuric acid / vellum, slightly tilted right, front ── */}
               <div style={{
                 position: "absolute", inset: 0,
-                background: "rgba(232,224,200,0.62)",
+                background: "rgba(232,224,200,0.60)",
                 backdropFilter: "blur(1.5px)",
                 borderRadius: 3,
-                border: "1px solid rgba(200,185,155,0.4)",
+                border: "1px solid rgba(200,185,155,0.38)",
+                transform: "rotate(1.5deg)",
+                transformOrigin: "top center",
               }}>
-                {/* Hole at top */}
+                {/* Hole */}
                 <div style={{
                   position: "absolute", top: 16, left: "50%",
                   transform: "translateX(-50%)",
                   width: 13, height: 13, borderRadius: "50%",
-                  background: BG,
-                  border: "1.5px solid rgba(0,0,0,0.2)",
-                  zIndex: 2,
+                  background: BG, border: "1.5px solid rgba(0,0,0,0.18)",
                 }} />
-                {/* Quote text */}
+                {/* Quote */}
                 <div style={{
                   position: "absolute", top: 52, left: 18, right: 18,
                   fontFamily: "var(--font-mono)", fontSize: 7.5,
@@ -542,12 +567,11 @@ export default function Work() {
                   color: "rgba(20,12,6,0.45)", textAlign: "center",
                   fontStyle: "italic", letterSpacing: "0.08em",
                 }}>{p.name}</div>
-                {/* Decorative asterisk */}
+                {/* Asterisk */}
                 <div style={{
                   position: "absolute", bottom: 20, left: "50%",
                   transform: "translateX(-50%)",
-                  fontSize: 14, color: "rgba(20,12,6,0.3)",
-                  lineHeight: 1,
+                  fontSize: 14, color: "rgba(20,12,6,0.28)", lineHeight: 1,
                 }}>✳</div>
               </div>
             </div>
