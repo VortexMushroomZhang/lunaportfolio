@@ -9,11 +9,13 @@ import BackgroundGrid from "@/components/background-grid";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import Exploration from "@/pages/exploration";
+import Work from "@/pages/work";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/work" component={Work} />
       <Route path="/exploration" component={Exploration} />
       <Route component={NotFound} />
     </Switch>
