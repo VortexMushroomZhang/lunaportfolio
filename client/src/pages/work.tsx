@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import Navigation from "@/components/navigation";
 import SiteFooter from "@/components/site-footer";
+import vlkWorkImg from "@images/VLK_work.svg";
+import clientVoiceImg from "@images/ClientVoice.png";
+import masteryLoopImg from "@images/MasteryLoop.jpg";
 
 const TEAL = "#0A5068";
 const BG = "#F7F4EF";
@@ -21,6 +24,7 @@ const projects = [
     tags: ["Research", "AI", "Mobile"],
     quote: '"Accuracy and craftmanship in Finance."',
     envBg: "#0A3040",
+    image: vlkWorkImg,
   },
   {
     id: "client-voice",
@@ -35,6 +39,7 @@ const projects = [
     tags: ["Research Ops", "Data", "UX"],
     quote: '"One source of truth for everything that matters."',
     envBg: "#224128",
+    image: clientVoiceImg,
   },
   {
     id: "mastery-loop",
@@ -49,18 +54,19 @@ const projects = [
     tags: ["EdTech", "Learning", "Design"],
     quote: '"Practice with intention, improve by design."',
     envBg: "#6A6494",
+    image: masteryLoopImg,
   },
 ];
 
-const FILM_GRADIENTS = [
-  "linear-gradient(160deg,#1a0a2e,#3a1060,#0d0520)",
-  "linear-gradient(170deg,#001a30,#003a6a,#0a2040)",
-  "linear-gradient(150deg,#0d1a0d,#1a4a1a,#0a1505)",
-  "linear-gradient(165deg,#2a1500,#7a3a00,#3a1a00)",
-  "linear-gradient(155deg,#1a0505,#4a0a0a,#200505)",
-  "linear-gradient(160deg,#050520,#0a0a3a,#050510)",
-  "linear-gradient(160deg,#1a1a0a,#3a3a10,#101005)",
-  "linear-gradient(170deg,#0a1a1a,#104040,#051515)",
+const FILM_FRAMES = [
+  "linear-gradient(180deg,#5c2800,#9b4a08,#3d1a00)",
+  "linear-gradient(180deg,#7a3a0a,#c07020,#5a2800)",
+  "linear-gradient(180deg,#3d1a00,#6b3000,#9b4a10)",
+  "linear-gradient(180deg,#a05010,#c47820,#7a3808)",
+  "linear-gradient(180deg,#6b3008,#503000,#8b4510)",
+  "linear-gradient(180deg,#401800,#8b3a0a,#401800)",
+  "linear-gradient(180deg,#8b4a18,#b06a20,#6b3a10)",
+  "linear-gradient(180deg,#5c2800,#9b4a10,#3d1a00)",
 ];
 
 export default function Work() {
@@ -88,7 +94,7 @@ export default function Work() {
       if (folderRef.current)
         folderRef.current.style.transform = `translateX(-52%) rotate(1.5deg) translate3d(${dx * 4}px,${dy * 4}px,0)`;
       if (photosRef.current)
-        photosRef.current.style.transform = `rotate(-2deg) translate3d(${dx * 5}px,${dy * 5}px,0)`;
+        photosRef.current.style.transform = `rotate(-4deg) translate3d(${dx * 5}px,${dy * 5}px,0)`;
       if (mapRef.current)
         mapRef.current.style.transform = `rotate(-5deg) translate3d(${dx * 3}px,${dy * 3}px,0)`;
     };
@@ -181,209 +187,371 @@ export default function Work() {
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
           >
-            {/* Folder */}
+            {/* ── Dossier / Clipboard ── */}
             <div
               ref={folderRef}
               style={{
                 position: "absolute",
-                bottom: 32,
+                bottom: 18,
                 left: "50%",
                 transform: "translateX(-52%) rotate(1.5deg)",
-                width: 380,
-                height: 480,
+                width: 490,
+                height: 580,
                 zIndex: 1,
-                filter: "drop-shadow(0 20px 60px rgba(0,0,0,0.16))",
+                filter: "drop-shadow(0 28px 70px rgba(0,0,0,0.28))",
               }}
             >
-              <div style={{ position: "absolute", inset: 0, background: "#5a3515", borderRadius: "2px 2px 3px 3px" }}>
+              {/* ── Document 1 — cream paper sticking out top-left ── */}
+              <div style={{
+                position: "absolute", top: -88, left: 38,
+                width: 310, height: 240,
+                background: "#f0ebe0",
+                transform: "rotate(-4deg)",
+                boxShadow: "0 -4px 16px rgba(0,0,0,0.13)",
+                overflow: "hidden",
+              }}>
+                {/* Blue ruled lines */}
                 <div style={{
-                  position: "absolute", top: -18, left: 20,
-                  width: 88, height: 20, background: "#5a3515",
-                  borderRadius: "3px 3px 0 0",
-                  fontFamily: "var(--font-mono)", fontSize: 7,
-                  letterSpacing: "0.2em", color: "rgba(255,255,255,0.3)",
-                  display: "flex", alignItems: "center", paddingLeft: 8,
-                }}>PROJ-FILES</div>
-                <div style={{
-                  position: "absolute", top: 16, left: 20, right: 20,
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  padding: "8px 10px", fontSize: 7,
-                  color: "rgba(255,255,255,0.2)", letterSpacing: "0.15em",
-                  lineHeight: 2, fontFamily: "var(--font-mono)",
-                }}>
-                  CLASSIFICATION:&nbsp;
-                  <span style={{ display: "inline-block", background: "rgba(0,0,0,0.6)", height: 9, width: 64, verticalAlign: "middle" }} /><br />
-                  PROJECT REF:&nbsp;
-                  <span style={{ display: "inline-block", background: "rgba(0,0,0,0.6)", height: 9, width: 42, verticalAlign: "middle" }} /><br />
-                  AUTHORIZATION: DR.&nbsp;
-                  <span style={{ display: "inline-block", background: "rgba(0,0,0,0.6)", height: 9, width: 52, verticalAlign: "middle" }} />
+                  position: "absolute", inset: 0,
+                  background: "repeating-linear-gradient(to bottom,transparent 0,transparent 18px,rgba(100,130,200,0.13) 18px,rgba(100,130,200,0.13) 19px)",
+                }} />
+                {/* Red margin line */}
+                <div style={{ position: "absolute", top: 0, bottom: 0, left: 38, width: 1, background: "rgba(200,60,40,0.2)" }} />
+                <div style={{ padding: "10px 14px 10px 48px", fontFamily: "var(--font-mono)", fontSize: 7, color: "rgba(0,0,0,0.45)", letterSpacing: "0.1em", lineHeight: "19px" }}>
+                  FILE REF: {p.num} · {p.id.toUpperCase()}<br />
+                  PROJECT: {p.name.toUpperCase()}<br />
+                  COMPANY: {p.company.toUpperCase()}<br />
+                  STATUS: {p.status.toUpperCase()}<br />
+                  PERIOD: {p.period}<br />
+                  <br />
+                  {p.desc.slice(0, 60)}...
                 </div>
+                {/* FILED stamp */}
                 <div style={{
-                  position: "absolute", bottom: 20, right: 16,
-                  fontFamily: "var(--font-mono)", fontSize: 10,
-                  letterSpacing: "0.4em", color: "rgba(192,57,43,0.3)",
-                  transform: "rotate(-4deg)",
+                  position: "absolute", bottom: 18, right: 16,
+                  border: "2px solid rgba(170,35,20,0.38)",
+                  color: "rgba(170,35,20,0.38)",
+                  fontFamily: "var(--font-mono)", fontSize: 9,
+                  letterSpacing: "0.22em", padding: "2px 7px",
+                  transform: "rotate(7deg)", fontWeight: 700,
+                }}>FILED</div>
+              </div>
+
+              {/* ── Document 2 — smaller slip top-right ── */}
+              <div style={{
+                position: "absolute", top: -52, right: 22,
+                width: 185, height: 130,
+                background: "#e8e2d4",
+                transform: "rotate(5deg)",
+                boxShadow: "0 -2px 10px rgba(0,0,0,0.1)",
+                overflow: "hidden",
+              }}>
+                <div style={{
+                  position: "absolute", inset: 0,
+                  background: "repeating-linear-gradient(to bottom,transparent 0,transparent 18px,rgba(100,130,200,0.1) 18px,rgba(100,130,200,0.1) 19px)",
+                }} />
+                <div style={{ padding: "8px 12px", fontFamily: "var(--font-mono)", fontSize: 6.5, color: "rgba(0,0,0,0.35)", letterSpacing: "0.1em", lineHeight: "19px" }}>
+                  CASE {parseInt(p.num)}<br />
+                  {p.type.toUpperCase()}<br />
+                  {p.tags.join(" · ")}
+                </div>
+              </div>
+
+              {/* ── Folder base — dusky pink ── */}
+              <div style={{ position: "absolute", inset: 0, background: "#C899B4", borderRadius: "0 0 4px 4px" }}>
+
+                {/* Primary tab */}
+                <div style={{
+                  position: "absolute", top: -26, left: 32,
+                  width: 140, height: 28,
+                  background: "#C899B4",
+                  borderRadius: "5px 5px 0 0",
+                  display: "flex", alignItems: "center", paddingLeft: 12,
+                  fontFamily: "var(--font-mono)", fontSize: 8,
+                  letterSpacing: "0.2em", color: "rgba(60,10,40,0.55)",
+                }}>PROJ-FILES</div>
+
+                {/* Secondary tab (darker) */}
+                <div style={{
+                  position: "absolute", top: -26, right: 72,
+                  width: 80, height: 28,
+                  background: "#a87898",
+                  borderRadius: "5px 5px 0 0",
+                }} />
+
+                {/* Top edge highlight */}
+                <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "rgba(255,255,255,0.14)" }} />
+
+                {/* Horizontal grain lines */}
+                <div style={{
+                  position: "absolute", inset: 0,
+                  background: "repeating-linear-gradient(to bottom,transparent,transparent 34px,rgba(0,0,0,0.03) 34px,rgba(0,0,0,0.03) 35px)",
+                }} />
+
+                {/* Left binding strip */}
+                <div style={{
+                  position: "absolute", top: 0, bottom: 0, left: 0, width: 22,
+                  background: "linear-gradient(to right,rgba(0,0,0,0.22),rgba(0,0,0,0.06))",
+                  borderRight: "1px solid rgba(0,0,0,0.1)",
+                }}>
+                  {[55, 150, 260, 370, 470].map(top => (
+                    <div key={top} style={{
+                      position: "absolute", top, left: "50%",
+                      transform: "translateX(-50%)",
+                      width: 7, height: 7, borderRadius: "50%",
+                      background: "rgba(0,0,0,0.28)",
+                      boxShadow: "inset 0 1px 2px rgba(0,0,0,0.4)",
+                    }} />
+                  ))}
+                </div>
+
+                {/* Classification header box */}
+                <div style={{
+                  position: "absolute", top: 22, left: 32, right: 26,
+                  border: "1px solid rgba(60,10,40,0.16)",
+                  padding: "10px 14px",
+                }}>
+                  <div style={{
+                    fontFamily: "var(--font-mono)", fontSize: 7.5,
+                    color: "rgba(60,10,40,0.5)", letterSpacing: "0.14em", lineHeight: 2.3,
+                  }}>
+                    CLASSIFICATION:&nbsp;
+                    <span style={{ display: "inline-block", background: "rgba(60,10,40,0.35)", height: 9, width: 96, verticalAlign: "middle" }} /><br />
+                    PROJECT REF:&nbsp;
+                    <span style={{ display: "inline-block", background: "rgba(60,10,40,0.35)", height: 9, width: 60, verticalAlign: "middle" }} /><br />
+                    AUTHORIZATION: DR.&nbsp;
+                    <span style={{ display: "inline-block", background: "rgba(60,10,40,0.35)", height: 9, width: 74, verticalAlign: "middle" }} />
+                  </div>
+                </div>
+
+                {/* Horizontal rule */}
+                <div style={{ position: "absolute", top: 148, left: 32, right: 26, height: 1, background: "rgba(60,10,40,0.12)" }} />
+
+                {/* Project name */}
+                <div style={{
+                  position: "absolute", top: 160, left: 34,
+                  fontFamily: "var(--font-serif)", fontSize: 24,
+                  color: "rgba(60,10,40,0.32)", fontStyle: "italic",
+                  letterSpacing: "0.03em",
+                }}>{p.name}</div>
+
+                {/* Ruled content section */}
+                <div style={{
+                  position: "absolute", top: 206, left: 32, right: 26, height: 230,
+                  background: "repeating-linear-gradient(to bottom,transparent,transparent 21px,rgba(60,10,40,0.06) 21px,rgba(60,10,40,0.06) 22px)",
+                }}>
+                  <div style={{
+                    fontFamily: "var(--font-mono)", fontSize: 7.5,
+                    color: "rgba(60,10,40,0.4)", letterSpacing: "0.1em",
+                    lineHeight: "22px", padding: "1px 6px",
+                  }}>
+                    {p.tags.map(t => `[ ${t} ]`).join("  ")}<br />
+                    {p.type.toUpperCase()}&nbsp;&nbsp;&nbsp;&nbsp;{p.period}<br />
+                    {p.company.toUpperCase()}<br />
+                    <br />
+                    {p.desc.slice(0, 55)}...
+                  </div>
+                </div>
+
+                {/* Large CONFIDENTIAL stamp */}
+                <div style={{
+                  position: "absolute", bottom: 88, left: "50%",
+                  transform: "translateX(-48%) rotate(-8deg)",
+                  border: "4px solid rgba(150,30,20,0.42)",
+                  color: "rgba(150,30,20,0.42)",
+                  fontFamily: "var(--font-mono)", fontSize: 22,
+                  letterSpacing: "0.3em", padding: "5px 18px",
+                  fontWeight: 800, whiteSpace: "nowrap",
                 }}>CONFIDENTIAL</div>
+
+                {/* Tape strips at bottom */}
+                <div style={{
+                  position: "absolute", bottom: 44, left: 48,
+                  width: 72, height: 18,
+                  background: "rgba(60,10,40,0.12)",
+                  transform: "rotate(-2deg)",
+                }} />
+                <div style={{
+                  position: "absolute", bottom: 36, right: 56,
+                  width: 52, height: 14,
+                  background: "rgba(60,10,40,0.1)",
+                  transform: "rotate(3deg)",
+                }} />
               </div>
             </div>
 
-            {/* Film strip — warm dark brown for light background */}
+            {/* ── Film strip 1 (parallax) ── */}
             <div
               ref={filmRef}
               style={{
                 position: "absolute",
                 left: "50%", top: 0, bottom: 0,
-                transform: "translateX(-148px) rotate(-1deg)",
-                width: 52, zIndex: 0,
-                background: "#1e1508",
-                borderLeft: "3px solid #2d2010",
-                borderRight: "3px solid #2d2010",
+                transform: "translateX(-148px) rotate(-1.5deg)",
+                width: 50, zIndex: 0,
+                background: "#1e0c00",
                 overflow: "hidden",
               }}
             >
-              {FILM_GRADIENTS.map((grad, i) => (
+              {/* Amber film frames */}
+              {FILM_FRAMES.map((grad, i) => (
                 <div key={i} style={{
                   position: "absolute",
-                  left: 14, right: 14,
-                  top: 18 + i * 80, height: 70,
-                  border: "1px solid #2a1e0c",
-                  background: grad,
+                  left: 9, right: 9,
+                  top: 8 + i * 80, height: 70,
+                  background: grad, opacity: 0.88,
+                }} />
+              ))}
+              {/* Sprocket holes — left column */}
+              {Array.from({ length: 44 }).map((_, i) => (
+                <div key={`l${i}`} style={{
+                  position: "absolute",
+                  top: 3 + i * 18, left: 1,
+                  width: 6, height: 10, borderRadius: 1,
+                  background: "rgba(255,255,255,0.18)",
+                }} />
+              ))}
+              {/* Sprocket holes — right column */}
+              {Array.from({ length: 44 }).map((_, i) => (
+                <div key={`r${i}`} style={{
+                  position: "absolute",
+                  top: 3 + i * 18, right: 1,
+                  width: 6, height: 10, borderRadius: 1,
+                  background: "rgba(255,255,255,0.18)",
                 }} />
               ))}
             </div>
 
-            {/* ── Clip photo group — far right, bottom-aligned to envelope ── */}
+            {/* ── Film strip 2 (static, slightly offset) ── */}
+            <div style={{
+              position: "absolute",
+              left: "50%", top: "8%", bottom: "-4%",
+              transform: "translateX(-96px) rotate(2.5deg)",
+              width: 50, zIndex: 0,
+              background: "#250f00",
+              overflow: "hidden",
+            }}>
+              {FILM_FRAMES.map((grad, i) => (
+                <div key={i} style={{
+                  position: "absolute",
+                  left: 9, right: 9,
+                  top: 8 + i * 80, height: 70,
+                  background: grad, opacity: 0.75,
+                }} />
+              ))}
+              {Array.from({ length: 44 }).map((_, i) => (
+                <div key={`l${i}`} style={{
+                  position: "absolute",
+                  top: 3 + i * 18, left: 1,
+                  width: 6, height: 10, borderRadius: 1,
+                  background: "rgba(255,255,255,0.14)",
+                }} />
+              ))}
+              {Array.from({ length: 44 }).map((_, i) => (
+                <div key={`r${i}`} style={{
+                  position: "absolute",
+                  top: 3 + i * 18, right: 1,
+                  width: 6, height: 10, borderRadius: 1,
+                  background: "rgba(255,255,255,0.14)",
+                }} />
+              ))}
+            </div>
+
+            {/* ── Layered hang-tag label (parallax) ── */}
             <div
               ref={photosRef}
               style={{
                 position: "absolute",
-                right: -48,
-                bottom: 158,
-                width: 175,
-                zIndex: 22,
-                transform: "rotate(-2deg)",
+                right: -55,
+                bottom: 160,
+                width: 195,
+                height: 340,
+                zIndex: 10,
+                transform: "rotate(-4deg)",
               }}
             >
-              {/* Binder clip */}
+              {/* Layer 3 — back label card, shifted LEFT, bigger, tilted left */}
               <div style={{
                 position: "absolute",
-                top: -28, left: "50%",
-                transform: "translateX(-50%)",
-                zIndex: 30, width: 44,
-              }}>
-                <div style={{
-                  width: 44, height: 14,
-                  background: "linear-gradient(180deg,#d0d0d0,#909090 40%,#b0b0b0)",
-                  borderRadius: "3px 3px 0 0",
-                  position: "relative",
-                  boxShadow: "0 2px 6px rgba(0,0,0,0.28)",
-                }}>
-                  <div style={{
-                    position: "absolute", top: 3, left: "50%",
-                    transform: "translateX(-50%)",
-                    width: 10, height: 10, borderRadius: "50%",
-                    background: "radial-gradient(circle at 35% 35%,#e8e8e8,#888)",
-                    boxShadow: "inset 0 1px 3px rgba(0,0,0,0.4)",
-                  }} />
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between", padding: "0 4px" }}>
-                  <div style={{ width: 16, height: 20, background: "linear-gradient(180deg,#b0b0b0,#787878)", clipPath: "polygon(15% 0%,85% 0%,100% 100%,0% 100%)" }} />
-                  <div style={{ width: 16, height: 20, background: "linear-gradient(180deg,#b0b0b0,#787878)", clipPath: "polygon(15% 0%,85% 0%,100% 100%,0% 100%)" }} />
-                </div>
-              </div>
+                top: -6, left: -18, right: 6, bottom: -10,
+                background: "#f0e8d4",
+                borderRadius: 3,
+                transform: "rotate(-2.5deg)",
+                transformOrigin: "top center",
+                boxShadow: "0 8px 26px rgba(0,0,0,0.24)",
+              }} />
 
-              {/* Photo 1 */}
-              <div style={{ marginBottom: -60, transform: "rotate(-4deg)", marginLeft: -8 }}>
-                <div style={{
-                  background: "#c8c0b0",
-                  padding: "5px 5px 24px", width: 160,
-                  boxShadow: "0 4px 16px rgba(0,0,0,0.2)",
-                }}>
-                  <div style={{
-                    width: 150, height: 110,
-                    background: "linear-gradient(170deg,#0a0f0a,#1a2a1a,#080c08)",
-                    filter: "grayscale(0.8) contrast(1.3)",
-                  }} />
-                  <div style={{
-                    fontFamily: "var(--font-mono)", fontSize: 7,
-                    color: "#444", letterSpacing: "0.12em",
-                    marginTop: 5, textAlign: "right",
-                  }}>34156301 · 5A6205</div>
-                </div>
-              </div>
-
-              {/* Photo 2 */}
-              <div style={{ transform: "rotate(3deg)", marginLeft: 10 }}>
-                <div style={{
-                  background: "#c8c0b0",
-                  padding: "5px 5px 24px", width: 160,
-                  boxShadow: "0 4px 16px rgba(0,0,0,0.2)",
-                }}>
-                  <div style={{
-                    width: 150, height: 110,
-                    background: "radial-gradient(ellipse at 45% 55%,#e8e8e8,#a0a0a0 20%,#303030 55%,#080808)",
-                    filter: "grayscale(1) contrast(1.6)",
-                  }} />
-                  <div style={{
-                    fontFamily: "var(--font-mono)", fontSize: 7,
-                    color: "#444", letterSpacing: "0.12em",
-                    marginTop: 5, textAlign: "right",
-                  }}>FIELD SCAN · NR-001</div>
-                </div>
-              </div>
-            </div>
-
-            {/* ── Tracing / sulfuric paper — over photos ── */}
-            <div style={{
-              position: "absolute",
-              right: 4, bottom: 158,
-              transform: "rotate(-1deg)",
-              width: 168, height: 275,
-              zIndex: 28, pointerEvents: "none",
-            }}>
+              {/* String — passes through all holes (highest z) */}
               <div style={{
-                width: "100%", height: "100%",
-                background: "rgba(210,220,200,0.14)",
-                border: "1px solid rgba(180,190,170,0.22)",
-                backdropFilter: "blur(0.5px)",
-                position: "relative", overflow: "hidden",
+                position: "absolute",
+                top: -82, left: "50%",
+                transform: "translateX(-50%)",
+                width: 2, height: 110,
+                background: "linear-gradient(180deg,rgba(28,18,8,0.5),rgba(28,18,8,0.82) 55%,rgba(28,18,8,0.55))",
+                borderRadius: 1,
+                zIndex: 20,
+                pointerEvents: "none",
+              }} />
+
+              {/* Layer 2 — project image */}
+              <div style={{
+                position: "absolute", inset: 0,
+                borderRadius: 3, overflow: "hidden",
               }}>
-                {/* Ruled lines */}
+                <img
+                  src={p.image} alt={p.name}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                />
+                {/* Hole punch cutout on image layer */}
                 <div style={{
-                  position: "absolute", inset: 0,
-                  background: "repeating-linear-gradient(to bottom,transparent 0px,transparent 13px,rgba(0,0,0,0.045) 13px,rgba(0,0,0,0.045) 14px)",
+                  position: "absolute", top: 16, left: "50%",
+                  transform: "translateX(-50%)",
+                  width: 13, height: 13, borderRadius: "50%",
+                  background: BG,
                 }} />
-                {/* Faint text content */}
+              </div>
+
+              {/* Layer 1 — sulfuric acid / vellum paper on top */}
+              <div style={{
+                position: "absolute", inset: 0,
+                background: "rgba(232,224,200,0.62)",
+                backdropFilter: "blur(1.5px)",
+                borderRadius: 3,
+                border: "1px solid rgba(200,185,155,0.4)",
+              }}>
+                {/* Hole at top */}
                 <div style={{
-                  position: "absolute", top: 18, left: 14, right: 14,
-                  fontFamily: "var(--font-mono)", fontSize: 7,
-                  lineHeight: 2, color: "rgba(40,50,30,0.32)",
-                  whiteSpace: "pre-line", letterSpacing: "0.05em",
-                }}>
-                  {"RESEARCH NOTES\n\nCase No.:\nR-01 · CRM\nR-02 · AI Chat\nR-03 · Mobile\n\n— map user journey\nacross touchpoints"}
-                </div>
-                {/* Edge shadow curl */}
-                <div style={{
-                  position: "absolute", inset: 0,
-                  background: "linear-gradient(to right,rgba(0,0,0,0.07) 0%,transparent 12%),linear-gradient(to left,rgba(0,0,0,0.04) 0%,transparent 10%),linear-gradient(to bottom,rgba(0,0,0,0.05) 0%,transparent 8%),linear-gradient(to top,rgba(0,0,0,0.08) 0%,transparent 12%)",
-                  pointerEvents: "none",
+                  position: "absolute", top: 16, left: "50%",
+                  transform: "translateX(-50%)",
+                  width: 13, height: 13, borderRadius: "50%",
+                  background: BG,
+                  border: "1.5px solid rgba(0,0,0,0.2)",
+                  zIndex: 2,
                 }} />
+                {/* Quote text */}
+                <div style={{
+                  position: "absolute", top: 52, left: 18, right: 18,
+                  fontFamily: "var(--font-mono)", fontSize: 7.5,
+                  color: "rgba(20,12,6,0.75)", letterSpacing: "0.05em",
+                  lineHeight: 1.8, textAlign: "center",
+                  whiteSpace: "pre-line",
+                }}>{p.quote.replace(/^"|"$/g, "")}</div>
+                {/* Project name */}
+                <div style={{
+                  position: "absolute", bottom: 48, left: 14, right: 14,
+                  fontFamily: "var(--font-serif)", fontSize: 9,
+                  color: "rgba(20,12,6,0.45)", textAlign: "center",
+                  fontStyle: "italic", letterSpacing: "0.08em",
+                }}>{p.name}</div>
+                {/* Decorative asterisk */}
+                <div style={{
+                  position: "absolute", bottom: 20, left: "50%",
+                  transform: "translateX(-50%)",
+                  fontSize: 14, color: "rgba(20,12,6,0.3)",
+                  lineHeight: 1,
+                }}>✳</div>
               </div>
             </div>
 
-            {/* ── Tape strips ── */}
-            <div style={{
-              position: "absolute", top: "52%", right: 6,
-              width: 22, height: 22,
-              background: `${TEAL}70`,
-              zIndex: 29, transform: "rotate(-3deg)",
-            }} />
-            <div style={{
-              position: "absolute", top: "62%", right: 10,
-              width: 17, height: 17,
-              background: `${TEAL}55`,
-              zIndex: 29, transform: "rotate(5deg)",
-            }} />
 
             {/* ── Map / illustration polaroid ── */}
             <div
@@ -412,48 +580,25 @@ export default function Work() {
                 padding: "8px 8px 32px", width: 155,
                 boxShadow: "2px 4px 14px rgba(0,0,0,0.18)",
               }}>
-                <div style={{ width: 139, height: 120, background: "#ddd8cc", position: "relative", overflow: "hidden" }}>
-                  <svg viewBox="0 0 139 120" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.85 }}>
-                    <rect width="139" height="120" fill="#ccc8be" />
-                    <path d="M30,20 C18,22 10,35 14,48 C8,55 12,68 20,72 C16,82 22,95 35,98 C42,108 58,112 68,105 C78,112 92,108 96,96 C110,94 118,80 112,68 C122,58 118,42 108,36 C112,24 100,14 88,18 C78,8 58,10 50,18 C42,12 34,16 30,20Z"
-                      fill="#e8e4da" stroke="#2a2820" strokeWidth="1.2" />
-                    <path d="M38,32 C30,38 28,50 34,58 C30,66 36,78 46,80" stroke="#2a2820" strokeWidth="0.7" opacity="0.6" />
-                    <path d="M55,22 C48,30 50,42 58,46 C52,54 56,66 64,68" stroke="#2a2820" strokeWidth="0.7" opacity="0.6" />
-                    <path d="M75,20 C70,28 74,40 80,44 C76,52 78,64 86,66" stroke="#2a2820" strokeWidth="0.7" opacity="0.6" />
-                    <path d="M95,32 C100,40 98,52 92,58 C98,66 96,78 88,82" stroke="#2a2820" strokeWidth="0.7" opacity="0.6" />
-                    <circle cx="44" cy="55" r="3" fill="#2a2820" opacity="0.5" />
-                    <circle cx="70" cy="45" r="2" fill="#2a2820" opacity="0.4" />
-                    <circle cx="88" cy="60" r="2.5" fill="#2a2820" opacity="0.5" />
-                    <line x1="35" y1="90" x2="100" y2="90" stroke="#2a2820" strokeWidth="0.5" opacity="0.4" />
-                    <line x1="35" y1="88" x2="35" y2="92" stroke="#2a2820" strokeWidth="0.5" opacity="0.4" />
-                    <line x1="100" y1="88" x2="100" y2="92" stroke="#2a2820" strokeWidth="0.5" opacity="0.4" />
-                    <text x="60" y="99" fontFamily="monospace" fontSize="5" fill="#2a2820" opacity="0.5">~3.2 km</text>
-                    <path d="M55,68 L58,62 L61,68" stroke="#2a2820" strokeWidth="0.6" opacity="0.45" />
-                    <path d="M76,72 L79,66 L82,72" stroke="#2a2820" strokeWidth="0.6" opacity="0.45" />
-                    <rect x="48" y="46" width="6" height="4" stroke="#2a2820" strokeWidth="0.5" opacity="0.4" fill="none" />
-                    <rect x="80" y="36" width="5" height="4" stroke="#2a2820" strokeWidth="0.5" opacity="0.4" fill="none" />
-                    {/* Teal tape square */}
-                    <rect x="56" y="3" width="26" height="20" fill={`${TEAL}88`} rx="1" />
-                    <line x1="63" y1="9" x2="75" y2="17" stroke="rgba(255,255,255,0.3)" strokeWidth="1" />
-                  </svg>
+                <div style={{ width: 139, height: 120, overflow: "hidden" }}>
+                  <img src={p.image} alt={p.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                 </div>
                 <div style={{
                   fontFamily: "var(--font-serif)", fontSize: 10,
                   color: "#555", textAlign: "center",
                   marginTop: 6, fontStyle: "italic",
-                }}>Storytelling</div>
+                }}>{p.name}</div>
               </div>
             </div>
 
-            {/* ── Ticket — peeks out of envelope, slides fully up on hover ── */}
+            {/* ── Ticket — sandwiched: flap behind, body in front ── */}
             <div style={{
               position: "absolute",
-              bottom: hovered ? 360 : 130,
+              bottom: hovered ? 220 : 90,
               left: "50%",
               transform: `translateX(-50%) rotate(${hovered ? "-0.4deg" : "-0.8deg"})`,
               width: 370,
-              zIndex: 15,
+              zIndex: 12,
               transition: "bottom 0.72s cubic-bezier(0.16,1,0.3,1), transform 0.72s cubic-bezier(0.16,1,0.3,1)",
               filter: "drop-shadow(0 -4px 30px rgba(0,0,0,0.1))",
             }}>
@@ -581,49 +726,64 @@ export default function Work() {
               </div>
             </div>
 
-            {/* ── Envelope — open flap + body ── */}
+            {/* ── Envelope flap — flat rectangle, BEHIND ticket (zIndex 6) ── */}
+            <div style={{
+              position: "absolute",
+              bottom: 235, left: "50%",
+              transform: `translateX(-50%) rotate(-1deg)`,
+              width: 380,
+              zIndex: 6,
+            }}>
+              {/* Flat open flap — inner face shows slightly lighter */}
+              <div style={{
+                width: "100%", height: 60,
+                background: p.envBg,
+                filter: "brightness(1.12)",
+                transition: "background 0.5s, filter 0.5s",
+                borderTop: "1px solid rgba(255,255,255,0.08)",
+                boxShadow: "0 8px 18px rgba(0,0,0,0.22)",
+              }} />
+            </div>
+
+            {/* ── Envelope body — IN FRONT of ticket (zIndex 18), hides ticket bottom ── */}
             <div style={{
               position: "absolute",
               bottom: 30, left: "50%",
-              transform: `translateX(-50%) rotate(-1deg)${hovered ? " translateY(-3px)" : ""}`,
-              width: 360,
-              zIndex: 20,
-              filter: "drop-shadow(0 24px 60px rgba(0,0,0,0.22))",
+              transform: `translateX(-50%) rotate(-1deg)`,
+              width: 380,
+              zIndex: 18,
+              filter: "drop-shadow(0 24px 60px rgba(0,0,0,0.26))",
               transition: "transform 0.4s cubic-bezier(0.23,1,0.32,1)",
             }}>
-              {/* Open flap — triangle pointing up, sits above body */}
               <div style={{
-                width: "100%", height: 88,
-                background: p.envBg,
-                clipPath: "polygon(0% 100%, 50% 0%, 100% 100%)",
-                filter: "brightness(0.78)",
-                transition: "background 0.5s",
-                marginBottom: -1,
-              }} />
-
-              {/* Envelope body */}
-              <div style={{
-                height: 205, borderRadius: "0 0 2px 2px", overflow: "hidden",
+                height: 205, borderRadius: "0 0 3px 3px", overflow: "hidden",
                 background: p.envBg, transition: "background 0.5s",
                 position: "relative",
               }}>
+                {/* Full X fold — all 4 triangles from each corner to centre */}
                 <div style={{
-                  position: "absolute", inset: 0,
-                  background: "repeating-linear-gradient(0deg,transparent,transparent 18px,rgba(255,255,255,0.015) 18px,rgba(255,255,255,0.015) 19px)",
-                  pointerEvents: "none",
+                  position: "absolute", top: 0, left: 0,
+                  width: "50%", height: "50%",
+                  clipPath: "polygon(0 0,100% 0,0 100%)",
+                  background: "rgba(255,255,255,0.04)",
                 }} />
-                {/* X fold lines */}
+                <div style={{
+                  position: "absolute", top: 0, right: 0,
+                  width: "50%", height: "50%",
+                  clipPath: "polygon(0 0,100% 0,100% 100%)",
+                  background: "rgba(0,0,0,0.1)",
+                }} />
                 <div style={{
                   position: "absolute", bottom: 0, left: 0,
-                  width: "50%", height: "100%",
-                  clipPath: "polygon(0 100%,0 0,100% 100%)",
-                  background: "rgba(0,0,0,0.18)",
+                  width: "50%", height: "50%",
+                  clipPath: "polygon(0 0,0 100%,100% 100%)",
+                  background: "rgba(0,0,0,0.14)",
                 }} />
                 <div style={{
                   position: "absolute", bottom: 0, right: 0,
-                  width: "50%", height: "100%",
+                  width: "50%", height: "50%",
                   clipPath: "polygon(100% 0,0 100%,100% 100%)",
-                  background: "rgba(0,0,0,0.11)",
+                  background: "rgba(0,0,0,0.08)",
                 }} />
                 {/* Address box */}
                 <div style={{
@@ -639,7 +799,7 @@ export default function Work() {
                     letterSpacing: "0.25em", color: TEAL,
                     borderBottom: `1px solid ${TEAL}40`,
                     paddingBottom: 3, marginBottom: 4, fontWeight: 600,
-                  }}>CASE {p.num}</div>
+                  }}>CASE {parseInt(p.num)}</div>
                   {p.company.toUpperCase()}<br />
                   {p.type.toUpperCase()}<br />
                   {p.period}
@@ -655,36 +815,6 @@ export default function Work() {
               </div>
             </div>
 
-            {/* Hint */}
-            <div style={{
-              position: "absolute", bottom: 14, left: "50%",
-              transform: "translateX(-50%)",
-              fontFamily: "var(--font-serif)", fontSize: 11, fontStyle: "italic",
-              color: "rgba(0,0,0,0.2)", whiteSpace: "nowrap",
-              pointerEvents: "none", zIndex: 35,
-              opacity: hovered ? 0 : 1, transition: "opacity 0.3s",
-            }}>pull to read ↑</div>
-
-            {/* Dots */}
-            <div style={{
-              position: "absolute", bottom: 6, left: "50%",
-              transform: "translateX(-50%)",
-              display: "flex", gap: 8, zIndex: 40,
-            }}>
-              {projects.map((proj, i) => (
-                <button
-                  key={i}
-                  aria-label={`View project ${proj.name}`}
-                  onClick={() => setCurrent(i)}
-                  style={{
-                    width: 6, height: 6, borderRadius: "50%", border: "none", padding: 0,
-                    background: i === current ? TEAL : "rgba(0,0,0,0.18)",
-                    transform: i === current ? "scale(1.4)" : "scale(1)",
-                    transition: "background 0.3s, transform 0.3s",
-                  }}
-                />
-              ))}
-            </div>
           </div>
         </div>
       </div>
