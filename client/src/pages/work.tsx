@@ -469,7 +469,86 @@ export default function Work() {
                 transform: "rotate(-4deg)",
               }}
             >
-              {/* ── Catenary string — curves from above the dossier down to the hole ── */}
+              {/* ── Tag layer 3 — beige + dot-grid pattern, big tilt left ── */}
+              <div style={{
+                position: "absolute", inset: 0,
+                background: "#f0e6c8",
+                backgroundImage: "radial-gradient(circle, rgba(100,70,30,0.13) 1.5px, transparent 1.5px)",
+                backgroundSize: "14px 14px",
+                borderRadius: 3,
+                transform: "translateX(-26px) rotate(-9deg)",
+                transformOrigin: "top center",
+                boxShadow: "0 12px 32px rgba(0,0,0,0.22)",
+              }}>
+                <div style={{
+                  position: "absolute", inset: 10,
+                  border: "0.5px solid rgba(100,70,30,0.18)",
+                  borderRadius: 2, pointerEvents: "none",
+                }} />
+                <div style={{
+                  position: "absolute", top: 16, left: "50%",
+                  transform: "translateX(-50%)",
+                  width: 14, height: 14, borderRadius: "50%",
+                  background: BG, border: "1px solid rgba(100,70,30,0.22)",
+                }} />
+              </div>
+
+              {/* ── Tag layer 2 — photo card, medium tilt ── */}
+              <div style={{
+                position: "absolute", inset: 0,
+                borderRadius: 3, overflow: "hidden",
+                transform: "translateX(-9px) rotate(-3.5deg)",
+                transformOrigin: "top center",
+                boxShadow: "0 8px 22px rgba(0,0,0,0.2)",
+              }}>
+                <img
+                  src={p.image} alt={p.name}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                />
+                <div style={{
+                  position: "absolute", top: 16, left: "50%",
+                  transform: "translateX(-50%)",
+                  width: 14, height: 14, borderRadius: "50%",
+                  background: BG,
+                }} />
+              </div>
+
+              {/* ── Tag layer 1 — sulfuric acid vellum, slight tilt right, front ── */}
+              <div style={{
+                position: "absolute", inset: 0,
+                background: "rgba(232,224,200,0.60)",
+                backdropFilter: "blur(1.5px)",
+                borderRadius: 3,
+                border: "1px solid rgba(200,185,155,0.38)",
+                transform: "translateX(5px) rotate(2.5deg)",
+                transformOrigin: "top center",
+              }}>
+                <div style={{
+                  position: "absolute", top: 16, left: "50%",
+                  transform: "translateX(-50%)",
+                  width: 14, height: 14, borderRadius: "50%",
+                  background: BG, border: "1.5px solid rgba(0,0,0,0.18)",
+                }} />
+                <div style={{
+                  position: "absolute", top: 52, left: 18, right: 18,
+                  fontFamily: "var(--font-mono)", fontSize: 7.5,
+                  color: "rgba(20,12,6,0.75)", letterSpacing: "0.05em",
+                  lineHeight: 1.8, textAlign: "center", whiteSpace: "pre-line",
+                }}>{p.quote.replace(/^"|"$/g, "")}</div>
+                <div style={{
+                  position: "absolute", bottom: 48, left: 14, right: 14,
+                  fontFamily: "var(--font-serif)", fontSize: 9,
+                  color: "rgba(20,12,6,0.45)", textAlign: "center",
+                  fontStyle: "italic", letterSpacing: "0.08em",
+                }}>{p.name}</div>
+                <div style={{
+                  position: "absolute", bottom: 20, left: "50%",
+                  transform: "translateX(-50%)",
+                  fontSize: 14, color: "rgba(20,12,6,0.28)", lineHeight: 1,
+                }}>✳</div>
+              </div>
+
+              {/* ── Cord loop — thick SVG teardrop, binds all three tags ── */}
               <svg
                 width="0" height="0"
                 style={{
@@ -477,103 +556,24 @@ export default function Work() {
                   overflow: "visible", zIndex: 25, pointerEvents: "none",
                 }}
               >
-                {/* Natural hanging cord: from upper-left (over the dossier) to hole at (97.5, 22.5) */}
+                {/* Main cord — thick dark rope forming a teardrop loop */}
                 <path
-                  d="M -145,-215 C -145,-75 12,-8 97.5,22.5"
-                  stroke="rgba(22,14,5,0.72)"
-                  strokeWidth="1.8"
+                  d="M 97.5,22.5 C 65,5 28,-88 82,-178 C 88,-204 107,-204 113,-178 C 162,-88 130,5 97.5,22.5"
+                  stroke="#0c0805"
+                  strokeWidth="3.8"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                {/* Highlight — simulates twisted cord texture */}
+                <path
+                  d="M 97.5,22.5 C 67,6 32,-86 83,-176 C 89,-202 108,-202 114,-176 C 161,-86 128,6 97.5,22.5"
+                  stroke="rgba(90,55,20,0.28)"
+                  strokeWidth="1.6"
                   fill="none"
                   strokeLinecap="round"
                 />
               </svg>
-
-              {/* ── Tag layer 3 — beige background card with pattern, tilted left ── */}
-              <div style={{
-                position: "absolute", inset: 0,
-                background: "#f0e6c8",
-                backgroundImage:
-                  "radial-gradient(circle, rgba(100,70,30,0.13) 1.5px, transparent 1.5px)",
-                backgroundSize: "14px 14px",
-                borderRadius: 3,
-                transform: "rotate(-3deg)",
-                transformOrigin: "top center",
-                boxShadow: "0 10px 30px rgba(0,0,0,0.22)",
-              }}>
-                {/* Inner decorative frame */}
-                <div style={{
-                  position: "absolute", inset: 10,
-                  border: "0.5px solid rgba(100,70,30,0.18)",
-                  borderRadius: 2, pointerEvents: "none",
-                }} />
-                {/* Hole */}
-                <div style={{
-                  position: "absolute", top: 16, left: "50%",
-                  transform: "translateX(-50%)",
-                  width: 13, height: 13, borderRadius: "50%",
-                  background: BG, border: "1px solid rgba(100,70,30,0.22)",
-                }} />
-              </div>
-
-              {/* ── Tag layer 2 — photo card, slightly tilted ── */}
-              <div style={{
-                position: "absolute", inset: 0,
-                borderRadius: 3, overflow: "hidden",
-                transform: "rotate(-1.5deg)",
-                transformOrigin: "top center",
-                boxShadow: "0 6px 20px rgba(0,0,0,0.18)",
-              }}>
-                <img
-                  src={p.image} alt={p.name}
-                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                />
-                {/* Hole punch */}
-                <div style={{
-                  position: "absolute", top: 16, left: "50%",
-                  transform: "translateX(-50%)",
-                  width: 13, height: 13, borderRadius: "50%",
-                  background: BG,
-                }} />
-              </div>
-
-              {/* ── Tag layer 1 — sulfuric acid / vellum, slightly tilted right, front ── */}
-              <div style={{
-                position: "absolute", inset: 0,
-                background: "rgba(232,224,200,0.60)",
-                backdropFilter: "blur(1.5px)",
-                borderRadius: 3,
-                border: "1px solid rgba(200,185,155,0.38)",
-                transform: "rotate(1.5deg)",
-                transformOrigin: "top center",
-              }}>
-                {/* Hole */}
-                <div style={{
-                  position: "absolute", top: 16, left: "50%",
-                  transform: "translateX(-50%)",
-                  width: 13, height: 13, borderRadius: "50%",
-                  background: BG, border: "1.5px solid rgba(0,0,0,0.18)",
-                }} />
-                {/* Quote */}
-                <div style={{
-                  position: "absolute", top: 52, left: 18, right: 18,
-                  fontFamily: "var(--font-mono)", fontSize: 7.5,
-                  color: "rgba(20,12,6,0.75)", letterSpacing: "0.05em",
-                  lineHeight: 1.8, textAlign: "center",
-                  whiteSpace: "pre-line",
-                }}>{p.quote.replace(/^"|"$/g, "")}</div>
-                {/* Project name */}
-                <div style={{
-                  position: "absolute", bottom: 48, left: 14, right: 14,
-                  fontFamily: "var(--font-serif)", fontSize: 9,
-                  color: "rgba(20,12,6,0.45)", textAlign: "center",
-                  fontStyle: "italic", letterSpacing: "0.08em",
-                }}>{p.name}</div>
-                {/* Asterisk */}
-                <div style={{
-                  position: "absolute", bottom: 20, left: "50%",
-                  transform: "translateX(-50%)",
-                  fontSize: 14, color: "rgba(20,12,6,0.28)", lineHeight: 1,
-                }}>✳</div>
-              </div>
             </div>
 
 
