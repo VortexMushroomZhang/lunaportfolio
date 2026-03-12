@@ -675,9 +675,10 @@ export default function Work() {
               transform: "translateX(-50%)",
               display: "flex", gap: 8, zIndex: 40,
             }}>
-              {projects.map((_, i) => (
+              {projects.map((proj, i) => (
                 <button
                   key={i}
+                  aria-label={`View project ${proj.name}`}
                   onClick={() => setCurrent(i)}
                   style={{
                     width: 6, height: 6, borderRadius: "50%", border: "none", padding: 0,
