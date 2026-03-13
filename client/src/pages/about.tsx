@@ -599,7 +599,7 @@ export default function About() {
             {[
               { label: "Based in", value: "Amsterdam, NL & Paris, FR" },
               { label: "Currently", value: "Product Designer @ Van Lanschot Kempen" },
-              { label: "Education", value: "MSc Industrial Design, TU/e. BSc Industrial Design, Zhejiang University" },
+              { label: "Education", value: "MSc Industrial Design, TU/e. \n BSc Industrial Design, Zhejiang University" },
               { label: "Languages", value: "Chinese · English · French (A2)" },
             ].map(({ label, value }) => (
               <div

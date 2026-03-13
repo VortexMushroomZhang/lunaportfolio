@@ -99,6 +99,325 @@ const FILM_FRAMES = [
   "linear-gradient(180deg,#5c2800,#9b4a10,#3d1a00)",
 ];
 
+/* ─── Workflow (Double Diamond) ─── */
+const WF_SAGE = "#7A9068";
+const WF_TEAL = "#7ECECE";
+
+// Layout constants — traditional
+const _GW  = 260;   // group width
+const _GH  = 122;   // outline diamond half-height
+const _DS  = 70;    // vertex diamond box size
+const _GAP = 44;    // gap between Strategy exit and Problem entry
+const _PAD = 50;    // left/right padding
+const _MY  = 178;   // center Y in diagram area
+
+// Group left-vertex x positions
+const _SX = _PAD;
+const _PX = _PAD + _GW + _GAP;
+const _OX = _PX + _GW;
+const _EX = _OX + _GW;
+const _LX = _EX + _GW;
+const _LGW = 420;  // Listen phase is wider
+const _TW = _LX + _LGW + _PAD;
+
+// Interior position helpers
+const _li  = (g: number) => g + _GW * 0.30;
+const _ri  = (g: number) => g + _GW * 0.70;
+
+// Layout constants — AI
+const _AGW = 280;
+const _AGH = 116;
+const _ADX = _PAD;
+const _ABX = _PAD + _AGW;
+const _ASX = _PAD + 2 * _AGW;
+const _ATW = _ASX + _AGW + _DS + _PAD;  // Learn & Adapt vertex at _ASX+_AGW
+const _ali = (g: number) => g + _AGW * 0.30;
+const _ari = (g: number) => g + _AGW * 0.70;
+
+interface WfVertex  { id: string; x: number; label: string; desc?: string; sub?: string; note?: string; noteDiamond?: boolean; size?: number; faded?: boolean; }
+interface WfInner   { id: string; x: number; label: string; desc?: string; bold?: boolean; note?: string; faded?: boolean; }
+interface WfOutline { lx: number; rx: number; stroke: string; phase: string; phaseSub?: string; phaseFaded?: boolean; }
+interface DDConfig  { gh: number; my: number; }
+
+// ── Traditional data ──
+const tradOutlines: WfOutline[] = [
+  { lx: _SX,          rx: _SX + _GW, stroke: "rgba(0,0,0,0.13)", phase: "Strategy Space" },
+  { lx: _PX,          rx: _PX + _GW, stroke: "rgba(0,0,0,0.13)", phase: "Problem Space" },
+  { lx: _OX,          rx: _OX + _GW, stroke: "rgba(0,0,0,0.13)", phase: "Solution Space" },
+  { lx: _EX,          rx: _EX + _GW, stroke: "rgba(0,0,0,0.13)", phase: "Execution Space", phaseSub: "Development" },
+  { lx: _LX,          rx: _LX + _LGW, stroke: "rgba(0,0,0,0.06)", phase: "Listen & Iterate", phaseSub: "Validation · Rollout", phaseFaded: true },
+];
+const tradVertices: WfVertex[] = [
+  { id: "v-obj", x: _SX + _GW, label: "Objectives", note: "Strategy Plan", desc: "Aligned objectives and success metrics" },
+  { id: "v-hyp", x: _PX,       label: "Hypoth",     desc: "Scoping the problem, aligning requirements" },
+  { id: "v-hmw", x: _OX,       label: "HMW",        sub: "How might we ...", desc: "Reframe problem as design challenge" },
+  { id: "v-poc", x: _EX,       label: "P.O.C",      sub: "Proof of concept", desc: "GO / NO GO refactor" },
+  { id: "v-dh",  x: _EX + _GW * 0.5, label: "Design\nHandoff",      note: "PRD", noteDiamond: true, size: 90, desc: "UX Audit · spec tracking and analytics" },
+  { id: "v-qa",  x: _LX,             label: "QA\nReview",          desc: "Implementation QA Review → Feature launch" },
+  { id: "v-fe",  x: _LX + _LGW,     label: "Feature\nEvaluation", size: 88, desc: "Feature launch evaluation · rollout metrics", faded: true },
+];
+const tradInners: WfInner[] = [
+  { id: "i-vp", x: _li(_SX), label: "Value\nProposition", desc: "Define the core value offered to clients" },
+  { id: "i-sk", x: _ri(_SX), label: "Strategy\nKernel",   desc: "Key strategic choices and trade-offs" },
+  { id: "i-re", x: _li(_PX), label: "Research", desc: "Opportunity areas" },
+  { id: "i-in", x: _ri(_PX), label: "Insight",  desc: "Design challenge brief" },
+  { id: "i-id", x: _li(_OX), label: "Ideate",   desc: "Exploring different solution ideas" },
+  { id: "i-va", x: _ri(_OX), label: "Validate", desc: "Prototype and concept testing (R)" },
+  { id: "i-co", x: _EX + _GW * 0.30, label: "Complete", desc: "Finalise user journeys, logic, edge cases" },
+  { id: "i-de", x: _EX + _GW * 0.70, label: "Deliver",  desc: "Handoff specs, PRD, tracking requirements" },
+  { id: "i-ev", x: _LX + _LGW * 0.44, label: "Evaluate", desc: "Usage evaluation and feature performance", faded: true },
+];
+const tradCfg: DDConfig = { gh: _GH, my: _MY };
+
+// ── AI data ──
+const aiOutlines: WfOutline[] = [
+  { lx: _ADX, rx: _ADX + _AGW, stroke: "rgba(0,0,0,0.13)", phase: "Discovery",          phaseSub: "AI-augmented" },
+  { lx: _ABX, rx: _ABX + _AGW, stroke: "rgba(0,0,0,0.13)", phase: "Design + Build",     phaseSub: "AI-assisted" },
+  { lx: _ASX, rx: _ASX + _AGW, stroke: "rgba(0,0,0,0.08)", phase: "Engineer + Ship",    phaseSub: "Human oversight" },
+];
+const aiVertices: WfVertex[] = [
+  { id: "a-def", x: _ADX,          label: "Define",       desc: "AI-assisted problem scoping & competitive intelligence" },
+  { id: "a-gen", x: _ABX,          label: "Generate",     sub: "HMW × AI",    desc: "Co-generate opportunities — human curation leads" },
+  { id: "a-bld", x: _ASX,          label: "Build",        sub: "Claude Code", desc: "Vibe coding · AI pair programming · human oversight" },
+  { id: "a-la",  x: _ASX + _AGW,   label: "Learn &\nAdapt", desc: "AI analytics · continuous improvement loop" },
+];
+const aiInners: WfInner[] = [
+  { id: "ai-rs", x: _ali(_ADX), label: "Research",           desc: "Automated synthesis · AI clusters feedback patterns" },
+  { id: "ai-fr", x: _ari(_ADX), label: "Frame",              desc: "AI-generated opportunity clusters + human curation" },
+  { id: "ai-pr", x: _ali(_ABX), label: "Prototype",          desc: "AI-generated UI via v0 · iterate 10× faster" },
+  { id: "ai-vl", x: _ari(_ABX), label: "Validate",           desc: "Rapid testing with AI-assisted evaluation" },
+  { id: "ai-he", x: _ali(_ASX), label: "Human\nEngineering", desc: "Critical review, edge cases, QA · human takes the wheel" },
+  { id: "ai-sh", x: _ari(_ASX), label: "Ship",               desc: "Continuous deployment + automated checks" },
+];
+const aiCfg: DDConfig = { gh: _AGH, my: _MY };
+
+function DoubleDiamondDiagram({
+  outlines, vertices, inners, totalW, cfg, accent,
+}: {
+  outlines: WfOutline[];
+  vertices: WfVertex[];
+  inners: WfInner[];
+  totalW: number;
+  cfg: DDConfig;
+  accent: string;
+}) {
+  const [hov, setHov] = useState<string | null>(null);
+  const { gh, my } = cfg;
+  const DS = _DS;
+  const SVG_H = my + gh + 90;
+  const PHASE_H = 50;
+  const allItems = [...vertices, ...inners];
+  const hovItem = hov ? allItems.find(x => x.id === hov) : null;
+
+  return (
+    <div style={{ overflowX: "auto" }}>
+      <div style={{ minWidth: totalW, position: "relative" }}>
+
+        {/* Phase label row */}
+        <div style={{ position: "relative", height: PHASE_H, borderBottom: "1px solid rgba(0,0,0,0.07)" }}>
+          {outlines.map((o) => (
+            <div key={o.phase} style={{
+              position: "absolute", left: o.lx, width: o.rx - o.lx,
+              top: 0, height: "100%", paddingLeft: 8,
+              borderRight: "1px dashed rgba(0,0,0,0.1)",
+              display: "flex", flexDirection: "column", justifyContent: "center",
+            }}>
+              <div style={{
+                fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 700,
+                color: o.phaseFaded ? "rgba(0,0,0,0.22)" : "#1a1a1a",
+              }}>{o.phase}</div>
+              {o.phaseSub && (
+                <div style={{
+                  fontFamily: "var(--font-serif)", fontSize: 9, fontStyle: "italic",
+                  color: "rgba(0,0,0,0.38)",
+                }}>{o.phaseSub}</div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Diagram area */}
+        <div style={{ position: "relative", height: SVG_H }}>
+
+          {/* SVG: outlines + arrows */}
+          <svg width={totalW} height={SVG_H}
+            style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
+            {outlines.map((o) => {
+              const cx = (o.lx + o.rx) / 2;
+              const ow = o.rx - o.lx;
+              const a1x = o.lx + ow * 0.40, a2x = o.lx + ow * 0.60;
+              return (
+                <g key={o.phase}>
+                  {/* Outline diamond */}
+                  <polygon
+                    points={`${o.lx},${my} ${cx},${my - gh} ${o.rx},${my} ${cx},${my + gh}`}
+                    fill="none"
+                    stroke={o.stroke}
+                    strokeWidth="1.3"
+                  />
+                  {/* Center vertical divider */}
+                  <line
+                    x1={cx} y1={my - gh * 0.68}
+                    x2={cx} y2={my + gh * 0.68}
+                    stroke={o.stroke} strokeWidth="0.7"
+                  />
+                  {/* Forward arrow: dot → arrowhead */}
+                  <circle cx={a1x} cy={my - 20} r="3" fill="rgba(0,0,0,0.22)" />
+                  <line x1={a1x + 6} y1={my - 20} x2={a2x - 7} y2={my - 20}
+                    stroke="rgba(0,0,0,0.22)" strokeWidth="1.1" />
+                  <polygon points={`${a2x},${my-20} ${a2x-8},${my-23} ${a2x-8},${my-17}`}
+                    fill="rgba(0,0,0,0.22)" />
+                  {/* Back arrow: dot → arrowhead */}
+                  <circle cx={a2x} cy={my + 20} r="3" fill="rgba(0,0,0,0.22)" />
+                  <line x1={a2x - 6} y1={my + 20} x2={a1x + 7} y2={my + 20}
+                    stroke="rgba(0,0,0,0.22)" strokeWidth="1.1" />
+                  <polygon points={`${a1x},${my+20} ${a1x+8},${my+23} ${a1x+8},${my+17}`}
+                    fill="rgba(0,0,0,0.22)" />
+                </g>
+              );
+            })}
+          </svg>
+
+          {/* Vertex diamonds */}
+          {vertices.map((v) => {
+            const isH = hov === v.id;
+            const dimmed = hov !== null && hov !== v.id;
+            const sz = v.size ?? DS;
+            const smallSz = sz * 0.58;
+            return (
+              <div key={v.id}
+                onMouseEnter={() => setHov(v.id)}
+                onMouseLeave={() => setHov(null)}
+                style={{
+                  position: "absolute",
+                  left: v.x - sz / 2, top: my - sz / 2,
+                  width: sz, height: sz,
+                  cursor: "pointer", zIndex: 5,
+                  opacity: dimmed ? 0.2 : 1,
+                  transition: "opacity 0.2s",
+                }}
+              >
+                {/* PRD-style faded mini-diamond above (noteDiamond) */}
+                {v.noteDiamond && v.note && (
+                  <div style={{
+                    position: "absolute",
+                    left: "50%", bottom: sz - smallSz * 0.3,
+                    transform: "translateX(-50%)",
+                    width: smallSz, height: smallSz,
+                    zIndex: 0, pointerEvents: "none",
+                  }}>
+                    <div style={{
+                      position: "absolute", inset: 0,
+                      background: accent, opacity: 0.38,
+                      transform: "rotate(45deg)",
+                    }} />
+                    <div style={{
+                      position: "absolute", inset: 0,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 700,
+                      color: "rgba(0,0,0,0.45)", zIndex: 1,
+                    }}>{v.note}</div>
+                  </div>
+                )}
+                {/* Plain text note above (e.g. "Strategy Plan") */}
+                {v.note && !v.noteDiamond && (
+                  <div style={{
+                    position: "absolute",
+                    bottom: sz + 8, left: "50%",
+                    transform: "translateX(-50%)",
+                    fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: 700,
+                    color: "#1a1a1a", whiteSpace: "nowrap", pointerEvents: "none",
+                  }}>{v.note}</div>
+                )}
+                {/* Diamond shape */}
+                <div style={{
+                  position: "absolute", inset: 0,
+                  background: v.faded ? `${accent}55` : accent,
+                  transform: `rotate(45deg)${isH ? " scale(1.1)" : ""}`,
+                  transition: "transform 0.18s ease, box-shadow 0.18s ease",
+                  boxShadow: isH ? `0 5px 24px ${accent}aa` : "none",
+                }} />
+                {/* Label centered on diamond */}
+                <div style={{
+                  position: "absolute", inset: 0,
+                  display: "flex", flexDirection: "column",
+                  alignItems: "center", justifyContent: "center",
+                  zIndex: 1, pointerEvents: "none",
+                }}>
+                  <div style={{
+                    fontFamily: "var(--font-sans)", fontSize: sz > DS ? 13 : 11, fontWeight: 700,
+                    color: "#1a1a1a", textAlign: "center", lineHeight: 1.2,
+                    whiteSpace: "pre-line",
+                  }}>{v.label}</div>
+                  {v.sub && (
+                    <div style={{
+                      fontFamily: "var(--font-serif)", fontSize: 7, fontStyle: "italic",
+                      color: "rgba(0,0,0,0.55)", marginTop: 2, textAlign: "center",
+                    }}>{v.sub}</div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+
+          {/* Interior labels (Research, Insight, etc.) */}
+          {inners.map((inn) => {
+            const isH = hov === inn.id;
+            const dimmed = hov !== null && hov !== inn.id;
+            return (
+              <div key={inn.id}
+                onMouseEnter={() => setHov(inn.id)}
+                onMouseLeave={() => setHov(null)}
+                style={{
+                  position: "absolute",
+                  left: inn.x - 46, top: my - 34,
+                  width: 92, height: 72,
+                  cursor: inn.desc ? "pointer" : "default",
+                  zIndex: 4,
+                  opacity: dimmed ? 0.2 : 1,
+                  transition: "opacity 0.2s",
+                  display: "flex", flexDirection: "column",
+                  alignItems: "center", justifyContent: "center",
+                }}
+              >
+                {inn.note && (
+                  <div style={{
+                    fontFamily: "var(--font-mono)", fontSize: 7.5,
+                    letterSpacing: "0.1em", color: "rgba(0,0,0,0.35)",
+                    marginBottom: 3, textAlign: "center",
+                  }}>{inn.note}</div>
+                )}
+                <div style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: inn.bold ? 14 : 13,
+                  fontWeight: inn.bold ? 700 : 600,
+                  color: inn.faded ? "rgba(0,0,0,0.28)" : isH ? "#000" : "rgba(0,0,0,0.72)",
+                  textAlign: "center", whiteSpace: "pre-line", lineHeight: 1.25,
+                  transition: "color 0.18s",
+                }}>{inn.label}</div>
+              </div>
+            );
+          })}
+
+          {/* Tooltip — plain text just below the diamond bottom */}
+          {hovItem?.desc && (() => {
+            const tipW = 260;
+            const tipL = Math.max(8, Math.min(hovItem.x - tipW / 2, totalW - tipW - 8));
+            return (
+              <div style={{
+                position: "absolute", left: tipL, top: my + gh + 10,
+                width: tipW, pointerEvents: "none", zIndex: 20,
+                fontFamily: "var(--font-sans)", fontSize: 11,
+                color: "rgba(0,0,0,0.45)", lineHeight: 1.6,
+              }}>{hovItem.desc}</div>
+            );
+          })()}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Work() {
   const [current, setCurrent] = useState(0);
   const [hovered, setHovered] = useState(false);
@@ -876,6 +1195,69 @@ export default function Work() {
           </div>
         </div>
       </div>
+
+      {/* ═══ WORKFLOW ═══ */}
+      <section style={{ background: "#EDEBE4", padding: "96px clamp(32px,5vw,80px) 80px" }}>
+        <div style={{ maxWidth: 1440 }}>
+          <p style={{
+            fontFamily: "var(--font-mono)", fontSize: 10,
+            letterSpacing: "0.22em", color: "rgba(0,0,0,0.35)",
+            textTransform: "uppercase", marginBottom: 10,
+          }}>How I work</p>
+          <h2 style={{
+            fontFamily: "var(--font-serif)", fontSize: 38,
+            fontWeight: 300, color: "#1a1a1a", marginBottom: 64,
+          }}>Workflow</h2>
+
+          {/* 01 — Traditional */}
+          <div style={{ marginBottom: 36 }}>
+            <span style={{
+              fontFamily: "var(--font-mono)", fontSize: 9,
+              letterSpacing: "0.2em", color: TEAL, textTransform: "uppercase",
+            }}>01</span>
+            <h3 style={{
+              fontFamily: "var(--font-sans)", fontSize: 17, fontWeight: 600,
+              color: "#1a1a1a", margin: "6px 0 10px",
+            }}>Traditional Way of Working</h3>
+            <p style={{
+              fontFamily: "var(--font-sans)", fontSize: 13,
+              color: "rgba(0,0,0,0.48)", lineHeight: 1.75, maxWidth: 500,
+              marginBottom: 36,
+            }}>
+              Double diamond design process — from problem hypothesis through research, ideation, and delivery, with iterative loops at each phase.
+            </p>
+          </div>
+          <DoubleDiamondDiagram
+            outlines={tradOutlines} vertices={tradVertices} inners={tradInners}
+            totalW={_TW} cfg={tradCfg} accent={WF_SAGE}
+          />
+
+          <div style={{ height: 1, background: "rgba(0,0,0,0.08)", margin: "72px 0" }} />
+
+          {/* 02 — AI era */}
+          <div style={{ marginBottom: 36 }}>
+            <span style={{
+              fontFamily: "var(--font-mono)", fontSize: 9,
+              letterSpacing: "0.2em", color: TEAL, textTransform: "uppercase",
+            }}>02</span>
+            <h3 style={{
+              fontFamily: "var(--font-sans)", fontSize: 17, fontWeight: 600,
+              color: "#1a1a1a", margin: "6px 0 10px",
+            }}>In the Era of AI</h3>
+            <p style={{
+              fontFamily: "var(--font-sans)", fontSize: 13,
+              color: "rgba(0,0,0,0.48)", lineHeight: 1.75, maxWidth: 500,
+              marginBottom: 36,
+            }}>
+              AI tools compress research cycles, accelerate ideation, and enable rapid prototyping — shifting the designer's role from executor to curator and critical thinker.
+            </p>
+          </div>
+          <DoubleDiamondDiagram
+            outlines={aiOutlines} vertices={aiVertices} inners={aiInners}
+            totalW={_ATW} cfg={aiCfg} accent={WF_TEAL}
+          />
+        </div>
+      </section>
 
       {/* ── FOOTER ── */}
       <SiteFooter />

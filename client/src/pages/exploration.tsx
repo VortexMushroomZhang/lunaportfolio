@@ -398,7 +398,6 @@ export default function Exploration() {
         </div>
       </section>
 
-      <SiteFooter />
     </div>
   );
 }
