@@ -14,14 +14,14 @@ const projects = [
   {
     id: "work-projects",
     num: "01",
-    name: "Client APP & CRM AI",
-    sub: "Banker tools · Finance",
+    name: "Client APP",
+    sub: "Finance",
     type: "Work",
     status: "Ongoing",
     period: "2023 — Now",
     company: "Van Lanschot Kempen",
-    desc: "Leading research on banker-facing CRM and data analysis toolings, internal AI chat assistant, and client-facing mobile applications.",
-    tags: ["Research", "AI", "Mobile"],
+    desc: "Research and design for the next-gen private banking client app, focused on delivering a best-in-class digital experience that reflects the precision and craftsmanship of our financial services.",
+    tags: ["Research", "Design", "Mobile"],
     quote: '"Accuracy and craftmanship in Finance."',
     envBg: "#0A3040",
     image: vlkWorkImg,
@@ -30,8 +30,8 @@ const projects = [
     id: "client-voice",
     num: "02",
     name: "Client Voice",
-    sub: "Feedback intelligence · SaaS",
-    type: "Interest Project",
+    sub: "Client feedback · SaaS",
+    type: "Work interest project",
     status: "Completed",
     period: "2026 · Jan",
     company: "Self-initiated",
@@ -52,22 +52,22 @@ const projects = [
     company: "Personal",
     desc: "An old-school inspired language practice tool for listening, reading, writing, and dictation through a continuous cycle of focused exercises.",
     tags: ["EdTech", "Learning", "Design"],
-    quote: '"Practice with intention, improve by design."',
+    quote: '"Practice with intention."',
     envBg: "#6A6494",
     image: masteryLoopImg,
   },
   {
-    id: "placeholder-04",
+    id: "AI-in-current-workflow",
     num: "04",
-    name: "Coming Soon",
-    sub: "TBD · Placeholder",
+    name: "AI assistant workflow integration",
+    sub: "2025 · NOV",
     type: "Work",
-    status: "Upcoming",
-    period: "2026",
-    company: "TBD",
-    desc: "This project is currently in early research and discovery. Details will be added as the work progresses.",
-    tags: ["TBD"],
-    quote: '"Good design is never finished, only abandoned."',
+    status: "Live",
+    period: "2025",
+    company: "Van Lanschot Kempen",
+    desc: "Implementing AI tools within banker tooling cluster to enhance efficiency and insights while maintaining the high standards of precision and client service expected in private banking.",
+    tags: ["AI", "DesignOps", "ResearchOps"],
+    quote: '"AI implementation in current workflow for workflow enhancement."',
     envBg: "#3A2E28",
     image: vlkWorkImg,
   },
@@ -75,7 +75,7 @@ const projects = [
     id: "placeholder-05",
     num: "05",
     name: "Coming Soon",
-    sub: "TBD · Placeholder",
+    sub: "TBD",
     type: "Side Project",
     status: "Upcoming",
     period: "2026",
@@ -578,30 +578,32 @@ export default function Work() {
                 }}>✳</div>
               </div>
 
-              {/* ── Cord loop — thick SVG teardrop, binds all three tags ── */}
-              {/* SVG positioned at top:-215 so y-coords +215 offset (loop apex at y≈11, hole at y≈237) */}
+              {/* ── Cord — thin natural hanging cord from board pin to tag hole ── */}
               <svg
-                width="200" height="250"
+                width="28" height="148"
                 style={{
-                  position: "absolute", top: -215, left: 0,
+                  position: "absolute", top: -133, left: "50%",
+                  transform: "translateX(-50%)",
                   zIndex: 25, pointerEvents: "none",
                   overflow: "visible",
                 }}
               >
-                {/* Main cord — thick dark rope forming a teardrop loop */}
+                {/* Board pin / tack */}
+                <circle cx="14" cy="5" r="3.5" fill="rgba(40,28,16,0.55)" />
+                <circle cx="14" cy="5" r="1.8" fill="rgba(200,170,120,0.6)" />
+                {/* Cord — gentle catenary sag */}
                 <path
-                  d="M 97.5,237.5 C 65,220 28,127 82,37 C 88,11 107,11 113,37 C 162,127 130,220 97.5,237.5"
-                  stroke="#0c0805"
-                  strokeWidth="3.8"
+                  d="M 14,8 C 11,42 17,82 14,143"
+                  stroke="#2e1c0a"
+                  strokeWidth="1.6"
                   fill="none"
                   strokeLinecap="round"
-                  strokeLinejoin="round"
                 />
-                {/* Highlight — simulates twisted cord texture */}
+                {/* Subtle highlight for cord texture */}
                 <path
-                  d="M 97.5,237.5 C 67,221 32,129 83,39 C 89,13 108,13 114,39 C 161,129 128,221 97.5,237.5"
-                  stroke="rgba(90,55,20,0.28)"
-                  strokeWidth="1.6"
+                  d="M 15,8 C 12,42 18,82 15,143"
+                  stroke="rgba(160,110,55,0.3)"
+                  strokeWidth="0.7"
                   fill="none"
                   strokeLinecap="round"
                 />
