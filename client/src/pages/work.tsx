@@ -56,6 +56,36 @@ const projects = [
     envBg: "#6A6494",
     image: masteryLoopImg,
   },
+  {
+    id: "placeholder-04",
+    num: "04",
+    name: "Coming Soon",
+    sub: "TBD · Placeholder",
+    type: "Work",
+    status: "Upcoming",
+    period: "2026",
+    company: "TBD",
+    desc: "This project is currently in early research and discovery. Details will be added as the work progresses.",
+    tags: ["TBD"],
+    quote: '"Good design is never finished, only abandoned."',
+    envBg: "#3A2E28",
+    image: vlkWorkImg,
+  },
+  {
+    id: "placeholder-05",
+    num: "05",
+    name: "Coming Soon",
+    sub: "TBD · Placeholder",
+    type: "Side Project",
+    status: "Upcoming",
+    period: "2026",
+    company: "Personal",
+    desc: "This project is currently in early research and discovery. Details will be added as the work progresses.",
+    tags: ["TBD"],
+    quote: '"Every great design begins with an even better story."',
+    envBg: "#2A3038",
+    image: masteryLoopImg,
+  },
 ];
 
 const FILM_FRAMES = [
@@ -549,16 +579,18 @@ export default function Work() {
               </div>
 
               {/* ── Cord loop — thick SVG teardrop, binds all three tags ── */}
+              {/* SVG positioned at top:-215 so y-coords +215 offset (loop apex at y≈11, hole at y≈237) */}
               <svg
-                width="0" height="0"
+                width="200" height="250"
                 style={{
-                  position: "absolute", top: 0, left: 0,
-                  overflow: "visible", zIndex: 25, pointerEvents: "none",
+                  position: "absolute", top: -215, left: 0,
+                  zIndex: 25, pointerEvents: "none",
+                  overflow: "visible",
                 }}
               >
                 {/* Main cord — thick dark rope forming a teardrop loop */}
                 <path
-                  d="M 97.5,22.5 C 65,5 28,-88 82,-178 C 88,-204 107,-204 113,-178 C 162,-88 130,5 97.5,22.5"
+                  d="M 97.5,237.5 C 65,220 28,127 82,37 C 88,11 107,11 113,37 C 162,127 130,220 97.5,237.5"
                   stroke="#0c0805"
                   strokeWidth="3.8"
                   fill="none"
@@ -567,7 +599,7 @@ export default function Work() {
                 />
                 {/* Highlight — simulates twisted cord texture */}
                 <path
-                  d="M 97.5,22.5 C 67,6 32,-86 83,-176 C 89,-202 108,-202 114,-176 C 161,-86 128,6 97.5,22.5"
+                  d="M 97.5,237.5 C 67,221 32,129 83,39 C 89,13 108,13 114,39 C 161,129 128,221 97.5,237.5"
                   stroke="rgba(90,55,20,0.28)"
                   strokeWidth="1.6"
                   fill="none"
