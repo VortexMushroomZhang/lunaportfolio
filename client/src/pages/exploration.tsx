@@ -1,5 +1,4 @@
 import Navigation from "@/components/navigation";
-import SiteFooter from "@/components/site-footer";
 import InteractiveTree from "@/components/interactive-tree";
 import { useState, useEffect, useRef, useCallback } from "react";
 
